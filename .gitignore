@@ -2,3 +2,8 @@
 .meteor/
 .idea/
 project.iml
+
+!.meteor/packages
+!.meteor/platforms
+!.meteor/release
+!.meteor/versions
