@@ -1,0 +1,22 @@
+<template name="chatHome">
+    <div id="chat_container">
+        <div id="users_panel">
+            Some User
+        </div>
+        <div id="chat_window">
+            {{#each messages}}
+                {{message}}<br />
+            {{/each}}
+        </div>
+    </div>
+    <div class="navbar bg-blue navbar-fixed-bottom">
+        <div class="navbar-form text-center">
+            <form id="chat_form" action="post">
+                <div class="form-group message-form-group">
+                    <input class="form-control" type="text" name="message" id="message" placeholder="What would you like to say?">
+                    <button id="button_chat" class="btn btn-red"><span class="glyphicon glyphicon-comment"></span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>

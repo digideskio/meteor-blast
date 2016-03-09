@@ -1,7 +1,7 @@
 Template.loading.rendered = function () {
   if ( ! Session.get('loadingSplash') ) {
     this.loading = window.pleaseWait({
-      logo: '/images/Meteor-logo.png',
+      logo: '/images/icons/meteor.png',
       backgroundColor: '#7f8c8d',
       loadingHtml: message + spinner
     });
@@ -12,6 +12,7 @@ Template.loading.rendered = function () {
 Template.loading.destroyed = function () {
   if ( this.loading ) {
     this.loading.finish();
+    delete Session.keys['loadingSplash'];
   }
 };
 

@@ -2,5 +2,5 @@
 
 // From the percolate:migrations package
 Meteor.startup(function() {
-  Migrations.migrateTo(1);
+  Migrations.migrateTo(2);
 });
