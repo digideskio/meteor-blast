@@ -1,37 +1,4 @@
-#chat_container {
-    font-size: 0;
-    height: 100%;
-    background-color: #FBFBF9;
-}
-
 #chat_window {
-    font-size: 14px;
-    height: 100%;
-    vertical-align: top;
-    display: inline-block;
-    text-align: top;
-    padding: .5%;
     overflow: auto;
-    width: 85%;
-}
-#users_panel {
-    font-size: 14px;
-    height: 100%;
-    padding: .5%;
-    vertical-align: top;
-    width: 15%;
-    overflow: auto;
-    display: inline-block;
-    text-align: top;
-}
-.room_msg {
-    display: block;
-}
-
-#chat_form input {
-    width: 70%;
-}
-
-.message-form-group {
-    width: 80%;
+    height: 90%;
 }

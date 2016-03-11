@@ -1,22 +1,30 @@
 <template name="chatHome">
-    <div id="chat_container">
-        <div id="users_panel">
-            Some User
-        </div>
-        <div id="chat_window">
-            {{#each messages}}
-                {{message}}<br />
-            {{/each}}
-        </div>
-    </div>
-    <div class="navbar bg-blue navbar-fixed-bottom">
-        <div class="navbar-form text-center">
-            <form id="chat_form" action="post">
-                <div class="form-group message-form-group">
-                    <input class="form-control" type="text" name="message" id="message" placeholder="What would you like to say?">
-                    <button id="button_chat" class="btn btn-red"><span class="glyphicon glyphicon-comment"></span></button>
+
+    <div class="container fill-height">
+        <div class="row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
+            <div style="background-color:cadetblue;" class="col-xs-2 fill-height">
+
+            </div>
+            <div class="col-xs-10 fill-height">
+                <div class="chat-window" style="min-height: 95%; height: 95%; overflow-y: auto; padding: 5px;">
+                        {{#each messages}}
+                            <div id="messages">
+                                {{message}}
+                            </div>
+                        {{/each}}
                 </div>
-            </form>
+                <div style="min-height: 5%; height: 5%; padding-top: 10px;">
+                    <form id="chat_form" class="new-message" method="post">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="message" id="message" placeholder="What would you like to say?">
+                            <span class="input-group-btn">
+                                <button class="btn btn-info"><span class="glyphicon glyphicon-comment"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
 </template>
