@@ -15,6 +15,7 @@ Once you have installed Meteor and cloned the project, simply run `meteor` from 
 * [ian:accounts-ui-bootstrap-3](https://github.com/ianmartorell/meteor-accounts-ui-bootstrap-3/) - Templating with bootstrap for logging in
 * [iron:router](https://github.com/iron-meteor/iron-router/) - The go to router for Meteor 
 * [percolate:migrations](https://github.com/percolatestudio/meteor-migrations/) - Support for migrations on startup
+* [pecl:loading](https://github.com/pcel/meteor-loading) - Loading screen for subscribing to lots of data.
 * [lepozepo:accounting](https://github.com/Lepozepo/meteor-accounting/) - Working with currency data.
 * [twbs:bootstrap](https://github.com/twbs/bootstrap/) - The popular and easy to use framework for html/css/js.
 * [momentjs:moment](https://github.com/moment/moment/) - Formatting dates with ease.
