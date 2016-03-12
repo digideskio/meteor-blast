@@ -1,3 +1,24 @@
+// Functions available to this template js file only
+var scrollToBottom = function() {
+  var selector = $('.chat-window');
+  selector.scrollTop(selector[0].scrollHeight);
+};
+
+// Functions that are available in the view
+Template.chatHome.helpers({
+  dateFormat: function(date) {
+    return moment(date).format('MM/DD/YYYY hh:mm A');
+  },
+  messages: function() {
+    return Messages.find({}, {sort: {date: 1}}).fetch().map(
+      function(o) {
+        return o;
+      }
+    );
+  }
+});
+
+// Events for this template
 Template.chatHome.events({
   "submit .new-message": function(event) {
     // Stop the form from submitting
@@ -9,17 +30,12 @@ Template.chatHome.events({
     // Clear the form
     event.target.message.value = "";
     // Auto scroll to the bottom of the page
-    var selector = $('.chat-window');
-    selector.scrollTop(selector[0].scrollHeight);
+    scrollToBottom();
   }
 });
 
-// This is the preferred way to access the DOM if you
-// need to do something after all the data has been rendered.
-// Sadly, it is not working.
+// This will work fine if you have a waitOn hook for all
+// of the template's data
 Template.chatHome.onRendered(function() {
-  Tracker.afterFlush(function() {
-    var selector = $('.chat-window');
-      selector.scrollTop(selector[0].scrollHeight);
-  });
+  scrollToBottom();
 });

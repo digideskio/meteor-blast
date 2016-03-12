@@ -9,6 +9,8 @@
                 <div class="chat-window" style="min-height: 95%; height: 95%; overflow-y: auto; padding: 5px;">
                         {{#each messages}}
                             <div id="messages">
+                                <span class="date">{{dateFormat date}}</span>
+                                <span class="name">{{profile.name}}</span>
                                 {{message}}
                             </div>
                         {{/each}}
