@@ -1,3 +1,3 @@
-Meteor.publish("homePages", function() {
-   return Pages.find({name: 'home'});
+Meteor.publish("getPageData", function(template) {
+   return Pages.find({name: template});
 });
