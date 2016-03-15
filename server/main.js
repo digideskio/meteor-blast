@@ -4,3 +4,7 @@
 Meteor.startup(function() {
   Migrations.migrateTo(3);
 });
+
+//Meteor.onConnection(function() {
+//  console.log(this);
+//});

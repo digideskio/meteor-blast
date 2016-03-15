@@ -1,9 +1,11 @@
 <template name="chatHome">
-
+    {{#if Template.subscriptionsReady}}
     <div class="container fill-height">
         <div class="row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
             <div style="background-color:cadetblue;" class="col-xs-2 fill-height">
-
+                {{#each usersLoggedIn}}
+                    test
+                    {{/each}}
             </div>
             <div class="col-xs-10 fill-height">
                 <div class="chat-window" style="min-height: 95%; height: 95%; overflow-y: auto; padding: 5px;">
@@ -28,5 +30,8 @@
             </div>
         </div>
     </div>
-
+        {{scrollToBottom}}
+    {{else}}
+        {{>loading}}
+    {{/if}}
 </template>

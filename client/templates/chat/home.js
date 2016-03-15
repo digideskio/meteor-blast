@@ -10,11 +10,11 @@ Template.chatHome.helpers({
     return moment(date).format('MM/DD/YYYY hh:mm A');
   },
   messages: function() {
-    return Messages.find({}, {sort: {date: 1}}).fetch().map(
-      function(o) {
-        return o;
-      }
-    );
+    return Messages.find({}, {sort: {date: 1}});
+  },
+  usersLoggedIn: function() {
+    console.log(Meteor.users.find({"status.online": true}).fetch());
+    return Meteor.users.find({"status.online": true});
   }
 });
 
@@ -34,8 +34,11 @@ Template.chatHome.events({
   }
 });
 
-// This will work fine if you have a waitOn hook for all
-// of the template's data
-Template.chatHome.onRendered(function() {
-  scrollToBottom();
+Template.chatHome.onCreated(function() {
+  this.subscribe("userStatus");
+  this.subscribe("messages", function() {
+    Tracker.afterFlush(function() {
+      scrollToBottom();
+    })
+  });
 });
