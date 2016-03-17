@@ -1,8 +1,12 @@
 // Functions available to this template js file only
 var scrollToBottom = function() {
   var selector = $('.chat-window');
-  selector.scrollTop(selector[0].scrollHeight);
+  if (selector[0]) {
+    selector.scrollTop(selector[0].scrollHeight*10000);
+  }
 };
+
+var thisTracker;
 
 // Functions that are available in the view
 Template.chatHome.helpers({
@@ -13,8 +17,15 @@ Template.chatHome.helpers({
     return Messages.find({}, {sort: {date: 1}});
   },
   usersLoggedIn: function() {
-    console.log(Meteor.users.find({"status.online": true}).fetch());
-    return Meteor.users.find({"status.online": true});
+    return Meteor.users.find();
+  },
+  isOwner: function(userId) {
+    return userId == Meteor.userId();
+  },
+  scroll: function(messages) {
+    console.log(messages.length);
+    if (messages && !messages.length)
+      scrollToBottom();
   }
 });
 
@@ -34,11 +45,8 @@ Template.chatHome.events({
   }
 });
 
-Template.chatHome.onCreated(function() {
-  this.subscribe("userStatus");
-  this.subscribe("messages", function() {
-    Tracker.afterFlush(function() {
-      scrollToBottom();
-    })
-  });
+Template.chatHome.onRendered(function() {
+  var self = this;
+  self.subscribe("userStatus");
+  self.subscribe("messages");
 });

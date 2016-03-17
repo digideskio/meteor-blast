@@ -1,23 +1,53 @@
 <template name="chatHome">
     {{#if Template.subscriptionsReady}}
     <div class="container fill-height">
-        <div class="row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
-            <div style="background-color:cadetblue;" class="col-xs-2 fill-height">
-                {{#each usersLoggedIn}}
-                    test
+        <div class="chat-home row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
+            <div style="background-color:#d3d2c8; padding-left: 0px; padding-right: 0px;" class="col-xs-3 fill-height">
+                <div class="loggedin-list" style="width: 100%; background-color: slategray; min-height: 45%; height: 45%; overflow: auto; padding: 5px; margin: 0px;">
+                    <div class="side-title">
+                        Users Logged In
+                    </div>
+                    {{#each usersLoggedIn}}
+                    {{#with profile}}
+                        <div class="text-nowrap" style="padding: 5px">
+                                <img alt="{{name}}" style="max-height: 40px; max-width:40px; display: inline-block;" class="img-responsive img-circle" src="/images/default-avatar.png">
+                                {{name}}
+                        </div>
+                    {{/with}}
                     {{/each}}
+                </div>
+                <div class="options-list" style="width: 100%; background-color: antiquewhite; min-height: 45%; height: 45%; overflow: auto; padding: 5px;">
+                    <div class="side-title">
+                        Options
+                    </div>
+                    {{#each usersLoggedIn}}
+                        {{#with profile}}
+                            <div class="text-nowrap" style="padding: 5px">
+                                <img alt="{{name}}" style="max-height: 40px; max-width:40px; display: inline-block;" class="img-responsive img-circle" src="/images/default-avatar.png">
+                                {{name}}
+                            </div>
+                        {{/with}}
+                    {{/each}}
+                </div>
             </div>
-            <div class="col-xs-10 fill-height">
+            <div class="col-xs-9 fill-height">
                 <div class="chat-window" style="min-height: 95%; height: 95%; overflow-y: auto; padding: 5px;">
                         {{#each messages}}
-                            <div id="messages">
-                                <span class="date">{{dateFormat date}}</span>
-                                <span class="name">{{profile.name}}</span>
-                                {{message}}
+                            <div id="message">
+                                {{#if isOwner _userId}}
+                                    <div class="bubble bubble--owner">{{message}}</div>
+                                    <div class="clearfix"></div>
+                                    <div class="bubble-info pull-right">{{dateFormat date}}</div>
+                                {{else}}
+                                    <div class="bubble">{{message}}</div>
+                                    <div class="clearfix"></div>
+                                    <div class="bubble-info">{{dateFormat date}}</div>
+                                {{/if}}
                             </div>
+                            {{scroll messages}}
                         {{/each}}
                 </div>
-                <div style="min-height: 5%; height: 5%; padding-top: 10px;">
+                <div style="min-height: 5%; height: 5%; padding-top: 8px;">
                     <form id="chat_form" class="new-message" method="post">
                         <div class="input-group">
                             <input class="form-control" type="text" name="message" id="message" placeholder="What would you like to say?">

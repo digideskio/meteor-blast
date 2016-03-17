@@ -1,21 +1,15 @@
 Meteor.publish("userStatus", function() {
-  var self = this,
-    initializing = true;
+  var handle = Meteor.users.find({"status.online": true}, {fields: {profile: 1}});
+  handle.observeChanges({
+    added: function() {
+      console.log("Something was added");
+    },
+    removed: function() {
 
-  Meteor.users.find({"status.online": true}, {fields: {profile: 1}}).observeChanges({
-    added: function(id, doc) {
-      if (initializing) {
-        self.added('userStatus', id, doc);
-      }
     },
-    removed: function(id) {
-      self.removed('userStatus', id);
-    },
-    changed: function(id, field) {
-      self.changed("messages", id, field);
+    changed: function() {
+
     }
   });
-
-  this.ready();
-  initializing = false;
+  return handle;
 });

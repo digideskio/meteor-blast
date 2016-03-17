@@ -9,19 +9,18 @@ Meteor.publish("messages", function (limit) {
     var observable = Messages.find({}, {limit: limit, sort: {date: -1}});
 
     var handle = observable.observeChanges({
-        added: function (id, doc) {
-            self.added('messages', id, {message: doc.message, date: doc.date, profile: UserMethods.getUserProfile(doc._userId)});
-        },
-        removed: function (id) {
-            console.log("messages publish removed");
-            self.removed('messages', id);
-        },
-        changed: function(id, fields) {
-            // The _userId reference never changes, but the data it refs may have.
-            // Let's get access to the doc and change it as if we were adding it
-            var doc = Messages.findOne({_id: id});
-            self.changed("messages", id, {message: doc.message, date: doc.date, profile: UserMethods.getUserProfile(doc._userId)});
-        }
+        //added: function (id, doc) {
+        //    self.added('messages', id, {message: doc.message, date: doc.date, profile: UserMethods.getUserProfile(doc._userId)});
+        //},
+        //removed: function (id) {
+        //    self.removed('messages', id);
+        //},
+        //changed: function(id, fields) {
+        //    // The _userId reference never changes, but the data it refs may have.
+        //    // Let's get access to the doc and change it as if we were adding it
+        //    var doc = Messages.findOne({_id: id});
+        //    self.changed("messages", id, {message: doc.message, date: doc.date, profile: UserMethods.getUserProfile(doc._userId)});
+        //}
     });
 
     self.ready();
@@ -32,4 +31,6 @@ Meteor.publish("messages", function (limit) {
     self.onStop(function () {
         handle.stop();
     });
+
+  return observable;
 });
