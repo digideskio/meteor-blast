@@ -32,3 +32,5 @@ accounts-github
 mizzao:user-status
 reactive-var
 accounts-base
+fortawesome:fontawesome
+less

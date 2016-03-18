@@ -1,37 +1,72 @@
 <template name="chatHome">
     {{#if Template.subscriptionsReady}}
-    <div class="container fill-height">
-        <div class="chat-home row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
-            <div style="background-color:#d3d2c8; padding-left: 0px; padding-right: 0px;" class="col-xs-3 fill-height">
-                <div class="loggedin-list" style="width: 100%; background-color: slategray; min-height: 45%; height: 45%; overflow: auto; padding: 5px; margin: 0px;">
+    <div class="container fill-height chat-home">
+        <div class="row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
+            <div class="sidebar col-xs-3 fill-height">
+                <div class="available-users side-panel">
                     <div class="side-title">
-                        Users Logged In
+                        Available Users
                     </div>
-                    {{#each usersLoggedIn}}
-                    {{#with profile}}
-                        <div class="text-nowrap" style="padding: 5px">
-                                <img alt="{{name}}" style="max-height: 40px; max-width:40px; display: inline-block;" class="img-responsive img-circle" src="/images/default-avatar.png">
-                                {{name}}
-                        </div>
-                    {{/with}}
-                    {{/each}}
+                    <div class="side-content">
+                        {{#each usersLoggedIn}}
+                            {{#with profile}}
+                                <div class="loggedin-user text-nowrap">
+                                    <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
+                                    {{name}}
+                                </div>
+                            {{/with}}
+                        {{/each}}
+                    </div>
                 </div>
-                <div class="options-list" style="width: 100%; background-color: antiquewhite; min-height: 45%; height: 45%; overflow: auto; padding: 5px;">
+                <div class="user-info side-panel hide">
                     <div class="side-title">
-                        Options
+                        User Info
                     </div>
-                    {{#each usersLoggedIn}}
-                        {{#with profile}}
-                            <div class="text-nowrap" style="padding: 5px">
-                                <img alt="{{name}}" style="max-height: 40px; max-width:40px; display: inline-block;" class="img-responsive img-circle" src="/images/default-avatar.png">
-                                {{name}}
-                            </div>
-                        {{/with}}
-                    {{/each}}
+                    <div class="side-content">
+                        {{#each usersLoggedIn}}
+                            {{#with profile}}
+                                <div class="loggedin-user text-nowrap">
+                                    <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
+                                    {{name}}
+                                </div>
+                            {{/with}}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="settings side-panel hide">
+                    <div class="side-title">
+                        Settings
+                    </div>
+                    <div class="side-content">
+                        {{#each usersLoggedIn}}
+                            {{#with profile}}
+                                <div class="loggedin-user text-nowrap">
+                                    <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
+                                    {{name}}
+                                </div>
+                            {{/with}}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="side-footer">
+                    <div class="btn-group">
+                        <button class="btn btn-info btn-rnd-btm-left btn-available-users">
+                            <i class="fa fa-users"></i>
+                        </button>
+                        <button class="btn btn-info btn-user-info">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+                        <button class="btn btn-info btn-settings">
+                            <i class="fa fa-cog"></i>
+                        </button>
+                        <button class="btn btn-info btn-scroll">
+                            <i class="fa fa-arrow-down"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="col-xs-9 fill-height">
-                <div class="chat-window" style="min-height: 95%; height: 95%; overflow-y: auto; padding: 5px;">
+            <div class="col-xs-9 fill-height chat-container">
+                <div class="chat-window fill-height">
                         {{#each messages}}
                             <div id="message">
                                 {{#if isOwner _userId}}

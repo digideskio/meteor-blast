@@ -23,7 +23,6 @@ Template.chatHome.helpers({
     return userId == Meteor.userId();
   },
   scroll: function(messages) {
-    console.log(messages.length);
     if (messages && !messages.length)
       scrollToBottom();
   }
@@ -42,6 +41,21 @@ Template.chatHome.events({
     event.target.message.value = "";
     // Auto scroll to the bottom of the page
     scrollToBottom();
+  },
+  "click .btn-scroll": function(event) {
+    scrollToBottom();
+  },
+  "click .btn-available-users": function(event) {
+    $('.side-panel').addClass('hide');
+    $('.available-users').removeClass('hide');
+  },
+  "click .btn-user-info": function(event) {
+    $('.side-panel').addClass('hide');
+    $('.user-info').removeClass('hide');
+  },
+  "click .btn-settings": function(event) {
+    $('.side-panel').addClass('hide');
+    $('.settings').removeClass('hide');
   }
 });
 
