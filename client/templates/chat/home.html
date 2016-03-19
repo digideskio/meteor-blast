@@ -3,99 +3,16 @@
     <div class="container fill-height chat-home">
         <div class="row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
             <div class="sidebar col-xs-3 fill-height">
-                <div class="available-users side-panel">
-                    <div class="side-title">
-                        Available Users
-                    </div>
-                    <div class="side-content">
-                        {{#each usersLoggedIn}}
-                            {{#with profile}}
-                                <div class="loggedin-user text-nowrap">
-                                    <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
-                                    {{name}}
-                                </div>
-                            {{/with}}
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="user-info side-panel hide">
-                    <div class="side-title">
-                        User Info
-                    </div>
-                    <div class="side-content">
-                        {{#each usersLoggedIn}}
-                            {{#with profile}}
-                                <div class="loggedin-user text-nowrap">
-                                    <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
-                                    {{name}}
-                                </div>
-                            {{/with}}
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="settings side-panel hide">
-                    <div class="side-title">
-                        Settings
-                    </div>
-                    <div class="side-content">
-                        {{#each usersLoggedIn}}
-                            {{#with profile}}
-                                <div class="loggedin-user text-nowrap">
-                                    <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
-                                    {{name}}
-                                </div>
-                            {{/with}}
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="side-footer">
-                    <div class="btn-group">
-                        <button class="btn btn-info btn-rnd-btm-left btn-available-users">
-                            <i class="fa fa-users"></i>
-                        </button>
-                        <button class="btn btn-info btn-user-info">
-                            <i class="fa fa-info-circle"></i>
-                        </button>
-                        <button class="btn btn-info btn-settings">
-                            <i class="fa fa-cog"></i>
-                        </button>
-                        <button class="btn btn-info btn-scroll">
-                            <i class="fa fa-arrow-down"></i>
-                        </button>
-                    </div>
-                </div>
+                {{> chatSidebarAvailableUsers}}
+                {{> chatSidebarUserInfo}}
+                {{> chatSidebarSettings}}
+                {{> chatSidebarFooter}}
             </div>
             <div class="col-xs-9 fill-height chat-container">
-                <div class="chat-window fill-height">
-                        {{#each messages}}
-                            <div id="message">
-                                {{#if isOwner _userId}}
-                                    <div class="bubble bubble--owner">{{message}}</div>
-                                    <div class="clearfix"></div>
-                                    <div class="bubble-info pull-right">{{dateFormat date}}</div>
-                                {{else}}
-                                    <div class="bubble">{{message}}</div>
-                                    <div class="clearfix"></div>
-                                    <div class="bubble-info">{{dateFormat date}}</div>
-                                {{/if}}
-                            </div>
-                            {{scroll messages}}
-                        {{/each}}
-                </div>
-                <div style="min-height: 5%; height: 5%; padding-top: 8px;">
-                    <form id="chat_form" class="new-message" method="post">
-                        <div class="input-group">
-                            <input class="form-control" type="text" name="message" id="message" placeholder="What would you like to say?">
-                            <span class="input-group-btn">
-                                <button class="btn btn-info"><span class="glyphicon glyphicon-comment"></span></button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
+                {{> chatMainPanelWindow}}
             </div>
         </div>
     </div>
-        {{scrollToBottom}}
     {{else}}
         {{>loading}}
     {{/if}}

@@ -1,0 +1,14 @@
+<template name="chatSidebarUserInfo">
+    <div class="user-info side-panel hide">
+        <div class="side-title">
+            User Info
+        </div>
+        <div class="side-content">
+            {{#each getUserProfile}}
+                {{#with profile}}
+                    {{name}}
+                {{/with}}
+            {{/each}}
+        </div>
+    </div>
+</template>

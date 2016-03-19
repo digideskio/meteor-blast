@@ -1,4 +1,4 @@
-Meteor.publish("userStatus", function() {
+Meteor.publish("onlineProfiles", function() {
   var handle = Meteor.users.find({"status.online": true}, {fields: {profile: 1}});
   handle.observeChanges({
     added: function() {

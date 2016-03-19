@@ -1,0 +1,17 @@
+<template name="chatSidebarAvailableUsers">
+    <div class="available-users side-panel">
+        <div class="side-title">
+            Available Users
+        </div>
+        <div class="side-content">
+            {{#each usersLoggedIn}}
+                {{#with profile}}
+                    <div class="loggedin-user text-nowrap">
+                        <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
+                        {{name}}
+                    </div>
+                {{/with}}
+            {{/each}}
+        </div>
+    </div>
+</template>

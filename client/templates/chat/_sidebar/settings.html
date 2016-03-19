@@ -1,0 +1,27 @@
+<template name="chatSidebarSettings">
+    <div class="settings side-panel hide">
+        <div class="side-title">
+            Settings
+        </div>
+        <div class="side-content">
+            <table class="table">
+                <tr>
+                    <td class="text-nowrap">
+                        Display Timestamps
+                    </td>
+                    <td>
+                        {{> BootstrapToggle options=toggle_timestamp_options var="timestamp"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-nowrap">
+                        Display Timestamps
+                    </td>
+                    <td>
+                        {{> BootstrapToggle options=toggle_timestamp_options var="timestamp"}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</template>
