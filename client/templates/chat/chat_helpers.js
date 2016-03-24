@@ -1,8 +1,12 @@
 /**
+ *
+ */
+var safeUserId = Meteor.userId();
+
+/**
  * Functions available only within the scope of this file
  */
 var scrollToBottom = function() {
-  console.log('called stb');
   var selector = $('.chat-window');
   if (selector[0]) {
     selector.scrollTop(selector[0].scrollHeight*10000);
@@ -115,8 +119,11 @@ Template.chatHome.onCreated(function() {
   self.subscribe("onlineProfiles");
   self.subscribe("messages");
 
-  // Initialize settings
-  Session.set('timestamp', true);
+  if (settings) {
+    // Timestamp default is true
+    Session.set('timestamp', settings.timestamp !== false);
+  }
+  console.log(settings);
 });
 
 Template.chatMainPanelWindow.onRendered(function() {
