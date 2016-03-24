@@ -2,11 +2,13 @@
  * Functions available only within the scope of this file
  */
 var scrollToBottom = function() {
+  console.log('called stb');
   var selector = $('.chat-window');
   if (selector[0]) {
     selector.scrollTop(selector[0].scrollHeight*10000);
   }
 };
+
 
 /**
  * Sidebar Helpers
@@ -19,7 +21,9 @@ Template.chatSidebarAvailableUsers.helpers({
 
 Template.chatSidebarUserInfo.helpers({
   getUserProfile: function() {
-    return Meteor.users.find({_id: Session.get('profile') || Meteor.userId()}, {field: {profile: 1}});
+    // Subscribed only to logged in users, and only able to see profile information
+    var profileId = Session.get('profile') || Meteor.userId();
+    return Meteor.users.find({_id: profileId}, {field: {profile: 1}}).fetch();
   }
 });
 
@@ -49,10 +53,6 @@ Template.chatMainPanelWindow.helpers({
   },
   isOwner: function(userId) {
     return userId == Meteor.userId();
-  },
-  scroll: function(messages) {
-    if (messages && !messages.length)
-      scrollToBottom();
   }
 });
 
@@ -93,7 +93,6 @@ Template.chatHome.events({
     $('.available-users').removeClass('hide');
   },
   "click .btn-user-info": function(event) {
-    Session.set('profile', "BGogNFLCLWg7b9chZ");
     $('.side-panel').addClass('hide');
     $('.user-info').removeClass('hide');
   },
@@ -112,29 +111,14 @@ Template.chatHome.events({
  *
  */
 Template.chatHome.onCreated(function() {
-  console.log("chatHome on created.");
   var self = this;
   self.subscribe("onlineProfiles");
   self.subscribe("messages");
-});
 
-Template.chatHome.onRendered(function() {
-  console.log("ChatHome on rendered");
+  // Initialize settings
+  Session.set('timestamp', true);
 });
 
 Template.chatMainPanelWindow.onRendered(function() {
-  console.log("chatMainPanelWindow on created");
-    scrollToBottom();
-});
-
-Template.chatMainPanelWindow.onCreated(function() {
-  console.log("chatMainPanelWindow on created.");
-});
-
-Template.chatSidebarUserInfo.onCreated(function() {
-  console.log("chatSideBarUserInfo on created.");
-});
-
-Template.chatSidebarUserInfo.onRendered(function() {
-  console.log("chatSideBarUserInfo on rendered.");
+  window.requestAnimationFrame(scrollToBottom);
 });

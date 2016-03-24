@@ -15,7 +15,9 @@
           <li class="{{#if homeActive}}active{{/if}}"><a href="{{pathFor 'homeIndex'}}">Home</a></li>
           <li class="{{#if aboutActive}}active{{/if}}"><a href="{{pathFor 'homeAbout'}}">About</a></li>
           <li class="{{#if contactActive}}active{{/if}}"><a href="{{pathFor 'homeContact'}}">Contact</a></li>
-          <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
+          {{#if currentUser}}
+            <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
+          {{/if}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>

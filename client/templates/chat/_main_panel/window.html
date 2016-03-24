@@ -1,7 +1,7 @@
 <template name="chatMainPanelWindow">
     <div class="chat-window fill-height">
         {{#each messages}}
-            <div id="message">
+            <div class="message">
                 {{#if isOwner _userId}}
                     <div class="bubble bubble--owner">{{message}}</div>
                     <div class="clearfix"></div>
