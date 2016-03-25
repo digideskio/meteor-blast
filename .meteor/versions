@@ -51,6 +51,7 @@ iron:location@1.0.11
 iron:middleware-stack@1.0.11
 iron:router@1.0.12
 iron:url@1.0.11
+jiku:bootstrap-toggle@0.0.1
 jquery@1.11.4
 launch-screen@1.0.4
 lepozepo:accounting@1.0.0
@@ -105,4 +106,3 @@ underscore@1.0.4
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
-williamledoux:bootstrap-toggle@2.2.1

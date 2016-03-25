@@ -34,4 +34,5 @@ reactive-var
 accounts-base
 fortawesome:fontawesome
 less
-williamledoux:bootstrap-toggle
+reactive-dict
+jiku:bootstrap-toggle

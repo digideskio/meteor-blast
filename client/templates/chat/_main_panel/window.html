@@ -5,11 +5,15 @@
                 {{#if isOwner _userId}}
                     <div class="bubble bubble--owner">{{message}}</div>
                     <div class="clearfix"></div>
-                    <div class="bubble-info pull-right">{{dateFormat date}}</div>
+                    {{#if showTimestamp}}
+                        <div class="bubble-info info-timestamp pull-right">{{dateFormat date}}</div>
+                    {{/if}}
                 {{else}}
                     <div class="bubble">{{message}}</div>
                     <div class="clearfix"></div>
-                    <div class="bubble-info">{{dateFormat date}}</div>
+                    {{#if showTimestamp}}
+                        <div class="bubble-info info-timestamp">{{dateFormat date}}</div>
+                    {{/if}}
                 {{/if}}
             </div>
         {{/each}}

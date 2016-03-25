@@ -1,9 +1,4 @@
 /**
- *
- */
-var safeUserId = Meteor.userId();
-
-/**
  * Functions available only within the scope of this file
  */
 var scrollToBottom = function() {
@@ -12,7 +7,6 @@ var scrollToBottom = function() {
     selector.scrollTop(selector[0].scrollHeight*10000);
   }
 };
-
 
 /**
  * Sidebar Helpers
@@ -25,23 +19,9 @@ Template.chatSidebarAvailableUsers.helpers({
 
 Template.chatSidebarUserInfo.helpers({
   getUserProfile: function() {
-    // Subscribed only to logged in users, and only able to see profile information
+    // Subscribed only to logged in users, and only able to see profile/settings information
     var profileId = Session.get('profile') || Meteor.userId();
-    return Meteor.users.find({_id: profileId}, {field: {profile: 1}}).fetch();
-  }
-});
-
-Template.chatSidebarSettings.helpers({
-  "toggle_timestamp_options": function(){
-    return {
-      "size": "mini"
-    }
-  },
-  "toggle_B_options": function(){
-    return {
-      "onstyle" : "success",
-      "offstyle": "danger"
-    };
+    return Meteor.users.find({_id: profileId}).fetch();
   }
 });
 
@@ -57,6 +37,9 @@ Template.chatMainPanelWindow.helpers({
   },
   isOwner: function(userId) {
     return userId == Meteor.userId();
+  },
+  showTimestamp: function() {
+    return (Meteor.user().settings || []).timestamp !== false;
   }
 });
 
@@ -107,25 +90,54 @@ Template.chatHome.events({
 });
 
 /**
+ * Listening to events for changing settings.
+ */
+Template.chatSidebarSettings.events({
+  "click .toggle-setting": function(event) {
+    event.stopPropagation();
+    var settingName = $(event.target).closest('span').data('name');
+    Meteor.call('updateSetting', settingName, true);
+  }
+});
+
+/**
  * The template methods "onCreated" and "onRendered" fire automatically
- * and in that order. In this case, because of the ordering of the partials
- * in the main template, if the following methods existed they would fire
- * in this order:
- *
- *
+ * and in that order. onRendered does not mean that data is finished being
+ * inserted into the DOM - use Tracker.afterFlush
  */
 Template.chatHome.onCreated(function() {
   var self = this;
   self.subscribe("onlineProfiles");
-  self.subscribe("messages");
-
-  if (settings) {
-    // Timestamp default is true
-    Session.set('timestamp', settings.timestamp !== false);
-  }
-  console.log(settings);
+  self.subscribe("messages", function() {
+    Tracker.afterFlush(function() {
+      window.requestAnimationFrame(scrollToBottom);
+    });
+  });
 });
 
-Template.chatMainPanelWindow.onRendered(function() {
-  window.requestAnimationFrame(scrollToBottom);
+/**
+ * Here we're going to update the view of the settings panel
+ * based on the saved user settings. If a setting changes in
+ * the database, the view will be updated accordingly.
+ */
+Template.chatSidebarSettings.onRendered(function() {
+  var self = this;
+
+  // PROBLEM: Sometimes this returns with bootstrapToggle is not a function
+  $('.toggle-button').bootstrapToggle();
+
+  self.autorun(function() {
+    if (!self.subscriptionsReady()) {
+      return;
+    }
+    var settings = Meteor.user().settings;
+    // Make sure the settings object exists. Users aren't initially created with settings.
+    if (settings) {
+      //timestamp default is on
+      $('#toggle-timestamp').bootstrapToggle(settings.timestamp !== false ? 'on' : 'off');
+    } else {
+      // Set default state for items that are on by default
+      $('#toggle-timestamp').bootstrapToggle('on');
+    }
+  });
 });
