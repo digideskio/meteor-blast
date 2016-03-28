@@ -95,8 +95,10 @@ Template.chatHome.events({
 Template.chatSidebarSettings.events({
   "click .toggle-setting": function(event) {
     event.stopPropagation();
-    var settingName = $(event.target).closest('span').data('name');
-    Meteor.call('updateSetting', settingName, true);
+    var settingName = $(event.target).closest('.toggle-setting').data('name');
+    var status = $('.toggle-on').closest('.toggle-setting').find('input').prop('checked');
+    // Update with the opposite of the current status
+    Meteor.call('updateSetting', settingName, !status);
   }
 });
 

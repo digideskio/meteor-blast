@@ -1,6 +1,9 @@
 /**
  * User migrations
  * Using alanning:roles package and percolate:migrations package
+ *
+ * This migration gets us started with two sample users. One with admin
+ * status and one normal user.
  */
 
 Migrations.add({
