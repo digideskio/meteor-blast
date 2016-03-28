@@ -1,24 +1,32 @@
 # :boom: Meteor Blast :boom:
 
-Meteor Blast is a boilerplate designed to get you up and running with the [Meteor](https://www.meteor.com/) javascript platform and creating websites quickly.
+Meteor Blast is a boilerplate designed to get you up and running with the [Meteor](https://www.meteor.com/) javascript platform and creating websites quickly. This boilerplate includes a simple chatroom example to introduce the developer to some of Meteor's design patterns.
 
 ## Getting Started
 
 Once you have installed Meteor and cloned the project, simply run `meteor` from the command line at the root of the project.
 
-## Packages Included
+Users are initially:
+* Username: `user` Password: `password`
+* Username: `admin` Password: `password`
 
-* [accounts-password](https://atmospherejs.com/meteor/accounts-password) - Takes care of passwords, so you don't have to.
+
+## Packages Added
+
 * [accounts-facebook](https://atmospherejs.com/meteor/accounts-facebook) - Easy configurable login with facebook!
+* [accounts-password](https://atmospherejs.com/meteor/accounts-password) - Takes care of passwords, so you don't have to.
 * [accounts-twitter](https://atmospherejs.com/meteor/accounts-twitter) - Easy configurable login with twitter! 
 * [alanning:roles](https://github.com/alanning/meteor-roles/) - Support for groups and roles for users
 * [ian:accounts-ui-bootstrap-3](https://github.com/ianmartorell/meteor-accounts-ui-bootstrap-3/) - Templating with bootstrap for logging in
 * [iron:router](https://github.com/iron-meteor/iron-router/) - The go to router for Meteor 
-* [percolate:migrations](https://github.com/percolatestudio/meteor-migrations/) - Support for migrations on startup
-* [pecl:loading](https://github.com/pcel/meteor-loading) - Loading screen for subscribing to lots of data.
+* [jiku:bootstrap-toggle](https://github.com/jiku/meteor-bootstrap-toggle/) - A wrapper for the bootstrap-toggle functionality
 * [lepozepo:accounting](https://github.com/Lepozepo/meteor-accounting/) - Working with currency data.
-* [twbs:bootstrap](https://github.com/twbs/bootstrap/) - The popular and easy to use framework for html/css/js.
+* [less](https://atmospherejs.com/meteor/less) - For writing less
+* [mizzao:user-status](https://github.com/mizzao/meteor-user-status/) - Popular package for tracking user online status
 * [momentjs:moment](https://github.com/moment/moment/) - Formatting dates with ease.
+* [pecl:loading](https://github.com/pcel/meteor-loading) - Loading screen for subscribing to lots of data.
+* [percolate:migrations](https://github.com/percolatestudio/meteor-migrations/) - Support for migrations on startup
+* [twbs:bootstrap](https://github.com/twbs/bootstrap/) - The popular and easy to use framework for html/css/js.
 
 #### Packages removed
 
@@ -53,6 +61,7 @@ client
   └─── templates
       ├─── _partials
       ├─── app
+      ├─── chat
       └─── home
   main.js
 ````
@@ -64,10 +73,12 @@ The `client` folder holds everything that will be loaded to and accessible by th
 ```
 lib
   ├─── collections
+  ├─── constants
+  ├─── methods
   └─── routes
 ```
 
-The `lib` folder is accessible by both the client and the server. It's where your routes are going to be located, and setting up your mongo collections. It's important to remember not to put any sensitive information here. The exception to this is setting up your collections. As long as you don't have the autopublish and insecure packages installed, collections will only be available to the client on a publish/subscribe basis.
+The `lib` folder is accessible by both the client and the server. It's where your routes are going to be located, and setting up your mongo collections. It's important to remember not to put any sensitive information here. The exception to this is setting up your collections. As long as you don't have the autopublish and insecure packages installed, collections will only be available to the client on a publish/subscribe basis. This is a good place to create some constants that you might want available the client/server. This is also a good place for Meteor methods. You can create the same Method in the lib and the server and it will work fine, with the client calling the `lib` method and the server calling the `server` method at the same time. See the method files already available for additional comments.
 
 #### `private` subfolder
 
@@ -96,7 +107,7 @@ server
   main.js
 ```
 
-This is where all the server magic happens. You'll want to set up your publications here.
+This is where all the server magic happens. You'll want to set up your publications here. `main.js` will be loaded before anything else in this folder.
 
 #### `tests` subfolder
 
@@ -110,6 +121,16 @@ This subfolder is ignored by Meteor. There are incredible packages that exist fo
 
 * Paying attention to the directory structure is important to the security of your app. Be mindful of sensitive data and where it's located.
 * The first thing to do when troubleshooting an unfamiliar bug is check it's location and ask yourself who's trying to access it.
+
+## Features
+
+#### Inline Edits for Admins
+
+If you log in as an Admin you can change the title and subtitle of the home and about us pages by clicking on it, editing it, and clicking away. This is a reactive source that will update the view for everyone connected. This is a simple proof of concept that I hope to expand for paragraphs and other areas of the site. Once it is done, I will add validation, clean it up and spin it out into a meteor package.
+
+#### Chatroom
+
+This area looks like a separate SPA though it's part of the entire app. The majority of the work for the chat app is located in `client/templates/chat`. The functionality is slowly coming along. Keep checking back here for updates.
 
 ## Resources
 
