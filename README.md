@@ -1,6 +1,6 @@
 # :boom: Meteor Blast :boom:
 
-Meteor Blast is a boilerplate designed to get you up and running with the [Meteor](https://www.meteor.com/) javascript platform and creating websites quickly. This boilerplate includes a chatroom.
+Meteor Blast is a boilerplate designed to get you up and running with the [Meteor](https://www.meteor.com/) javascript platform and creating websites quickly. This boilerplate includes a simple chatroom example to introduce the developer to some of Meteor's design patterns.
 
 ## Getting Started
 
