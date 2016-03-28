@@ -33,7 +33,13 @@ Template.chatMainPanelWindow.helpers({
     return moment(date).format('MM/DD/YYYY hh:mm A');
   },
   messages: function() {
-    return Messages.find({}, {sort: {date: 1}});
+    var msgs = Messages.find({}, {sort: {date: 1}}).fetch();
+    // Subscribe to the profile and setting information of every user we have a message for
+    msgs.forEach(function(m) {
+      console.log(m._userId);
+      Meteor.subscribe("userProfileInfo", m._userId);
+    });
+    return Messages.find({}, {sort: {date: 1}}).fetch();
   },
   isOwner: function(userId) {
     return userId == Meteor.userId();
@@ -41,6 +47,19 @@ Template.chatMainPanelWindow.helpers({
   showTimestamp: function() {
     return (Meteor.user().settings || []).timestamp !== false;
   }
+});
+
+Template.registerHelper('profileImage', function(userId) {
+  // For now, let's load a default picture based on the first letter of the user's name
+  var user = Meteor.users.find({_id: userId}).fetch();
+  var image = "/images/defaults/default.png";
+  if (user[0]) {
+    user = user[0];
+    if (user.profile && user.profile.name && (/[a-zA-Z]/).test(user.profile.name[0])) {
+      image = "/images/defaults/" + user.profile.name[0].toLocaleLowerCase() + ".png";
+    }
+  }
+  return image;
 });
 
 /**
@@ -125,7 +144,7 @@ Template.chatHome.onCreated(function() {
 Template.chatSidebarSettings.onRendered(function() {
   var self = this;
 
-  // PROBLEM: Sometimes this returns with bootstrapToggle is not a function
+  // Initialize the bootstrap toggle plugin
   $('.toggle-button').bootstrapToggle();
 
   self.autorun(function() {

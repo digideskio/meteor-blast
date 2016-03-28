@@ -20,3 +20,7 @@ Meteor.publish("onlineProfiles", function() {
   });
   return handle;
 });
+
+Meteor.publish("userProfileInfo", function(userId) {
+  return Meteor.users.find({_id: userId}, {fields: {profile: 1, settings: 1}});
+});
