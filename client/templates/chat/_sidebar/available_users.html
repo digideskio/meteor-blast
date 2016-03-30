@@ -5,12 +5,10 @@
         </div>
         <div class="side-content">
             {{#each usersLoggedIn}}
-                {{#with profile}}
-                    <div class="loggedin-user text-nowrap">
-                        <img alt="{{name}}" class="img-responsive img-circle img-profile" src="/images/default-avatar.png">
-                        {{name}}
-                    </div>
-                {{/with}}
+                <div class="loggedin-user text-nowrap" data-userid="{{_id}}">
+                    <img alt="{{profile.name}}" class="img-circle img-profile" src="{{profile.image}}">
+                    {{profile.name}}
+                </div>
             {{/each}}
         </div>
     </div>

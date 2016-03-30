@@ -8,8 +8,24 @@
  * things if any of those events happen. For instance, if a new online user is "added" to this
  * subscription, we can send a notification to the client that a "New user has signed on".
  */
+
+// Since we want to have access to the same fields every time we subscribe to a user that isn't the
+// logged in user, create an options object in one place, that can be used across multiple publish methods
+// in this file.
+var options = {
+  fields: {
+    username: 1,
+    profile: 1,
+    settings: 1,
+    "status.online": 1,
+    "status.idle": 1,
+    "services.github.username": 1,
+    "services.github.id": 1
+  }
+};
+
 Meteor.publish("onlineProfiles", function() {
-  var handle = Meteor.users.find({"status.online": true}, {fields: {profile: 1, settings: 1}});
+  var handle = Meteor.users.find({"status.online": true}, options);
   handle.observeChanges({
     added: function() {
     },
@@ -22,5 +38,5 @@ Meteor.publish("onlineProfiles", function() {
 });
 
 Meteor.publish("userProfileInfo", function(userId) {
-  return Meteor.users.find({_id: userId}, {fields: {profile: 1, settings: 1}});
+  return Meteor.users.find({_id: userId}, options);
 });

@@ -9,26 +9,28 @@
                                 <div class="bubble">{{message}}</div>
                             </div>
                             <div class="col-xs-1">
-                                <img class="bubble-profile-img img-circle" src="{{profileImage _userId}}">
+                                <img class="bubble-profile-img img-circle" src="{{currentUser.profile.image}}">
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        {{#if showTimestamp}}
+                        {{#if currentUser.settings.timestamp}}
                             <div class="bubble-info info-timestamp pull-right">{{dateFormat date}}</div>
                         {{/if}}
                     </div>
                 {{else}}
                     <div class="not-owner">
                         <div class="row display-flex">
-                            <div class="col-xs-1">
-                                <img class="bubble-profile-img img-circle" src="{{profileImage _userId}}">
-                            </div>
+                            {{#with getUser _userId}}
+                                <div class="col-xs-1">
+                                    <img class="bubble-profile-img img-circle" src="{{profile.image}}">
+                                </div>
+                            {{/with}}
                             <div class="col-xs-11">
                                 <div class="bubble">{{message}}</div>
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        {{#if showTimestamp}}
+                        {{#if currentUser.settings.timestamp}}
                             <div class="bubble-info info-timestamp">{{dateFormat date}}</div>
                         {{/if}}
                     </div>

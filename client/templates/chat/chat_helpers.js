@@ -8,20 +8,21 @@ var scrollToBottom = function() {
   }
 };
 
+var swapSidePanel = function(panel, button) {
+  $('.side-panel').addClass('hide');
+  $('.btn-info').removeClass('active');
+  panel.removeClass('hide');
+  button.addClass('active');
+};
+
 /**
  * Sidebar Helpers
  */
 Template.chatSidebarAvailableUsers.helpers({
   usersLoggedIn: function() {
-    return Meteor.users.find();
-  }
-});
-
-Template.chatSidebarUserInfo.helpers({
-  getUserProfile: function() {
-    // Subscribed only to logged in users, and only able to see profile/settings information
-    var profileId = Session.get('profile') || Meteor.userId();
-    return Meteor.users.find({_id: profileId}).fetch();
+    return Meteor.users.find().fetch().filter(function(u) {
+      return u.status && u.status.online;
+    });
   }
 });
 
@@ -36,30 +37,13 @@ Template.chatMainPanelWindow.helpers({
     var msgs = Messages.find({}, {sort: {date: 1}}).fetch();
     // Subscribe to the profile and setting information of every user we have a message for
     msgs.forEach(function(m) {
-      console.log(m._userId);
       Meteor.subscribe("userProfileInfo", m._userId);
     });
     return Messages.find({}, {sort: {date: 1}}).fetch();
   },
   isOwner: function(userId) {
     return userId == Meteor.userId();
-  },
-  showTimestamp: function() {
-    return (Meteor.user().settings || []).timestamp !== false;
   }
-});
-
-Template.registerHelper('profileImage', function(userId) {
-  // For now, let's load a default picture based on the first letter of the user's name
-  var user = Meteor.users.find({_id: userId}).fetch();
-  var image = "/images/defaults/default.png";
-  if (user[0]) {
-    user = user[0];
-    if (user.profile && user.profile.name && (/[a-zA-Z]/).test(user.profile.name[0])) {
-      image = "/images/defaults/" + user.profile.name[0].toLocaleLowerCase() + ".png";
-    }
-  }
-  return image;
 });
 
 /**
@@ -69,6 +53,23 @@ Template.registerHelper('profileImage', function(userId) {
  */
 Template.chatHome.helpers({
 
+});
+
+/**
+ * This is another way to register helper functions to templates. This method
+ * makes the function available to all templates. Normally, you would want a global
+ * registered function in your templates/main.js file, but since for now I'm only
+ * using it within the chat folder for all chat templates/sub-templates, I'll leave
+ * it here.
+ */
+Template.registerHelper("getUser", function(userId) {
+  // Meteor will only subscribe to the user once
+  Meteor.subscribe("userProfileInfo", userId);
+  return Meteor.users.find({_id: userId}).fetch()[0];
+});
+
+Template.registerHelper("getSessionData", function(key) {
+  return Session.get(key);
 });
 
 /**
@@ -91,20 +92,24 @@ Template.chatHome.events({
     // Auto scroll to the bottom of the page
     scrollToBottom();
   },
-  "click .btn-scroll": function(event) {
+  "click .btn-scroll": function() {
     scrollToBottom();
   },
-  "click .btn-available-users": function(event) {
-    $('.side-panel').addClass('hide');
-    $('.available-users').removeClass('hide');
+  "click .btn-available-users": function() {
+    swapSidePanel($('.available-users'), $('.btn-available-users'));
   },
-  "click .btn-user-info": function(event) {
-    $('.side-panel').addClass('hide');
-    $('.user-info').removeClass('hide');
+  "click .btn-user-info": function() {
+    swapSidePanel($('.user-info'), $('.btn-user-info'));
   },
-  "click .btn-settings": function(event) {
-    $('.side-panel').addClass('hide');
-    $('.settings').removeClass('hide');
+  "click .btn-settings": function() {
+    swapSidePanel($('.settings'), $('.btn-settings'));
+  },
+  "mouseover .loggedin-user": function() {
+    console.log('hovering over a logged in user');
+  },
+  "click .loggedin-user": function(event) {
+    Session.set('profileId', $(event.target).data('userid'));
+    swapSidePanel($('.user-info'), $('.btn-user-info'));
   }
 });
 
@@ -128,6 +133,9 @@ Template.chatSidebarSettings.events({
  */
 Template.chatHome.onCreated(function() {
   var self = this;
+  // Init Session profileId for viewing profiles
+  Session.set('profileId', Meteor.userId());
+
   self.subscribe("onlineProfiles");
   self.subscribe("messages", function() {
     Tracker.afterFlush(function() {
@@ -152,13 +160,8 @@ Template.chatSidebarSettings.onRendered(function() {
       return;
     }
     var settings = Meteor.user().settings;
-    // Make sure the settings object exists. Users aren't initially created with settings.
-    if (settings) {
-      //timestamp default is on
-      $('#toggle-timestamp').bootstrapToggle(settings.timestamp !== false ? 'on' : 'off');
-    } else {
-      // Set default state for items that are on by default
-      $('#toggle-timestamp').bootstrapToggle('on');
-    }
+
+    //timestamp default is on
+    $('#toggle-timestamp').bootstrapToggle(settings.timestamp !== false ? 'on' : 'off');
   });
 });

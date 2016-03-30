@@ -3,12 +3,13 @@
         <div class="side-title">
             User Info
         </div>
-        <div class="side-content">
-            {{#each getUserProfile}}
-                {{#with profile}}
-                    {{name}}
-                {{/with}}
-            {{/each}}
+        <div class="side-content text-center">
+            {{#with getUser (getSessionData "profileId")}}
+                <img style="max-height: 100px;" class="img-circle" src="{{profile.image}}">
+                <div>
+                    {{profile.name}}
+                </div>
+            {{/with}}
         </div>
     </div>
 </template>
