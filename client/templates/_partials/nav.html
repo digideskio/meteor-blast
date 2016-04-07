@@ -1,33 +1,34 @@
 <template name="nav">
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="{{pathFor 'homeIndex'}}">Project Name</a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li class="{{#if homeActive}}active{{/if}}"><a href="{{pathFor 'homeIndex'}}">Home</a></li>
-          <li class="{{#if aboutActive}}active{{/if}}"><a href="{{pathFor 'homeAbout'}}">About</a></li>
-          <li class="{{#if contactActive}}active{{/if}}"><a href="{{pathFor 'homeContact'}}">Contact</a></li>
-          {{#if currentUser}}
-            <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
-          {{/if}}
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-          {{#if isInRole 'admin' 'admin-group'}}
-            <a href="#">Admin Link</a>
-          {{/if}}
-          </li>
-          {{> loginButtons}} <!-- here -->
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
-  </nav>
+    <nav class="deep-purple darken-2 text-white" role="navigation">
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="#" class="brand-logo">Meteor Blast</a>
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars"></i></a>
+            <ul class="right hide-on-med-and-down">
+                <li class="{{#if homeActive}}active{{/if}}"><a href="{{pathFor 'homeIndex'}}">Home</a></li>
+                <li class="{{#if aboutActive}}active{{/if}}"><a href="{{pathFor 'homeAbout'}}">About</a></li>
+                <li class="{{#if contactActive}}active{{/if}}"><a href="{{pathFor 'homeContact'}}">Contact</a></li>
+                {{#if currentUser}}
+                    <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
+                {{/if}}
+                {{#if isInRole 'admin' 'admin-group'}}
+                    <li><a href="#">Admin Link</a></li>
+                {{/if}}
+                <li>{{> loginButtons}}</li>
+            </ul>
+
+            <ul id="nav-mobile" class="side-nav">
+                <li class="{{#if homeActive}}active{{/if}}"><a href="{{pathFor 'homeIndex'}}">Home</a></li>
+                <li class="{{#if aboutActive}}active{{/if}}"><a href="{{pathFor 'homeAbout'}}">About</a></li>
+                <li class="{{#if contactActive}}active{{/if}}"><a href="{{pathFor 'homeContact'}}">Contact</a></li>
+                {{#if currentUser}}
+                    <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
+                {{/if}}
+                {{#if isInRole 'admin' 'admin-group'}}
+                    <li><a href="#">Admin Link</a></li>
+                {{/if}}
+                <li>{{> loginButtons}}</li>
+
+            </ul>
+        </div>
+    </nav>
 </template>

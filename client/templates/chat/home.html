@@ -1,19 +1,20 @@
 <template name="chatHome">
     {{#if Template.subscriptionsReady}}
-    <div class="container fill-height chat-home">
-        <div class="row fill-height" style="padding-top: 10px; padding-bottom: 10px;">
-            <div class="sidebar col-xs-3 fill-height">
-                {{> chatSidebarAvailableUsers}}
-                {{> chatSidebarUserInfo}}
-                {{> chatSidebarSettings}}
-                {{> chatSidebarFooter}}
-            </div>
-            <div class="col-xs-9 fill-height chat-container">
-                {{> chatMainPanelWindow}}
+        <main class="chat-home pos-rel">
+        <div class="fill-height fill-width pos-abs">
+            <div class="row fill-height no-margin">
+                <div class="col s3 fill-height no-padding overflow-hidden deep-purple lighten-5">
+                    {{> chatSidebarAvailableUsers}}
+                    {{> chatSidebarUserInfo}}
+                    {{> chatSidebarSettings}}
+                </div>
+                <div class="col s9 fill-height overflow-auto no-margin no-padding">
+                    {{> chatMainPanelWindow}}
+                </div>
             </div>
         </div>
-    </div>
+    </main>
     {{else}}
-        {{>loading}}
+        {{> loading}}
     {{/if}}
 </template>

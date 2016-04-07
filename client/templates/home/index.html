@@ -1,22 +1,57 @@
 <template name="homeIndex">
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="jumbotron">
-        <h1>
-            <span data-template="homeIndex" id="title" class="editable">
-                {{pages.title}}
-            </span>
-        </h1>
-        <p class="lead">
-            <span data-template="homeIndex" id="subtitle" class="editable">
-                {{pages.subtitle}}
-            </span>
-        </p>
-      </div>
+    <main>
+    <div id="index-banner" class="parallax-container home-background-img">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <div class="row center">
+                    <h1 class="header teal-text text-lighten-2">
+                        <span data-template="homeIndex" id="title" class="editable">
+                            {{pages.title}}
+                        </span>
+                    </h1>
+                    <h5 class="header col white-text s12 light">
+                        <span data-template="homeIndex" id="subtitle" class="editable">
+                            {{pages.subtitle}}
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div class="parallax"><img alt="Meteor Blast Background" src="/images/backgrounds/meteorshower.jpg"></div>
     </div>
-    <hr/>
-  </div>
-</div>
+        <div class="container">
+            <div class="section">
 
+                <!--   Icon Section   -->
+                <div class="row">
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center brown-text"><i class="fa fa-wrench"></i></h2>
+                            <h5 class="center">Quick Setup</h5>
+                            <p class="light">I've created this template so that you could clone the GitHub repo and start working with Meteor code right away. The code is heavily commented and documented to get you started.</p>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center brown-text"><i class="fa fa-comment"></i></h2>
+                            <h5 class="center">Built-in Chat</h5>
+
+                            <p class="light">I've created this template so that you could clone the GitHub repo and start working with Meteor code right away. The code is heavily commented and documented to get you started.</p>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m4">
+                        <div class="icon-block">
+                            <h2 class="center brown-text"><i class="fa fa-user-plus"></i></h2>
+                            <h5 class="center">Users & Security</h5>
+
+                            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
 </template>

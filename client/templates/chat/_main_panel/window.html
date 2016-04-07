@@ -1,51 +1,55 @@
 <template name="chatMainPanelWindow">
-    <div class="chat-window fill-height">
-        {{#each messages}}
-            <div class="message">
+    <div class="fill-height flex-col grey lighten-4">
+        <div class="chat-window flex-1-1-auto overflow-auto">
+            {{#each messages}}
                 {{#if isOwner _userId}}
-                    <div class="owner">
-                        <div class="row display-flex">
-                            <div class="col-xs-11">
-                                <div class="bubble">{{message}}</div>
-                            </div>
-                            <div class="col-xs-1">
-                                <img class="bubble-profile-img img-circle" src="{{currentUser.profile.image}}">
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        {{#if currentUser.settings.timestamp}}
-                            <div class="bubble-info info-timestamp pull-right">{{dateFormat date}}</div>
-                        {{/if}}
-                    </div>
-                {{else}}
-                    <div class="not-owner">
-                        <div class="row display-flex">
-                            {{#with getUser _userId}}
-                                <div class="col-xs-1">
-                                    <img class="bubble-profile-img img-circle" src="{{profile.image}}">
+                    <div class="row no-margin">
+
+                        <div class="col s12 m8 offset-m4">
+                            <div class="card blue">
+                                {{#unless currentUser.settings.timestamp}}
+                                    <div class="card-action info-timestamp blue lighten-2" style="padding-top: 8px; padding-bottom: 8px;">
+                                        <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
+                                    </div>
+                                {{/unless}}
+                                <div class="card-content">
+                                    <span class="white-text">{{message}}</span>
                                 </div>
-                            {{/with}}
-                            <div class="col-xs-11">
-                                <div class="bubble">{{message}}</div>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
-                        {{#if currentUser.settings.timestamp}}
-                            <div class="bubble-info info-timestamp">{{dateFormat date}}</div>
-                        {{/if}}
+                    </div>
+                {{else}}{{! Not the owner of the message}}
+                    <div class="row no-margin">
+                        {{#unless currentUser.settings.profileImages}}
+                        {{#with getUser _userId}}
+                            <div class="col m1 hide-on-small-and-down no-padding-right">
+                                <img class="img-chat-profile z-depth-2" src="{{profile.image}}">
+                            </div>
+                        {{/with}}
+                        {{/unless}}
+                        <div class="col s12 m8">
+                            <div class="card teal">
+                                    <div class="card-action info-timestamp teal lighten-2" style="padding-top: 8px; padding-bottom: 8px;">
+                                        <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
+                                    </div>
+                                <div class="card-content">
+                                    <span class="white-text">{{message}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 {{/if}}
+            {{/each}}
+        </div>
+        <div class="no-flex deep-purple lighten-5">
+            <div class="row no-margin">
+                <form id="chat_form" class="new-message" method="post">
+                    <div class="input-field" style="margin: 6px;">
+                        <input class="col s11 validate no-margin no-border" type="text" placeholder="What would you like to say?" name="message" id="message">
+                        <button class="col s1 btn deep-purple lighten-1"><i class="fa fa-comment"></i></button>
+                    </div>
+                </form>
             </div>
-        {{/each}}
-    </div>
-    <div style="min-height: 5%; height: 5%; padding-top: 8px;">
-        <form id="chat_form" class="new-message" method="post">
-            <div class="input-group">
-                <input class="form-control" type="text" name="message" id="message" placeholder="What would you like to say?">
-                            <span class="input-group-btn">
-                                <button class="btn btn-info"><span class="glyphicon glyphicon-comment"></span></button>
-                            </span>
-            </div>
-        </form>
+        </div>
     </div>
 </template>

@@ -16,10 +16,8 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 accounts-password
-ian:accounts-ui-bootstrap-3
 iron:router
 percolate:migrations
-twbs:bootstrap
 alanning:roles
 accounts-facebook
 accounts-twitter
@@ -36,3 +34,6 @@ less
 reactive-dict
 standard-minifier-css
 standard-minifier-js
+accounts-ui
+fourseven:scss
+poetic:materialize-scss

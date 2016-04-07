@@ -117,11 +117,13 @@ Template.chatHome.events({
  * Listening to events for changing settings.
  */
 Template.chatSidebarSettings.events({
-  "click .toggle-setting": function(event) {
+  "click .switch-setting": function(event) {
     event.stopPropagation();
-    var settingName = $(event.target).closest('.toggle-setting').data('name');
-    var status = $('.toggle-on').closest('.toggle-setting').find('input').prop('checked');
+    var settingName = $(event.target).data('name');
+    var status = $(event.target).attr('checked');
     // Update with the opposite of the current status
+    console.log(settingName);
+    $(event.target).attr('checked', !status);
     Meteor.call('updateSetting', settingName, !status);
   }
 });
@@ -148,12 +150,13 @@ Template.chatHome.onCreated(function() {
  * Here we're going to update the view of the settings panel
  * based on the saved user settings. If a setting changes in
  * the database, the view will be updated accordingly.
+ *
+ * It's important to note that the setting may not exist. We want to be
+ * able to add settings later and not have to update every user in the DB. It
+ * will only create a DB entry for that user if they change the default value.
  */
 Template.chatSidebarSettings.onRendered(function() {
   var self = this;
-
-  // Initialize the bootstrap toggle plugin
-  $('.toggle-button').bootstrapToggle();
 
   self.autorun(function() {
     if (!self.subscriptionsReady()) {
@@ -161,7 +164,10 @@ Template.chatSidebarSettings.onRendered(function() {
     }
     var settings = Meteor.user().settings;
 
-    //timestamp default is on
-    $('#toggle-timestamp').bootstrapToggle(settings.timestamp !== false ? 'on' : 'off');
+    // Get all the switch-settings and set their default value
+    $('.switch-setting').toArray().forEach(function(s) {
+      $(s).attr('checked', settings && settings[$(s).data('name')]);
+    });
+
   });
 });

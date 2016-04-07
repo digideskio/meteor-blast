@@ -1,21 +1,39 @@
 <template name="chatSidebarSettings">
-    <div class="settings side-panel hide">
-        <div class="side-title">
-            Settings
+    <div class="settings side-panel fill-height flex-col hide">
+        <div class="side-title no-flex">
+            <div class="row no-margin">
+                <div class="card-panel no-margin center-align sidebar-header">
+                    Settings
+                </div>
+            </div>
         </div>
-        <div class="side-content">
-            <table class="table">
-                <tr>
-                    <td class="text-nowrap">
-                        Display Timestamps
-                    </td>
-                    <td>
-                        <span class="toggle-setting" data-name="timestamp">
-                            <input id="toggle-timestamp" class="toggle-button" type="checkbox" data-toggle="toggle" data-size="mini">
-                        </span>
-                    </td>
-                </tr>
-            </table>
+        <div class="side-content flex-1-1-auto overflow-auto" style="margin-top: 10px;">
+
+            <div class="row margin-bottom-5">
+                <div class="col s8">Hide Profile Images</div>
+                <div class="col s4">
+                    <div class="switch">
+                        <label>
+                            <input class="switch-setting" type="checkbox" data-name="profileImages" />
+                            <span class="lever no-margin"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row margin-bottom-5">
+                <div class="col s8">Hide My Timestamps</div>
+                <div class="col s4">
+                    <div class="switch">
+                        <label>
+                            <input class="switch-setting" type="checkbox" data-name="timestamp" />
+                            <span class="lever no-margin"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
         </div>
+        {{> chatSidebarFooter}}
     </div>
 </template>

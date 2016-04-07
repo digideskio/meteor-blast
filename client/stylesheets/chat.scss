@@ -1,0 +1,37 @@
+@import "main.scss";
+@import "classes.scss";
+
+.chat-home {
+  .img-profile {
+    max-width: 28px;
+    max-height: 28px;
+    display: inline-block;
+  }
+  .btn-info {
+    padding-top: 14px !important;
+    padding-bottom: 14px !important;
+    @extend .deep-purple.lighten-3;
+    &:hover {
+      @extend .deep-purple.lighten-2;
+    }
+  }
+  .active {
+    @extend .deep-purple.lighten-1,
+            .white-text;
+  }
+  .img-chat-profile {
+    margin-top: 7px;
+    max-width: 90%;
+    height: auto;
+  }
+  .sidebar-header {
+    padding: 8px;
+    font-weight: 600;
+    @extend .deep-purple.lighten-3;
+  }
+  .loggedin-user {
+    &:hover {
+      @extend .deep-purple.lighten-3;
+    }
+  }
+}
