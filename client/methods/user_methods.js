@@ -16,17 +16,9 @@ Meteor.methods({
     var settings;
 
     // This is for latency compensation. Let the client update the client db right away.
-    if (Meteor.isClient) {
-      settings = Meteor.users.findOne({_id: this.userId}).settings || {};
-      settings[settingName] = value;
-      Meteor.users.update({_id: this.userId}, {$set: {settings: settings}});
-    }
-    // Now if the server is making the call we can be assured that none of the global
-    // variables have been tampered with
-    if (Meteor.isServer) {
-      settings = Meteor.users.findOne({_id: this.userId}).settings || {};
-      settings[settingName] = value;
-      Meteor.users.update({_id: this.userId}, {$set: {settings: settings}});
-    }
+    settings = Meteor.users.findOne({_id: this.userId}).settings || {};
+    settings[settingName] = value;
+    Meteor.users.update({_id: this.userId}, {$set: {settings: settings}});
+
   }
 });

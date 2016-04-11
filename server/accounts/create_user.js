@@ -3,18 +3,21 @@
  * that there is consistency for the profile object among different services
  */
 Accounts.onCreateUser(function(options, user) {
+
   /**
-   * Copy profile options if they exist
+   * PROFILES
+   *
+   * Setting up a profile picture url and other default profile information
    */
+
+  // Copy profile options if they exist
   user.profile = {};
   // If there are profile options already set up
   if (options.profile) {
     user.profile = options.profile;
   }
 
-  /**
-   * Setting up a profile picture url
-   */
+  // Profile Images:
   // For github users
   if (user.services && user.services.github) {
     user.profile.image = "https://avatars.githubusercontent.com/u/" + user.services.github.id;
@@ -28,20 +31,39 @@ Accounts.onCreateUser(function(options, user) {
     user.profile.image = "/images/defaults/default.png";
   }
 
+  // Profile Names:
+  // If there's no name in the profile, set the name equal to the username
+  if (!user.profile.name) {
+    user.profile.name = user.username;
+  }
+
   /**
+   * SETTINGS
+   *
    * Some default settings
    */
   user.settings = {
-    timestamp: true
+    chatColor: "teal"
   };
 
   /**
+   * ROLES
+   *
    * Add user to proper group
    */
-  // Add user to a user group using the alanning:roles structure
   user.roles = {
     "user-group": [ "user" ]
   };
+
+  /**
+   * STATUS
+   *
+   * from the mizzaoLuser-status package
+   * the initially sets up online and idle status, as well as some lastLogin information
+   *
+   * Let's add a field for whether or not the user is typing in the chat form
+   */
+  user.status.typing = false;
 
   // Return the user to be inserted into the DB
   return user;

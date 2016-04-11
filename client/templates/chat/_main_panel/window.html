@@ -2,13 +2,13 @@
     <div class="fill-height flex-col grey lighten-4">
         <div class="chat-window flex-1-1-auto overflow-auto">
             {{#each messages}}
+
                 {{#if isOwner _userId}}
                     <div class="row no-margin">
-
-                        <div class="col s12 m8 offset-m4">
-                            <div class="card blue">
+                        <div class="col s12 m8 {{#unless currentUser.settings.ownerMessagesLeft}}offset-m4{{/unless}}">
+                            <div class="card {{#with getUser _userId}}{{settings.chatColor}}{{/with}}">
                                 {{#unless currentUser.settings.timestamp}}
-                                    <div class="card-action info-timestamp blue lighten-2" style="padding-top: 8px; padding-bottom: 8px;">
+                                    <div class="card-action info-timestamp {{#with getUser _userId}}{{settings.chatColor}}{{/with}} lighten-2">
                                         <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
                                     </div>
                                 {{/unless}}
@@ -18,7 +18,9 @@
                             </div>
                         </div>
                     </div>
-                {{else}}{{! Not the owner of the message}}
+
+                {{else}}
+                {{! Not the owner of the message}}
                     <div class="row no-margin">
                         {{#unless currentUser.settings.profileImages}}
                         {{#with getUser _userId}}
@@ -28,8 +30,8 @@
                         {{/with}}
                         {{/unless}}
                         <div class="col s12 m8">
-                            <div class="card teal">
-                                    <div class="card-action info-timestamp teal lighten-2" style="padding-top: 8px; padding-bottom: 8px;">
+                            <div class="card {{#with getUser _userId}}{{settings.chatColor}}{{/with}}">
+                                    <div class="card-action info-timestamp {{#with getUser _userId}}{{settings.chatColor}}{{/with}} lighten-2">
                                         <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
                                     </div>
                                 <div class="card-content">
@@ -39,12 +41,14 @@
                         </div>
                     </div>
                 {{/if}}
+
             {{/each}}
         </div>
+
         <div class="no-flex deep-purple lighten-5">
             <div class="row no-margin">
                 <form id="chat_form" class="new-message" method="post">
-                    <div class="input-field" style="margin: 6px;">
+                    <div class="input-field">
                         <input class="col s11 validate no-margin no-border" type="text" placeholder="What would you like to say?" name="message" id="message">
                         <button class="col s1 btn deep-purple lighten-1"><i class="fa fa-comment"></i></button>
                     </div>

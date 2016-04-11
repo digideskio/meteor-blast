@@ -8,8 +8,8 @@
     display: inline-block;
   }
   .btn-info {
-    padding-top: 14px !important;
-    padding-bottom: 14px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
     @extend .deep-purple.lighten-3;
     &:hover {
       @extend .deep-purple.lighten-2;
@@ -32,6 +32,36 @@
   .loggedin-user {
     &:hover {
       @extend .deep-purple.lighten-3;
+    }
+  }
+  .card {
+    margin: 0.3rem 0 0.5rem 0;
+
+    .card-content {
+      padding: 8px;
+    }
+    .card-action {
+      padding: 3px 8px 3px 8px;
+    }
+  }
+
+  #chat_form {
+    .input-field {
+      margin-top: 0px;
+    }
+    input {
+      height: 37px;
+    }
+    button {
+      height: 37px;
+      overflow: hidden;
+    }
+  }
+
+  .color-palette {
+    height: 30px;
+    &:hover {
+      @extend .lighten-2;
     }
   }
 }

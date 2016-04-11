@@ -10,9 +10,13 @@ Template.layout.events({
      * </span>
      */
     if (Roles.userIsInRole(Meteor.user(), ['admin'], 'admin-group')) {
-      var selector = $(event.target), formSelector;
+
+      var selector = $(event.currentTarget),
+        formSelector;
       var text = selector.html().trim(),
         id = selector.attr('id');
+
+      sAlert.info('Click away when done editing.', {position: 'top-right'});
 
       // Remove the .editable class for now so they can't double-click
       selector.removeClass('editable');
@@ -42,7 +46,12 @@ Template.layout.events({
 
     // If the value changed clear the html so the page can update reactively
     // Otherwise, put the original value back and clear the form
-    if (value != oldValue) {
+
+    // We don't want to allow empty values.
+    if (!value.length) {
+      sAlert.error('New value cannot be empty.', {position: 'top-right'});
+      parent.html(oldValue);
+    } else if (value != oldValue) {
       Meteor.call('updatePage', template, id, value);
       parent.html("");
     } else {

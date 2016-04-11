@@ -104,11 +104,8 @@ Template.chatHome.events({
   "click .btn-settings": function() {
     swapSidePanel($('.settings'), $('.btn-settings'));
   },
-  "mouseover .loggedin-user": function() {
-    console.log('hovering over a logged in user');
-  },
   "click .loggedin-user": function(event) {
-    Session.set('profileId', $(event.target).data('userid'));
+    Session.set('profileId', $(event.currentTarget).data('userid'));
     swapSidePanel($('.user-info'), $('.btn-user-info'));
   }
 });
@@ -119,12 +116,15 @@ Template.chatHome.events({
 Template.chatSidebarSettings.events({
   "click .switch-setting": function(event) {
     event.stopPropagation();
-    var settingName = $(event.target).data('name');
-    var status = $(event.target).attr('checked');
+    var settingName = $(event.currentTarget).data('name');
+    var status = $(event.currentTarget).attr('checked');
     // Update with the opposite of the current status
-    console.log(settingName);
-    $(event.target).attr('checked', !status);
+    $(event.currentTarget).attr('checked', !status);
     Meteor.call('updateSetting', settingName, !status);
+  },
+  "click .color-palette": function(event) {
+    var color = $(event.currentTarget).data('color');
+    Meteor.call('updateSetting', 'chatColor', color);
   }
 });
 
