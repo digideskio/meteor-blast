@@ -19,7 +19,6 @@ Users are initially:
 * [alanning:roles](https://github.com/alanning/meteor-roles/) - Support for groups and roles for users
 * [ian:accounts-ui-bootstrap-3](https://github.com/ianmartorell/meteor-accounts-ui-bootstrap-3/) - Templating with bootstrap for logging in
 * [iron:router](https://github.com/iron-meteor/iron-router/) - The go to router for Meteor 
-* [jiku:bootstrap-toggle](https://github.com/jiku/meteor-bootstrap-toggle/) - A wrapper for the bootstrap-toggle functionality
 * [lepozepo:accounting](https://github.com/Lepozepo/meteor-accounting/) - Working with currency data.
 * [less](https://atmospherejs.com/meteor/less) - For writing less
 * [mizzao:user-status](https://github.com/mizzao/meteor-user-status/) - Popular package for tracking user online status

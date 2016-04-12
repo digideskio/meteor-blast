@@ -1,3 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Roles } from 'meteor/alanning:roles';
+import { $ } from 'meteor/jquery';
+import { sAlert } from 'meteor/juliancwirko:s-alert';
+
 Template.layout.events({
   "click span.editable": function(event) {
     /**

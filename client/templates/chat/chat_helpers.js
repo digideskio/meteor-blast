@@ -1,3 +1,15 @@
+// Import Meteor globals
+import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
+import { Markdown } from 'meteor/markdown';
+import { Messages } from '/imports/api/messages/messages.js'
+import { $ } from 'meteor/jquery';
+
+global.Messages = Messages;
+
+// Import npm packages
+import moment from 'moment';
+
 /**
  * Functions available only within the scope of this file
  */
@@ -157,12 +169,12 @@ Template.chatHome.onCreated(function() {
  */
 Template.chatSidebarSettings.onRendered(function() {
   var self = this;
+  var settings = Meteor.user().settings;
 
   self.autorun(function() {
     if (!self.subscriptionsReady()) {
       return;
     }
-    var settings = Meteor.user().settings;
 
     // Get all the switch-settings and set their default value
     $('.switch-setting').toArray().forEach(function(s) {

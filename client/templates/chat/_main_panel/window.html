@@ -13,7 +13,7 @@
                                     </div>
                                 {{/unless}}
                                 <div class="card-content">
-                                    <span class="white-text">{{message}}</span>
+                                    <span class="white-text">{{#markdown}}{{message}}{{/markdown}}</span>
                                 </div>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
                                         <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
                                     </div>
                                 <div class="card-content">
-                                    <span class="white-text">{{message}}</span>
+                                    <span class="white-text">{{#markdown}}{{message}}{{/markdown}}</span>
                                 </div>
                             </div>
                         </div>

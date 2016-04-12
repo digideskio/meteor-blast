@@ -1,10 +1,12 @@
-// Starting point for the server
+import { Meteor } from 'meteor/meteor';
+import { Migrations } from 'meteor/percolate:migrations';
+import '/imports/migrations/';
 
-// From the percolate:migrations package
+// Import all the collection api's needed by the server
+import '/imports/api/messages/server/';
+import '/imports/api/pages/server/';
+import '/imports/api/users/server/';
+
 Meteor.startup(function() {
   Migrations.migrateTo(3);
 });
-
-//Meteor.onConnection(function() {
-//  console.log(this);
-//});

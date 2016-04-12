@@ -1,0 +1,25 @@
+{
+  "name": "meteor-blast",
+  "version": "1.0.0",
+  "description": "A meteor template",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbrady-techempower/meteor-blast.git"
+  },
+  "author": "Nate Brady",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nbrady-techempower/meteor-blast/issues"
+  },
+  "homepage": "https://github.com/nbrady-techempower/meteor-blast#readme",
+  "dependencies": {
+    "moment": "^2.12.0"
+  }
+}

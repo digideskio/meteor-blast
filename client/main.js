@@ -1,8 +1,11 @@
-UI.registerHelper("money", function(amount) {
-	return accounting.formatMoney(amount);
-});
+/**
+ * This is the main entry point for the client app.
+ */
 
-UI.registerHelper("markdown", function(text){
-  var converter = new showdown.Converter();
-  return converter.makeHtml(text);
-});
+// Import all client config files
+import '/imports/config/client/';
+
+// Import all the collection api's needed by the server
+import '/imports/api/messages/client/';
+import '/imports/api/pages/client/';
+import '/imports/api/users/client/';

@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Pages } from '/imports/api/pages/pages.js';
+
 Template.homeIndex.helpers({
    pages: function() {
        Meteor.subscribe('getPageData', 'homeIndex');
