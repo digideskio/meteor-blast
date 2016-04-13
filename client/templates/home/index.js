@@ -10,5 +10,6 @@ Template.homeIndex.helpers({
 });
 
 Template.homeIndex.onRendered(function() {
+  // Initialize the materialize parallax plugin
   $('.parallax').parallax();
 });

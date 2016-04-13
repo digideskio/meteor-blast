@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Messages } from '../messages.js';
+import { sAlert } from 'meteor/juliancwirko:s-alert';
 
 Meteor.methods({
   /**

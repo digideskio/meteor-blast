@@ -9,7 +9,7 @@ Meteor.startup(function () {
     timeout: 3000,
     html: false,
     onRouteClose: true,
-    stack: true,
+    stack: false,
     // or you can pass an object:
     // stack: {
     //     spacing: 10 // in px

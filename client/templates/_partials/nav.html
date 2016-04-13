@@ -4,11 +4,11 @@
             <a id="logo-container" href="#" class="brand-logo">Meteor Blast</a>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars"></i></a>
             <ul class="right hide-on-med-and-down">
-                <li class="{{#if homeActive}}active{{/if}}"><a href="{{pathFor 'homeIndex'}}">Home</a></li>
-                <li class="{{#if aboutActive}}active{{/if}}"><a href="{{pathFor 'homeAbout'}}">About</a></li>
-                <li class="{{#if contactActive}}active{{/if}}"><a href="{{pathFor 'homeContact'}}">Contact</a></li>
+                <li class="{{#if isRouteName 'home'}}active{{/if}}"><a href="/">Home</a></li>
+                <li class="{{#if isRouteName 'about'}}active{{/if}}"><a href="/about">About</a></li>
+                <li class="{{#if isRouteName 'contact'}}active{{/if}}"><a href="/contact">Contact</a></li>
                 {{#if currentUser}}
-                    <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
+                    <li class="{{#if isRouteName 'chat'}}active{{/if}}"><a href="/chat">Chat</a></li>
                 {{/if}}
                 {{#if isInRole 'admin' 'admin-group'}}
                     <li><a href="#">Admin Link</a></li>
@@ -17,11 +17,11 @@
             </ul>
 
             <ul id="nav-mobile" class="side-nav">
-                <li class="{{#if homeActive}}active{{/if}}"><a href="{{pathFor 'homeIndex'}}">Home</a></li>
-                <li class="{{#if aboutActive}}active{{/if}}"><a href="{{pathFor 'homeAbout'}}">About</a></li>
-                <li class="{{#if contactActive}}active{{/if}}"><a href="{{pathFor 'homeContact'}}">Contact</a></li>
+                <li class="{{#if isRouteName 'home'}}active{{/if}}"><a href="/">Home</a></li>
+                <li class="{{#if isRouteName 'about'}}active{{/if}}"><a href="/about">About</a></li>
+                <li class="{{#if isRouteName 'contact'}}active{{/if}}"><a href="/contact">Contact</a></li>
                 {{#if currentUser}}
-                    <li class="{{#if chatActive}}active{{/if}}"><a href="{{pathFor 'chatHome'}}">Chat</a></li>
+                    <li class="{{#if isRouteName 'chat'}}active{{/if}}"><a href="/chat">Chat</a></li>
                 {{/if}}
                 {{#if isInRole 'admin' 'admin-group'}}
                     <li><a href="#">Admin Link</a></li>

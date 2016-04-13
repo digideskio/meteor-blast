@@ -1,3 +1,7 @@
+/**
+ * This is the main entry point for the server.
+ */
+
 import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
 import '/imports/migrations/';

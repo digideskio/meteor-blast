@@ -1,6 +1,6 @@
 <template name="layout">
     {{> nav}}
-    {{> yield}}
+    {{> Template.dynamic template=content}}
     {{> footer}}
     {{> sAlert}}
 </template>

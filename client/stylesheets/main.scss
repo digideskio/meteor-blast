@@ -8,6 +8,12 @@ body {
   flex-direction: column;
 }
 
+#__blaze-root {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
 main {
   flex: 1 1 auto;
   //height: 87vh !important;

@@ -9,3 +9,6 @@ import '/imports/config/client/';
 import '/imports/api/messages/client/';
 import '/imports/api/pages/client/';
 import '/imports/api/users/client/';
+
+// Import our routes
+import '/imports/routes/';

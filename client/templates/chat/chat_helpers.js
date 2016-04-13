@@ -1,14 +1,17 @@
 // Import Meteor globals
 import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
 import { Markdown } from 'meteor/markdown';
 import { Messages } from '/imports/api/messages/messages.js'
+import { Session } from 'meteor/session';
 import { $ } from 'meteor/jquery';
-
-global.Messages = Messages;
 
 // Import npm packages
 import moment from 'moment';
+
+global.meteor = Meteor;
 
 /**
  * Functions available only within the scope of this file
@@ -16,7 +19,8 @@ import moment from 'moment';
 var scrollToBottom = function() {
   var selector = $('.chat-window');
   if (selector[0]) {
-    selector.scrollTop(selector[0].scrollHeight*10000);
+    var height = selector.prop('scrollHeight');
+    selector.stop().animate({scrollTop: height});
   }
 };
 
@@ -46,11 +50,6 @@ Template.chatMainPanelWindow.helpers({
     return moment(date).format('MM/DD/YYYY hh:mm A');
   },
   messages: function() {
-    var msgs = Messages.find({}, {sort: {date: 1}}).fetch();
-    // Subscribe to the profile and setting information of every user we have a message for
-    msgs.forEach(function(m) {
-      Meteor.subscribe("userProfileInfo", m._userId);
-    });
     return Messages.find({}, {sort: {date: 1}}).fetch();
   },
   isOwner: function(userId) {
@@ -74,14 +73,27 @@ Template.chatHome.helpers({
  * using it within the chat folder for all chat templates/sub-templates, I'll leave
  * it here.
  */
+
+// Subscribes to and returns a user
 Template.registerHelper("getUser", function(userId) {
   // Meteor will only subscribe to the user once
   Meteor.subscribe("userProfileInfo", userId);
   return Meteor.users.find({_id: userId}).fetch()[0];
 });
 
+// Gets Session data by some key
 Template.registerHelper("getSessionData", function(key) {
   return Session.get(key);
+});
+
+// Returns the current Route
+Template.registerHelper("getRouteName", function() {
+  return FlowRouter.getRouteName();
+});
+
+// Returns true if the current route matches any of the names provided
+Template.registerHelper("isRouteName", function (...names) {
+  return names.includes(FlowRouter.getRouteName());
 });
 
 /**
@@ -147,15 +159,28 @@ Template.chatSidebarSettings.events({
  */
 Template.chatHome.onCreated(function() {
   var self = this;
+
   // Init Session profileId for viewing profiles
   Session.set('profileId', Meteor.userId());
+  // Set auto Scrolling
+  Session.set('scrolling', true);
 
+  // Set up some subscriptions
   self.subscribe("onlineProfiles");
   self.subscribe("messages", function() {
     Tracker.afterFlush(function() {
       window.requestAnimationFrame(scrollToBottom);
     });
   });
+
+  // Track Meteor.userId() - once it no longer exits
+  // redirect the user
+  self.autorun(function() {
+    if (!Meteor.userId()) {
+      FlowRouter.go('/');
+    }
+  });
+
 });
 
 /**
