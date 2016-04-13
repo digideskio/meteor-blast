@@ -44,6 +44,7 @@ The directory structure below is adapted from common practices. You can structur
 project-root
     ├─── .meteor (for meteor packages)
     ├─── client
+    ├─── imports
     ├─── lib
     ├─── private
     ├─── public
@@ -67,7 +68,27 @@ client
 
 The `client` folder holds everything that will be loaded to and accessible by the client. It's important to note that anything that you wrap in `if (Meteor.isServer) { ... }` won't be accessible by client code, but could still be viewed by the client. Make sure to keep anything sensitive, like passwords, API keys, etc in folders that are only available to the server. Again, the substructure of `client` is up to you. In the case of this boilerplate, I keep all client configurations, like account.js, in `config`. All css (there are less compiler packages) and other things related to styling in `stylesheets`. I like to separate templates by `_partials`: snippets and includes used my multiple templates, `app`: templates used throughout the app, like 404.html, and then folders structured by routes. 
 
-#### `lib` subfolder
+#### `imports` subfolder
+
+```
+imports
+  └─── api
+      └─── messages
+          └─── client
+          └─── server
+          messages.js
+  └─── config
+      ├─── _partials
+      ├─── app
+      ├─── chat
+      └─── home
+  └─── migrations
+  main.js
+````
+
+The `imports` folder is ignored by Meteor initially. Nothing here is loaded until explicitly directed to by the app. Starting in 1.3 Meteor is moving away from the "globals everywhere" approach that made most of it magical to begin with. Now your entire api, all your collections, should be placed here and loaded as needed by the app. If an import is made on a directory, it will try and find the `index.js` file. If you look in `/imports/api/messages/server` you'll see such a file with a few import statements. We can then make an import in our `/server/main.js` file that looks like `import '/imports/api/messages/server/';` and it will run the `index.js` file and thus the imports there. If we do things this way, when we add more files to certain directories, we can update the individual `index.js` files without having to update the import statement in our `main.js` entry points for the client and server.
+
+#### `lib` subfolder **(THIS IS BEING REMOVED)**
 
 ```
 lib
