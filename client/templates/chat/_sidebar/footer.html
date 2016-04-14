@@ -1,13 +1,13 @@
 <template name="chatSidebarFooter">
     <div class="side-footer no-flex">
         <div class="row no-margin center-align">
-            <div class="col s3 btn-info btn-available-users active">
+            <div class="col s3 btn-info btn-available-users {{#if equals (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers"}}active{{/if}}">
                 <i class="fa fa-users"></i>
             </div>
-            <div class="col s3 btn-info btn-user-info">
+            <div class="col s3 btn-info btn-user-info {{#if equals (getSessionData "sidebarTemplate") "chatSidebarUserInfo"}}active{{/if}}">
                 <i class="fa fa-info-circle"></i>
             </div>
-            <div class="col s3 btn-info btn-settings">
+            <div class="col s3 btn-info btn-settings {{#if equals (getSessionData "sidebarTemplate") "chatSidebarSettings"}}active{{/if}}">
                 <i class="fa fa-cog"></i>
             </div>
             <div class="col s3 btn-info btn-scroll">

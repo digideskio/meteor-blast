@@ -1,6 +1,11 @@
 <template name="layout">
-    {{> nav}}
-    {{> Template.dynamic template=content}}
-    {{> footer}}
+    {{! If FlowRouter passes us a template variable, in this case a nav variable,
+        we will use that, otherwise we will use the "nav" default template in _partials }}
+    {{> Template.dynamic template=(getTemplate nav "nav") }}
+    {{> Template.dynamic template=(getTemplate content "404") }}
+    {{> Template.dynamic template=(getTemplate footer "footer") }}
+
+    {{! This template is used for providing error/info messages }}
     {{> sAlert}}
+
 </template>

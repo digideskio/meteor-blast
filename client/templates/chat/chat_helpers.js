@@ -11,8 +11,6 @@ import { $ } from 'meteor/jquery';
 // Import npm packages
 import moment from 'moment';
 
-global.meteor = Meteor;
-
 /**
  * Functions available only within the scope of this file
  */
@@ -22,13 +20,6 @@ var scrollToBottom = function() {
     var height = selector.prop('scrollHeight');
     selector.stop().animate({scrollTop: height});
   }
-};
-
-var swapSidePanel = function(panel, button) {
-  $('.side-panel').addClass('hide');
-  $('.btn-info').removeClass('active');
-  panel.removeClass('hide');
-  button.addClass('active');
 };
 
 /**
@@ -67,36 +58,6 @@ Template.chatHome.helpers({
 });
 
 /**
- * This is another way to register helper functions to templates. This method
- * makes the function available to all templates. Normally, you would want a global
- * registered function in your templates/main.js file, but since for now I'm only
- * using it within the chat folder for all chat templates/sub-templates, I'll leave
- * it here.
- */
-
-// Subscribes to and returns a user
-Template.registerHelper("getUser", function(userId) {
-  // Meteor will only subscribe to the user once
-  Meteor.subscribe("userProfileInfo", userId);
-  return Meteor.users.find({_id: userId}).fetch()[0];
-});
-
-// Gets Session data by some key
-Template.registerHelper("getSessionData", function(key) {
-  return Session.get(key);
-});
-
-// Returns the current Route
-Template.registerHelper("getRouteName", function() {
-  return FlowRouter.getRouteName();
-});
-
-// Returns true if the current route matches any of the names provided
-Template.registerHelper("isRouteName", function (...names) {
-  return names.includes(FlowRouter.getRouteName());
-});
-
-/**
  * Unlike helpers, events are available to all partial templates
  * loaded within the "chatHome" template, though it may be cleaner
  * and more legible if the events were placed on their corresponding
@@ -120,17 +81,17 @@ Template.chatHome.events({
     scrollToBottom();
   },
   "click .btn-available-users": function() {
-    swapSidePanel($('.available-users'), $('.btn-available-users'));
+    Session.set('sidebarTemplate', 'chatSidebarAvailableUsers');
   },
   "click .btn-user-info": function() {
-    swapSidePanel($('.user-info'), $('.btn-user-info'));
+    Session.set('sidebarTemplate', 'chatSidebarUserInfo');
   },
   "click .btn-settings": function() {
-    swapSidePanel($('.settings'), $('.btn-settings'));
+    Session.set('sidebarTemplate', 'chatSidebarSettings');
   },
   "click .loggedin-user": function(event) {
     Session.set('profileId', $(event.currentTarget).data('userid'));
-    swapSidePanel($('.user-info'), $('.btn-user-info'));
+    Session.set('sidebarTemplate', 'chatSidebarUserInfo');
   }
 });
 
@@ -154,16 +115,15 @@ Template.chatSidebarSettings.events({
 
 /**
  * The template methods "onCreated" and "onRendered" fire automatically
- * and in that order. onRendered does not mean that data is finished being
- * inserted into the DOM - use Tracker.afterFlush
+ * and in that order. onRendered does not always mean that data is finished being
+ * inserted into the DOM. There is no Meteor way to be sure that data being inserted
+ * into the DOM, especially from a #each block, has completed.
  */
 Template.chatHome.onCreated(function() {
   var self = this;
-
+  
   // Init Session profileId for viewing profiles
   Session.set('profileId', Meteor.userId());
-  // Set auto Scrolling
-  Session.set('scrolling', true);
 
   // Set up some subscriptions
   self.subscribe("onlineProfiles");
