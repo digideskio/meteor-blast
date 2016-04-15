@@ -1,24 +1,23 @@
 <template name="homeAbout">
-    <main>
-        <div class="container">
-            <div class="row">
-                <div class="col s12">
-                    <div class="jumbotron">
-                        <h1>
-            <span data-template="homeAbout" id="title" class="editable">
-                {{pages.title}}
-            </span>
-                        </h1>
-                        <p class="lead">
-            <span data-template="homeAbout" id="subtitle" class="editable">
-                {{pages.subtitle}}
-            </span>
-                        </p>
-                    </div>
-                </div>
-                <hr/>
-            </div>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <div class="jumbotron">
+            <h1>
+              <span data-template="homeAbout" id="title" class="editable">
+                {{getValueOrDefault pages.title "Set Title"}}
+              </span>
+            </h1>
+            <p class="lead">
+              <span data-template="homeAbout" id="subtitle" class="editable">
+                {{getValueOrDefault pages.subtitle "Set Subtitle"}}
+              </span>
+            </p>
+          </div>
         </div>
-    </main>
-
+        <hr/>
+      </div>
+    </div>
+  </main>
 </template>

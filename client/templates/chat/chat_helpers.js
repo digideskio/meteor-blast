@@ -124,6 +124,8 @@ Template.chatHome.onCreated(function() {
   
   // Init Session profileId for viewing profiles
   Session.set('profileId', Meteor.userId());
+  // Set the sidebar template
+  Session.set('sidebarTemplate', 'chatSidebarAvailableUsers');
 
   // Set up some subscriptions
   self.subscribe("onlineProfiles");

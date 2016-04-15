@@ -6,9 +6,9 @@
                 {{#if isOwner _userId}}
                     <div class="row no-margin">
                         <div class="col s12 m8 {{#unless currentUser.settings.ownerMessagesLeft}}offset-m4{{/unless}}">
-                            <div class="card {{#with getUser _userId}}{{settings.chatColor}}{{/with}}">
+                            <div class="card {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "blue"}}{{/with}}">
                                 {{#unless currentUser.settings.timestamp}}
-                                    <div class="card-action info-timestamp {{#with getUser _userId}}{{settings.chatColor}}{{/with}} lighten-2">
+                                    <div class="card-action info-timestamp {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}} lighten-2">
                                         <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
                                     </div>
                                 {{/unless}}
@@ -30,12 +30,16 @@
                         {{/with}}
                         {{/unless}}
                         <div class="col s12 m8">
-                            <div class="card {{#with getUser _userId}}{{settings.chatColor}}{{/with}}">
-                                    <div class="card-action info-timestamp {{#with getUser _userId}}{{settings.chatColor}}{{/with}} lighten-2">
-                                        <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
+                            <div class="card {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}}">
+                                    <div class="card-action info-timestamp {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}} lighten-2">
+                                        <span class="white-text">
+                                            {{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}
+                                        </span>
                                     </div>
                                 <div class="card-content">
-                                    <span class="white-text">{{#markdown}}{{message}}{{/markdown}}</span>
+                                    <span class="white-text">
+                                        {{#markdown}}{{message}}{{/markdown}}
+                                    </span>
                                 </div>
                             </div>
                         </div>

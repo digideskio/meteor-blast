@@ -1,21 +1,19 @@
 <template name="chatHome">
-    {{#if Template.subscriptionsReady}}
-        <main class="chat-home pos-rel">
-        <div class="fill-height fill-width pos-abs">
-            <div class="row fill-height no-margin">
-                <div class="col s3 fill-height no-padding overflow-hidden deep-purple lighten-5">
-                    {{! Keep a reactive session variable for swapping the sidebar template }}
-                    {{> Template.dynamic template = (getTemplate (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers" )}}
-                    <!--{{> chatSidebarUserInfo}}-->
-                    <!--{{> chatSidebarSettings}}-->
-                </div>
-                <div class="col s9 fill-height overflow-auto no-margin no-padding">
-                    {{> chatMainPanelWindow}}
-                </div>
-            </div>
+  {{#if Template.subscriptionsReady}}
+    <main class="chat-home pos-rel">
+      <div class="fill-height fill-width pos-abs">
+        <div class="row fill-height no-margin">
+          <div class="col s3 fill-height no-padding overflow-hidden deep-purple lighten-5">
+            {{! Keep a reactive session variable for swapping the sidebar template }}
+            {{> Template.dynamic template = (getValueOrDefault (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers" )}}
+          </div>
+          <div class="col s9 fill-height overflow-auto no-margin no-padding">
+            {{> chatMainPanelWindow}}
+          </div>
         </div>
+      </div>
     </main>
-    {{else}}
-        {{> loading}}
-    {{/if}}
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

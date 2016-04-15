@@ -6,12 +6,12 @@
                 <div class="row center">
                     <h1 class="header teal-text text-lighten-2">
                         <span data-template="homeIndex" id="title" class="editable">
-                            {{pages.title}}
+                            {{getValueOrDefault pages.title "Set Homepage Title"}}
                         </span>
                     </h1>
                     <h5 class="header col white-text s12 light">
                         <span data-template="homeIndex" id="subtitle" class="editable">
-                            {{pages.subtitle}}
+                            {{getValueOrDefault pages.subtitle "Set Subtitle by clicking here"}}
                         </span>
                     </h5>
                 </div>

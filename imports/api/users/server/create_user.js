@@ -46,7 +46,7 @@ Accounts.onCreateUser(function(options, user) {
    * Some default settings
    */
   user.settings = {
-    chatColor: "teal"
+    
   };
 
   /**
