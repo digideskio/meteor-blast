@@ -58,16 +58,6 @@ Accounts.onCreateUser(function(options, user) {
     "user-group": [ "user" ]
   };
 
-  /**
-   * STATUS
-   *
-   * from the mizzaoLuser-status package
-   * the initially sets up online and idle status, as well as some lastLogin information
-   *
-   * Let's add a field for whether or not the user is typing in the chat form
-   */
-  user.status.typing = false;
-
   // Return the user to be inserted into the DB
   return user;
 });
