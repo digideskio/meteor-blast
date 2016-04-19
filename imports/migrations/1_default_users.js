@@ -1,4 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
+import { Roles } from 'meteor/alanning:roles';
+
 
 /**
  * User migrations

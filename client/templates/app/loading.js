@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 
-Template.loading.rendered = function () {
+Template.loading.rendered = () => {
   if ( ! Session.get('loadingSplash') ) {
-    this.loading = window.pleaseWait({
+    Template.instance().loading = window.pleaseWait({
       logo: '/images/icons/meteor.png',
       backgroundColor: '#7f8c8d',
       loadingHtml: message + spinner
@@ -13,8 +13,8 @@ Template.loading.rendered = function () {
 };
 
 Template.loading.destroyed = function () {
-  if ( this.loading ) {
-    this.loading.finish();
+  if ( Template.instance().loading ) {
+    Template.instance().loading.finish();
     delete Session.keys['loadingSplash'];
   }
 };

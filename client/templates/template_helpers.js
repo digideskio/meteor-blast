@@ -12,7 +12,7 @@ import { Session } from 'meteor/session';
 /**
  * Subscribes to and returns a user
  */
-Template.registerHelper("getUser", function(userId) {
+Template.registerHelper("getUser", userId => {
   // If you're already subscribed to the user, Meteor will not "resubscribe"
   // Remember to set your own limitations on what information a user can see.
   // This will be done in your publication - See imports/api/users/server/publications.js
@@ -21,42 +21,42 @@ Template.registerHelper("getUser", function(userId) {
 });
 
 /**
+ * Simple check to see if a user exists
+ */
+Template.registerHelper("userExists", userId => {
+  Meteor.subscribe("userProfileInfo", userId);
+  return !!Meteor.users.find({_id: userId}).fetch()[0];
+});
+
+/**
  * Gets Session data by some key
  */
-Template.registerHelper("getSessionData", function(key) {
-  return Session.get(key);
-});
+Template.registerHelper("getSessionData", key => Session.get(key));
 
 /**
  * Sets Session key with some data
  */
-Template.registerHelper("setSessionData", function(key, data) {
-  return Session.set(key, data);
-});
+Template.registerHelper("setSessionData",
+  (key, data) => Session.set(key, data));
 
 
 /**
  * Returns the current Route Name
  */
-Template.registerHelper("getRouteName", function() {
-  return FlowRouter.getRouteName();
-});
+Template.registerHelper("getRouteName", () => FlowRouter.getRouteName());
 
 /**
  * Returns true if the current route matches any of the names provided
  */
-Template.registerHelper("isRouteName", function (...names) {
-  return names.includes(FlowRouter.getRouteName());
-});
+Template.registerHelper("isRouteName",
+  (...names) => names.includes(FlowRouter.getRouteName()));
 
 /**
  * In a lot of cases we'll want to get a value, like a template string or a setting value
  * and one won't exist. Let's create a template helper so that we can get a value or use
  * a default if one doesn't exist.
  */
-Template.registerHelper("getValueOrDefault", function(val, orDefault) {
-  return val || orDefault;
-});
+Template.registerHelper("getValueOrDefault", (val, orDefault) => val || orDefault);
 
 /**
  * Let's create an equals helper that returns true if all args are equal to each other
@@ -72,7 +72,6 @@ Template.registerHelper("equals", function(...items) {
   // Pop off the Spacebars.kw hash object
   items.pop();
   // Filter the array for elements equal to the first and then see if the 2 lengths match
-  return items.filter(function(el) {
-    return el == items[0];
-  }).length == items.length;
+  return items.filter(el => el == items[0])
+      .length === items.length;
 });

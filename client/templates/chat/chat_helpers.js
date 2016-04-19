@@ -14,10 +14,10 @@ import moment from 'moment';
 /**
  * Functions available only within the scope of this file
  */
-var scrollToBottom = function() {
-  var selector = $('.chat-window');
+var scrollToBottom = () => {
+  let selector = $('.chat-window');
   if (selector[0]) {
-    var height = selector.prop('scrollHeight');
+    let height = selector.prop('scrollHeight');
     selector.stop().animate({scrollTop: height});
   }
 };
@@ -26,26 +26,19 @@ var scrollToBottom = function() {
  * Sidebar Helpers
  */
 Template.chatSidebarAvailableUsers.helpers({
-  usersLoggedIn: function() {
-    return Meteor.users.find().fetch().filter(function(u) {
-      return u.status && u.status.online;
-    });
-  }
+  usersLoggedIn: () =>
+    Meteor.users.find().fetch()
+      .filter(u => u.status && u.status.online)
 });
 
 /**
  * MainPanel Helpers
  */
 Template.chatMainPanelWindow.helpers({
-  dateFormat: function(date) {
-    return moment(date).format('MM/DD/YYYY hh:mm A');
-  },
-  messages: function() {
-    return Messages.find({}, {sort: {date: 1}}).fetch();
-  },
-  isOwner: function(userId) {
-    return userId == Meteor.userId();
-  }
+  dateFormat: date =>
+    moment(date).format('MM/DD/YYYY hh:mm A'),
+  messages: () =>
+    Messages.find({}, {sort: {date: 1}}).fetch()
 });
 
 /**
@@ -69,7 +62,7 @@ Template.chatHome.events({
     // Stop the form from submitting
     event.preventDefault();
     // Grab the value at message
-    var message = event.target.message.value;
+    let message = event.target.message.value;
     // Call the method to add a chat message
     Meteor.call('addChatMessage', message);
     // Clear the form
@@ -77,19 +70,14 @@ Template.chatHome.events({
     // Auto scroll to the bottom of the page
     scrollToBottom();
   },
-  "click .btn-scroll": function() {
-    scrollToBottom();
-  },
-  "click .btn-available-users": function() {
-    Session.set('sidebarTemplate', 'chatSidebarAvailableUsers');
-  },
-  "click .btn-user-info": function() {
-    Session.set('sidebarTemplate', 'chatSidebarUserInfo');
-  },
-  "click .btn-settings": function() {
-    Session.set('sidebarTemplate', 'chatSidebarSettings');
-  },
-  "click .loggedin-user": function(event) {
+  "click .btn-scroll": () => scrollToBottom(),
+  "click .btn-available-users": () =>
+    Session.set('sidebarTemplate', 'chatSidebarAvailableUsers'),
+  "click .btn-user-info": () =>
+    Session.set('sidebarTemplate', 'chatSidebarUserInfo'),
+  "click .btn-settings": () =>
+    Session.set('sidebarTemplate', 'chatSidebarSettings'),
+  "click .loggedin-user": event => {
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
   }
@@ -99,16 +87,16 @@ Template.chatHome.events({
  * Listening to events for changing settings.
  */
 Template.chatSidebarSettings.events({
-  "click .switch-setting": function(event) {
+  "click .switch-setting": event => {
     event.stopPropagation();
-    var settingName = $(event.currentTarget).data('name');
-    var status = $(event.currentTarget).attr('checked');
+    let settingName = $(event.currentTarget).data('name');
+    let status = $(event.currentTarget).attr('checked');
     // Update with the opposite of the current status
     $(event.currentTarget).attr('checked', !status);
     Meteor.call('updateSetting', settingName, !status);
   },
-  "click .color-palette": function(event) {
-    var color = $(event.currentTarget).data('color');
+  "click .color-palette": event => {
+    let color = $(event.currentTarget).data('color');
     Meteor.call('updateSetting', 'chatColor', color);
   }
 });
@@ -119,25 +107,24 @@ Template.chatSidebarSettings.events({
  * inserted into the DOM. There is no Meteor way to be sure that data being inserted
  * into the DOM, especially from a #each block, has completed.
  */
-Template.chatHome.onCreated(function() {
-  var self = this;
-  
-  // Init Session profileId for viewing profiles
-  Session.set('profileId', Meteor.userId());
+Template.chatHome.onCreated(() => {
+  // Init Session profileId for viewing profiles &
   // Set the sidebar template
-  Session.set('sidebarTemplate', 'chatSidebarAvailableUsers');
+  Session.set({
+    'profileId': Meteor.userId(),
+    'sidebarTemplate': 'chatSidebarAvailableUsers'
+  });
 
   // Set up some subscriptions
-  self.subscribe("onlineProfiles");
-  self.subscribe("messages", function() {
-    Tracker.afterFlush(function() {
-      window.requestAnimationFrame(scrollToBottom);
-    });
-  });
+  Template.instance().subscribe("onlineProfiles");
+  Template.instance().subscribe("messages", () =>
+    Tracker.afterFlush(() =>
+      window.requestAnimationFrame(scrollToBottom))
+  );
 
   // Track Meteor.userId() - once it no longer exits
   // redirect the user
-  self.autorun(function() {
+  Template.instance().autorun(() => {
     if (!Meteor.userId()) {
       FlowRouter.go('/');
     }
@@ -154,19 +141,19 @@ Template.chatHome.onCreated(function() {
  * able to add settings later and not have to update every user in the DB. It
  * will only create a DB entry for that user if they change the default value.
  */
-Template.chatSidebarSettings.onRendered(function() {
-  var self = this;
-  var settings = Meteor.user().settings;
+Template.chatSidebarSettings.onRendered(() => {
+  let settings = Meteor.user().settings;
 
-  self.autorun(function() {
-    if (!self.subscriptionsReady()) {
+  Template.instance().autorun(() => {
+    if (!Template.instance().subscriptionsReady()) {
       return;
     }
 
     // Get all the switch-settings and set their default value
-    $('.switch-setting').toArray().forEach(function(s) {
-      $(s).attr('checked', settings && settings[$(s).data('name')]);
-    });
-
+    // Because this is being done in autorun(), if any of these values
+    // change, this will rerun
+    $('.switch-setting').toArray().forEach(s =>
+        $(s).attr('checked', settings && settings[$(s).data('name')]));
   });
+
 });

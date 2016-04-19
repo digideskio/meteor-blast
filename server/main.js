@@ -11,6 +11,6 @@ import '/imports/api/messages/server/';
 import '/imports/api/pages/server/';
 import '/imports/api/users/server/';
 
-Meteor.startup(function() {
+Meteor.startup(() => {
   Migrations.migrateTo(3);
 });

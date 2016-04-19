@@ -1,4 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
+import { Roles } from 'meteor/alanning:roles';
+import { Messages } from '/imports/api/messages/messages.js'
 
 /**
  * Create 1,000 sample messages for use in the chatroom

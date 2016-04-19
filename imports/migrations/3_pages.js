@@ -1,4 +1,5 @@
 import { Migrations } from 'meteor/percolate:migrations';
+import { Pages } from '/imports/api/pages/pages.js';
 
 /**
  * Some data to display on the pages that can be edited reactively by admins
