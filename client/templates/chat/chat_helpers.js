@@ -7,6 +7,7 @@ import { Markdown } from 'meteor/markdown';
 import { Messages } from '/imports/api/messages/messages.js'
 import { Session } from 'meteor/session';
 import { $ } from 'meteor/jquery';
+import { Parse } from '/imports/parse.js';
 
 // Import npm packages
 import moment from 'moment';
