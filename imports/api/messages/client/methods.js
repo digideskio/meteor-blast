@@ -4,16 +4,22 @@ import { sAlert } from 'meteor/juliancwirko:s-alert';
 
 Meteor.methods({
   /**
-   * Adding a chat message to the database. For now, not doing much validation
-   * on the client insert, so that the message shows up immediately.
-   * @param message
+   * Adding a chat message to the database.
+   *
+   * @param msg - A message object that has either a message, info, and error field.
+   *   if a message.message exists, that's what gets entered into the db. The rest is for
+   *   user alerts.
    */
-  addChatMessage: function(message) {
+  addChatMessage: function(msg) {
 
-    if (!message.length) {
-      sAlert.error("Please enter a message.");
-    } else {
-      Messages.insert({_userId: this.userId, message: message, date: new Date()});
+    if (msg.message) {
+      Messages.insert({_userId: Meteor.userId(), message: msg.message, date: new Date()});
+    }
+    if (msg.info) {
+      sAlert.info(msg.info);
+    }
+    if (msg.error) {
+      sAlert.error(msg.error);
     }
 
     /*

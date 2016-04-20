@@ -3,11 +3,15 @@ import { Messages } from '../messages.js';
 
 Meteor.methods({
 
-  addChatMessage: function(message) {
-    if (!message.length) {
-      // do nothing
-    } else {
-      Messages.insert({_userId: this.userId, message: message, date: new Date()});
+  /**
+   * For the server side of addChatMessage, the function only cares if theres a message
+   * property. The rest are alerts for the user.
+   *
+   * @param msg
+   */
+  addChatMessage: function(msg) {
+    if (msg.message) {
+      Messages.insert({_userId: this.userId, message: msg.message, date: new Date()});
     }
   }
 

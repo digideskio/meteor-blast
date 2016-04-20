@@ -65,7 +65,7 @@ Template.chatHome.events({
     // Grab the value at message
     let message = event.target.message.value;
     // Call the method to add a chat message
-    Meteor.call('addChatMessage', message);
+    Meteor.call('addChatMessage', Parse.parse(message));
     // Clear the form
     event.target.message.value = "";
     // Auto scroll to the bottom of the page
