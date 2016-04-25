@@ -1,29 +1,16 @@
 <template name="chatSidebarUserInfo">
-    <div class="user-info side-panel fill-height flex-col">
-
-        <div class="side-title no-flex">
-            <div class="row no-margin">
-                <div class="card-panel no-margin center-align sidebar-header">
-                    User Profile
-                </div>
-            </div>
+  <div class="available-users side-panel fill-vh flex-col z-depth-2" style="width: 260px;">
+    {{> chatSidebarHeader}}
+    <div class="flex-1-1-auto grey darken-3 pad10 overflow-auto">
+      {{#with getUser (getSessionData "profileId")}}
+        <div class="fill-width text-center">
+          <img class="responsive-img z-depth-1" src="{{profile.image}}" style="width: 140px;">
         </div>
-
-        <div class="side-content flex-1-1-auto overflow-auto">
-            {{#with getUser (getSessionData "profileId")}}
-            <div class="row center-align" style="margin-top: 10px;">
-                <div class="col s12 center-align">
-                    <img class="responsive-img z-depth-1" src="{{profile.image}}" style="max-height: 140px;">
-                </div>
-            </div>
-            <div class="row center-align">
-                <div class="col s12">
-                    {{profile.name}}
-                </div>
-            </div>
-            {{/with}}
+        <div class="fill-width text-center white-text">
+          {{profile.name}}
         </div>
-
-        {{> chatSidebarFooter}}
+      {{/with}}
     </div>
+    {{> chatSidebarFooter}}
+  </div>
 </template>

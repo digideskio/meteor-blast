@@ -2,55 +2,40 @@
 @import "classes";
 
 .chat-home {
-  .img-profile {
-    max-width: 28px;
-    max-height: 28px;
-    display: inline-block;
+  .topic-holder {
+    z-index: 100;
+  }
+  .room {
+    font-weight: 500;
+    font-size: 20px;
+  }
+  .topic {
+
+  }
+  .message {
+    p {
+      margin: 0;
+    }
   }
   .btn-info {
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-    @extend .deep-purple.lighten-3;
+    padding-top: 10px;
+    padding-bottom: 10px;
     &:hover {
-      @extend .deep-purple.lighten-2;
+      @extend .grey.darken-3;
     }
   }
   .active {
-    @extend .deep-purple.lighten-1,
-            .white-text;
-  }
-  .img-chat-profile {
-    margin-top: 7px;
-    max-width: 90%;
-    height: auto;
-  }
-  .sidebar-header {
-    padding: 8px;
-    font-weight: 600;
-    @extend .deep-purple.lighten-3;
+    @extend .grey.darken-3;
   }
   .loggedin-user {
     &:hover {
-      @extend .deep-purple.lighten-3;
-    }
-  }
-  .card {
-    margin: 0.3rem 0 0.5rem 0;
-
-    .card-content {
-      padding: 8px;
-    }
-    .card-action {
-      padding: 3px 8px 3px 8px;
-    }
-    p {
-      word-break: break-all;
+      @extend .grey.darken-1;
     }
   }
 
   #chat_form {
     .input-field {
-      margin-top: 0px;
+      margin-top: 0;
     }
     input {
       height: 37px;

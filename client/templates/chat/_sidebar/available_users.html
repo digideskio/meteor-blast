@@ -1,24 +1,15 @@
 <template name="chatSidebarAvailableUsers">
-    <div class="available-users side-panel fill-height flex-col">
-        <div class="side-title no-flex">
-            <div class="row no-margin">
-                    <div class="card-panel no-margin center-align sidebar-header">
-                        Available Users
-                    </div>
-            </div>
+    <div class="available-users side-panel fill-vh flex-col z-depth-2" style="width: 260px;">
+      {{> chatSidebarHeader}}
+      <div class="flex-1-1-auto grey darken-3 pad10">
+      {{#each usersLoggedIn}}
+        <div class="loggedin-user" data-userid="{{_id}}" style="padding: 5px;">
+            <img class="vert-middle" src="/images/chat/online.png" alt="Status: Online">
+            <img class="vert-middle z-depth-1" style="width: 30px; height: auto" src="{{profile.image}}">
+            <span class="white-text">{{profile.name}}</span>
         </div>
-        <div class="side-content flex-1-1-auto overflow-auto">
-            {{#each usersLoggedIn}}
-                <div class="loggedin-user row no-margin valign-wrapper" data-userid="{{_id}}" style="padding-top: 5px;">
-                    <div class="col m2 hide-on-small-and-down no-padding-right">
-                        <img class="responsive-img z-depth-1" style="max-height: 30px;" src="{{profile.image}}">
-                    </div>
-                    <div class="col s12 m10">
-                        {{profile.name}}
-                    </div>
-                </div>
-            {{/each}}
-        </div>
-        {{> chatSidebarFooter}}
+      {{/each}}
+      </div>
+      {{> chatSidebarFooter}}
     </div>
 </template>

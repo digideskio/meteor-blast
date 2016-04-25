@@ -1,16 +1,14 @@
 <template name="chatHome">
   {{#if Template.subscriptionsReady}}
-    <main class="chat-home pos-rel">
-      <div class="fill-height fill-width pos-abs">
-        <div class="row fill-height no-margin">
-          <div class="col s3 fill-height no-padding overflow-hidden deep-purple lighten-5">
+    <main class="chat-home">
+      <div class="flex-row">
+          <div class="flex-1-1-auto fill-vh">
             {{! Keep a reactive session variable for swapping the sidebar template }}
             {{> Template.dynamic template = (getValueOrDefault (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers" )}}
           </div>
-          <div class="col s9 fill-height overflow-auto no-margin no-padding">
+          <div class="flex-1-1-auto fill-vh">
             {{> chatMainPanelWindow}}
           </div>
-        </div>
       </div>
     </main>
   {{else}}

@@ -6,7 +6,7 @@ Meteor.startup(function () {
   sAlert.config({
     effect: '',
     position: 'bottom-right',
-    timeout: 3000,
+    timeout: 300000,
     html: false,
     onRouteClose: true,
     stack: false,

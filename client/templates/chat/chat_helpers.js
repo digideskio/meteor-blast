@@ -78,10 +78,16 @@ Template.chatHome.events({
     Session.set('sidebarTemplate', 'chatSidebarUserInfo'),
   "click .btn-settings": () =>
     Session.set('sidebarTemplate', 'chatSidebarSettings'),
+  "click .btn-rooms": () =>
+    Session.set('sidebarTemplate', 'chatSidebarRooms'),
+  "click .btn-help": () =>
+    Session.set('sidebarTemplate', 'chatSidebarHelp'),
   "click .loggedin-user": event => {
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
-  }
+  },
+  "click .alert": event =>
+    $(event.currentTarget).addClass('hide')
 });
 
 /**

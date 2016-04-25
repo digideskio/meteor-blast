@@ -13,14 +13,35 @@ export const Parse = {
 };
 
 // Available commands
-var commands = [
-  "time"
-];
+let Command = {
+  help: {
+    help: 'USAGE: /help <command>',
+    commandType: 'info',
+    exec: (args) => {
+        return (args && Command[args] && Command[args].help) ?
+          {
+            info: Command[args].help
+          } : {
+            error: "There is no help available for that command."
+          }
+    }
+  },
+  time: {
+    help: `USAGE: /time
+           Displays the server date & time.`,
+    commandType: 'info',
+    exec: () => {
+      return   {
+        'info': `Server time is currently: ${moment(Date.now()).format('MM/DD/YYYY hh:mm A')}`
+      }
+    }
+  }
+};
 
 /**
  * Parse the message for commands, etc
  */
-Parse.parse = (msg) => {
+Parse.parse = msg => {
 
   if (msg) {
     msg = msg.trim();
@@ -48,38 +69,29 @@ Parse.parse = (msg) => {
  * Returns true of the msg string begins with a '/' and an additional character
  * @param msg
  */
-Parse.isCommand = (msg) =>
+Parse.isCommand = msg =>
   (msg && msg.length > 1 && msg[0] === '/');
 
 /**
  * Runs the function that corresponds to a given command
  * @param msg
  */
-Parse.parseCommand = (msg) => {
+Parse.parseCommand = msg => {
   // Remove the '/' from the command
   // and any extra spaces
   msg = msg.slice(1).replace(/\s+/, ' ');
-  let command = msg, args = [];
+  let com = msg, args = [];
 
   if (msg.includes(' ')) {
-    command = msg.split(' ')[0];
+    com = msg.split(' ')[0];
     args = msg.split(' ').slice(1);
   }
 
-  if (commands.includes(command)) {
-    return Parse[command](args);
+  if (Object.keys(Command).includes(com)) {
+    return Command[com].exec(args);
   }
 
   return {
     'error': 'Invalid command.'
-  }
-};
-
-/**
- * time command
- */
-Parse.time = () => {
-  return   {
-    'info': `Server time is currently: ${moment(Date.now()).format('MM/DD/YYYY hh:mm A')}`
   }
 };

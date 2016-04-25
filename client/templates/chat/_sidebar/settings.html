@@ -1,75 +1,71 @@
 <template name="chatSidebarSettings">
-    <div class="settings side-panel fill-height flex-col">
-        <div class="side-title no-flex">
-            <div class="row no-margin">
-                <div class="card-panel no-margin center-align sidebar-header">
-                    Settings
-                </div>
-            </div>
+  <div class="available-users side-panel fill-vh flex-col z-depth-2" style="width: 260px;">
+    {{> chatSidebarHeader}}
+    <div class="flex-1-1-auto grey darken-3 pad10">
+      <div style="padding-bottom: 5px;">
+        <div class="display-inline-block white-text" style="width: 196px;">Hide Profile Images</div>
+        <div class="display-inline-block switch">
+          <label>
+            <input class="switch-setting" type="checkbox" data-name="profileImages" />
+            <span class="lever no-margin"></span>
+          </label>
         </div>
-        <div class="side-content flex-1-1-auto overflow-auto" style="margin-top: 10px;">
+      </div>
 
-            <div class="row margin-bottom-5">
-                <div class="col s8">Hide Profile Images</div>
-                <div class="col s4">
-                    <div class="switch">
-                        <label>
-                            <input class="switch-setting" type="checkbox" data-name="profileImages" />
-                            <span class="lever no-margin"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row margin-bottom-5">
-                <div class="col s8">Hide My Timestamps</div>
-                <div class="col s4">
-                    <div class="switch">
-                        <label>
-                            <input class="switch-setting" type="checkbox" data-name="timestamp" />
-                            <span class="lever no-margin"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row margin-bottom-5">
-                <div class="col s8">My Messages to Left</div>
-                <div class="col s4">
-                    <div class="switch">
-                        <label>
-                            <input class="switch-setting" type="checkbox" data-name="ownerMessagesLeft" />
-                            <span class="lever no-margin"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row margin-bottom-5">
-                <div class="col s12 center-align">
-                    Select a Chat Color
-                </div>
-            </div>
-            <div class="row no-margin-bottom">
-                <div class="col s3 color-palette red" data-color="red"></div>
-                <div class="col s3 color-palette pink" data-color="pink"></div>
-                <div class="col s3 color-palette purple" data-color="purple"></div>
-                <div class="col s3 color-palette deep-purple" data-color="deep-purple"></div>
-            </div>
-            <div class="row no-margin-bottom">
-                <div class="col s3 color-palette indigo" data-color="indigo"></div>
-                <div class="col s3 color-palette blue" data-color="blue"></div>
-                <div class="col s3 color-palette teal" data-color="teal"></div>
-                <div class="col s3 color-palette green" data-color="green"></div>
-            </div>
-            <div class="row margin-bottom-5">
-                <div class="col s3 color-palette amber" data-color="amber"></div>
-                <div class="col s3 color-palette orange" data-color="orange"></div>
-                <div class="col s3 color-palette brown" data-color="brown"></div>
-                <div class="col s3 color-palette grey" data-color="grey"></div>
-            </div>
-
+      <div style="padding-bottom: 5px;">
+        <div class="display-inline-block white-text" style="width: 196px;">Hide Timestamps</div>
+        <div class="display-inline-block switch">
+          <label>
+            <input class="switch-setting" type="checkbox" data-name="timestamp" />
+            <span class="lever no-margin"></span>
+          </label>
         </div>
-        {{> chatSidebarFooter}}
+      </div>
+
+      <div style="padding-bottom: 5px;">
+        <div class="display-inline-block white-text" style="width: 196px;">My Messages Right</div>
+        <div class="display-inline-block switch">
+          <label>
+            <input class="switch-setting" type="checkbox" data-name="ownerMessagesLeft" disabled/>
+            <span class="lever no-margin"></span>
+          </label>
+        </div>
+      </div>
+
+      <div style="padding-bottom: 5px;">
+        <div class="display-inline-block white-text" style="width: 196px;">Turn Off Chat Colors</div>
+        <div class="display-inline-block switch">
+          <label>
+            <input class="switch-setting" type="checkbox" data-name="chatColors" disabled/>
+            <span class="lever no-margin"></span>
+          </label>
+        </div>
+      </div>
+
+        <div class="row margin-bottom-5">
+          <div class="text-center white-text">
+            Select a Chat Color
+          </div>
+        </div>
+        <div class="row no-margin-bottom">
+          <div class="col s3 color-palette red" data-color="red"></div>
+          <div class="col s3 color-palette pink" data-color="pink"></div>
+          <div class="col s3 color-palette purple" data-color="purple"></div>
+          <div class="col s3 color-palette deep-purple" data-color="deep-purple"></div>
+        </div>
+        <div class="row no-margin-bottom">
+          <div class="col s3 color-palette indigo" data-color="indigo"></div>
+          <div class="col s3 color-palette blue" data-color="blue"></div>
+          <div class="col s3 color-palette teal" data-color="teal"></div>
+          <div class="col s3 color-palette green" data-color="green"></div>
+        </div>
+        <div class="row margin-bottom-5">
+          <div class="col s3 color-palette amber" data-color="amber"></div>
+          <div class="col s3 color-palette orange" data-color="orange"></div>
+          <div class="col s3 color-palette brown" data-color="brown"></div>
+          <div class="col s3 color-palette grey" data-color="grey"></div>
+        </div>
     </div>
+    {{> chatSidebarFooter}}
+  </div>
 </template>

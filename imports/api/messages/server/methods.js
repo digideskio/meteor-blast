@@ -10,8 +10,8 @@ Meteor.methods({
    * @param msg
    */
   addChatMessage: function(msg) {
-    if (msg.message) {
-      Messages.insert({_userId: this.userId, message: msg.message, date: new Date()});
+    if (msg && msg.message && msg.message.length) {
+      Messages.insert({_userId: Meteor.userId(), message: msg.message, date: new Date()});
     }
   }
 

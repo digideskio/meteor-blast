@@ -1,70 +1,59 @@
 <template name="chatMainPanelWindow">
-    <div class="fill-height flex-col grey lighten-4">
-        <div class="chat-window flex-1-1-auto overflow-auto">
-            {{#each messages}}
-                {{! Simple check to see if the message owner still exists}}
-                {{#if userExists _userId}}
-                    {{! If the user viewing the message is the owner}}
-                    {{#if equals currentUser._id _userId}}
-                        <div class="row no-margin">
-                            <div class="col s12 m8 {{#unless currentUser.settings.ownerMessagesLeft}}offset-m4{{/unless}}">
-                                <div class="card
-                                {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "blue"}}{{/with}}">
-                                    {{#unless currentUser.settings.timestamp}}
-                                        <div class="card-action info-timestamp {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}} lighten-2">
-                                            <span class="white-text">{{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}</span>
-                                        </div>
-                                    {{/unless}}
-                                    <div class="card-content">
-                                        <span class="white-text">{{#markdown}}{{message}}{{/markdown}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    {{else}}
-                    {{! Not the owner of the message}}
-                        <div class="row no-margin">
-                            {{#unless currentUser.settings.profileImages}}
-                            {{#with getUser _userId}}
-                                <div class="col m1 hide-on-small-and-down no-padding-right">
-                                    <img class="img-chat-profile z-depth-2" src="{{profile.image}}">
-                                </div>
-                            {{/with}}
-                            {{/unless}}
-                            <div class="col s12 m8">
-                                <div class="card {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}}">
-                                        <div class="card-action info-timestamp {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}} lighten-2">
-                                            <span class="white-text">
-                                                {{#with getUser _userId}}{{profile.name}}{{/with}} at {{dateFormat date}}
-                                            </span>
-                                        </div>
-                                    <div class="card-content">
-                                        <p>
-                                            <span class="white-text">
-                                                {{#markdown}}{{message}}{{/markdown}}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {{/if}}
-                {{/if}}
-            {{/each}}
-        </div>
-
-        <div class="no-flex deep-purple lighten-5">
-            <div class="row no-margin">
-                <form id="chat_form" class="new-message" method="post">
-                    <div class="input-field">
-                        <input class="col s11 validate no-margin no-border" type="text"
-                               placeholder="What would you like to say?" name="message" id="message"
-                               autocomplete="off" />
-                        <button class="col s1 btn deep-purple lighten-1"><i class="fa fa-comment"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="fill-height flex-col">
+    <div class="topic-holder flex-1-1-auto z-depth-2">
+      <div class="pad10">
+        <span class="room">#Meteor-Blast: </span>
+        <span class="topic grey-text text-darken-3">Set a topic</span>
+      </div>
     </div>
+    <div class="chat-window flex-1-1-auto overflow-auto">
+      {{#each messages}}
+      {{! Simple check to see if the message owner still exists}}
+        {{#if userExists _userId}}
+        {{! If the user viewing the message is the owner}}
+        {{! if equals currentUser._id _userId}}
+          <div class="flex-row pad10">
+            {{#unless currentUser.settings.profileImages}}
+            <div style="flex: 0 0 60px;">
+              {{#with getUser _userId}}
+                <img class="z-depth-1" style="width: 50px;" src="{{profile.image}}">
+              {{/with}}
+            </div>
+            {{/unless}}
+            <div class="flex-1-1-auto">
+              <div>
+                <span class="grey-text text-darken-3" style="font-weight: 600">{{#with getUser _userId}}{{profile.name}}{{/with}}</span>
+                {{#unless currentUser.settings.timestamp}}
+                  <span class="grey-text text-darken-1" style="font-weight: 400">{{dateFormat date}}</span>
+                {{/unless}}
+              </div>
+              <div style="font-weight: 600;"
+                   class="message {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}}-text">
+                  {{#markdown}}{{message}}{{/markdown}}
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+
+    <div class="alert {{alertType}}" style="position: absolute; bottom: 50px; z-index: 100;">
+      <div class="container blue" style="padding: 15px; font-weight: 700;">
+        Please enter a message.
+      </div>
+    </div>
+
+    <div class="no-flex deep-purple lighten-5">
+      <div class="row no-margin">
+        <form id="chat_form" class="new-message" method="post">
+          <div class="input-field">
+            <input class="col s11 validate no-margin no-border" type="text"
+                   placeholder="What would you like to say?" name="message" id="message"
+                   autocomplete="off" />
+            <button class="col s1 btn deep-purple lighten-1"><i class="fa fa-comment"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>

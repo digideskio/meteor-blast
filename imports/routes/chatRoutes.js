@@ -23,6 +23,6 @@ var chatRoutes = FlowRouter.group({
 chatRoutes.route('/', {
   name: 'chat',
   action: function() {
-    BlazeLayout.render("layout", {content: "chatHome"});
+    BlazeLayout.render("layout", {content: "chatHome", nav: "none", footer: "none"});
   }
 });

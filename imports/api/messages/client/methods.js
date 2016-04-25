@@ -12,7 +12,11 @@ Meteor.methods({
    */
   addChatMessage: function(msg) {
 
-    if (msg.message) {
+    if (!msg) {
+      return;
+    }
+
+    if (msg.message && msg.message.length) {
       Messages.insert({_userId: Meteor.userId(), message: msg.message, date: new Date()});
     }
     if (msg.info) {
