@@ -1,11 +1,15 @@
 <template name="chatMainPanelWindow">
   <div class="fill-height flex-col">
+
+    {{! Room name / Topic area }}
     <div class="topic-holder flex-1-1-auto z-depth-2">
       <div class="pad10">
         <span class="room">#Meteor-Blast: </span>
         <span class="topic grey-text text-darken-3">Set a topic</span>
       </div>
     </div>
+
+    {{! Chat window with messages }}
     <div class="chat-window flex-1-1-auto overflow-auto">
       {{#each messages}}
       {{! Simple check to see if the message owner still exists}}
@@ -37,23 +41,30 @@
       {{/each}}
     </div>
 
+    {{! Alert messages }}
     <!--<div class="alert {{alertType}}" style="position: absolute; bottom: 50px; z-index: 100;">-->
       <!--<div class="container blue" style="padding: 15px; font-weight: 700;">-->
         <!--Please enter a message.-->
       <!--</div>-->
     <!--</div>-->
 
-    <div class="no-flex deep-purple lighten-5">
-      <div class="row no-margin">
-        <form id="chat_form" class="new-message" method="post">
-          <div class="input-field">
-            <input class="col s11 validate no-margin no-border" type="text"
-                   placeholder="What would you like to say?" name="message" id="message"
-                   autocomplete="off" />
-            <button class="col s1 btn deep-purple lighten-1"><i class="fa fa-comment"></i></button>
-          </div>
+    {{! New Message Input area}}
+    <div style="flex: 1 1 37px;">
+      <div class="flex-row new-message grey lighten-3" style="align-items: center;">
+        <form id="chat_form" class="flex-1-1-auto fill-width no-border no-margin" method="post">
+          <input class="no-border no-margin new-message-input"
+                 type="text" placeholder="What would you like to say?"
+                 name="message" id="message"
+                 autocomplete="off" />
         </form>
+        <div class="chat-btn btn-chat flex-1-1-auto"><i class="fa fa-comment"></i></div>
+        <div class="chat-btn btn-scroll flex-1-1-auto"><i class="fa fa-arrow-down"></i></div>
+        <div class="chat-btn btn-expand flex-1-1-auto"><i class="fa fa-expand"></i></div>
+        <div class="chat-btn btn-compress flex-1-1-auto hide"><i class="fa fa-compress"></i></div>
       </div>
     </div>
+
+
+
   </div>
 </template>

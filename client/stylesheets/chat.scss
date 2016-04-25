@@ -17,6 +17,11 @@
       word-break: break-all;
       margin: 0;
     }
+    code {
+      background-color: black;
+      padding: 0 10px;
+      color: cornsilk;
+    }
   }
   .btn-info {
     padding-top: 10px;
@@ -35,15 +40,17 @@
   }
 
   #chat_form {
-    .input-field {
-      margin-top: 0;
-    }
     input {
       height: 37px;
+      padding-left: 10px;
     }
-    button {
-      height: 37px;
-      overflow: hidden;
+  }
+
+  .chat-btn {
+    padding: 10px;
+    @extend .deep-purple, .white-text;
+    &:hover {
+      @extend .darken-3;
     }
   }
 

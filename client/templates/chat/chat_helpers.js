@@ -71,7 +71,12 @@ Template.chatHome.events({
     // Auto scroll to the bottom of the page
     scrollToBottom();
   },
+  // Buttons by the message input
+  "click .btn-chat": () => $('#chat_form').submit(),
   "click .btn-scroll": () => scrollToBottom(),
+  "click .btn-expand, click .btn-compress": () =>
+    $('.sidebar-panel, .btn-expand, .btn-compress').toggleClass('hide'),
+  // Buttons in the sidebar header
   "click .btn-available-users": () =>
     Session.set('sidebarTemplate', 'chatSidebarAvailableUsers'),
   "click .btn-user-info": () =>
@@ -82,10 +87,12 @@ Template.chatHome.events({
     Session.set('sidebarTemplate', 'chatSidebarRooms'),
   "click .btn-help": () =>
     Session.set('sidebarTemplate', 'chatSidebarHelp'),
+  // Clicking on a user in the available users panel
   "click .loggedin-user": event => {
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
   },
+  // Hide an alert when it's clicked
   "click .alert": event =>
     $(event.currentTarget).addClass('hide')
 });
@@ -115,6 +122,14 @@ Template.chatSidebarSettings.events({
  * into the DOM, especially from a #each block, has completed.
  */
 Template.chatHome.onCreated(() => {
+  // If a key is pressed anywhere but within our
+  // input field, let's set focus back to the message input bad
+  $(document).on('keydown', function(event) {
+    if (!$(event.target).is('input')) {
+      event.preventDefault();
+      $('.new-message-input').focus();
+    }
+  });
   // Init Session profileId for viewing profiles &
   // Set the sidebar template
   Session.set({
