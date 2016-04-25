@@ -1,5 +1,5 @@
 <template name="chatMainPanelWindow">
-  <div class="fill-height flex-col">
+  <div class="fill-height flex-col pos-rel">
 
     {{! Room name / Topic area }}
     <div class="topic-holder flex-1-1-auto z-depth-2">
@@ -10,7 +10,7 @@
     </div>
 
     {{! Chat window with messages }}
-    <div class="chat-window flex-1-1-auto overflow-auto">
+    <div class="chat-window flex-1-1-auto overflow-auto pos-rel">
       {{#each messages}}
       {{! Simple check to see if the message owner still exists}}
         {{#if userExists _userId}}
@@ -41,13 +41,6 @@
       {{/each}}
     </div>
 
-    {{! Alert messages }}
-    <!--<div class="alert {{alertType}}" style="position: absolute; bottom: 50px; z-index: 100;">-->
-      <!--<div class="container blue" style="padding: 15px; font-weight: 700;">-->
-        <!--Please enter a message.-->
-      <!--</div>-->
-    <!--</div>-->
-
     {{! New Message Input area}}
     <div style="flex: 1 1 37px;">
       <div class="flex-row new-message grey lighten-3" style="align-items: center;">
@@ -64,7 +57,8 @@
       </div>
     </div>
 
-
+    {{! For alerts}}
+    {{> sAlert}}
 
   </div>
 </template>

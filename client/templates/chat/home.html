@@ -1,17 +1,19 @@
 <template name="chatHome">
-  {{#if Template.subscriptionsReady}}
-    <main class="chat-home">
+
+  <main class="chat-home">
       <div class="flex-row">
           <div class="flex-1-1-auto fill-vh sidebar-panel">
             {{! Keep a reactive session variable for swapping the sidebar template }}
             {{> Template.dynamic template = (getValueOrDefault (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers" )}}
           </div>
-          <div class="flex-1-1-auto fill-vh fill-width">
+          <div class="flex-1-1-auto fill-vh fill-width" style="position: relative;">
             {{> chatMainPanelWindow}}
+            {{#if Template.subscriptionsReady}}
+            {{else}}
+              {{> loading}}
+            {{/if}}
           </div>
+
       </div>
     </main>
-  {{else}}
-    {{> loading}}
-  {{/if}}
 </template>

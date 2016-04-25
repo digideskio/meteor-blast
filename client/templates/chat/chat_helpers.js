@@ -91,10 +91,8 @@ Template.chatHome.events({
   "click .loggedin-user": event => {
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
-  },
-  // Hide an alert when it's clicked
-  "click .alert": event =>
-    $(event.currentTarget).addClass('hide')
+    Template.instance().subscribe('messages', 150);
+  }
 });
 
 /**
@@ -122,6 +120,7 @@ Template.chatSidebarSettings.events({
  * into the DOM, especially from a #each block, has completed.
  */
 Template.chatHome.onCreated(() => {
+
   // If a key is pressed anywhere but within our
   // input field, let's set focus back to the message input bad
   $(document).on('keydown', function(event) {
@@ -130,6 +129,7 @@ Template.chatHome.onCreated(() => {
       $('.new-message-input').focus();
     }
   });
+
   // Init Session profileId for viewing profiles &
   // Set the sidebar template
   Session.set({

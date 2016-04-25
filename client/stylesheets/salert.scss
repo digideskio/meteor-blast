@@ -1,0 +1,15 @@
+@import "main";
+@import "classes";
+
+.s-alert-box {
+
+}
+.s-alert-bottom-left {
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  @extend .z-depth-2;
+  &:hover {
+
+  }
+}
