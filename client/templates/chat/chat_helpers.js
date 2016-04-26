@@ -7,11 +7,14 @@ import { Markdown } from 'meteor/markdown';
 import { Messages } from '/imports/api/messages/messages.js'
 import { Session } from 'meteor/session';
 import { $ } from 'meteor/jquery';
-import { Parse } from '/imports/parse.js';
 import { sAlert } from 'meteor/juliancwirko:s-alert';
 
 // Import npm packages
 import moment from 'moment';
+
+// Import our packages
+import { Parse } from '/imports/parse.js';
+import { Keyboard } from '/imports/keyboard.js';
 
 /**
  * Functions available only within the scope of this file
@@ -92,7 +95,7 @@ Template.chatHome.events({
   "click .loggedin-user": event => {
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
-    Template.instance().subscribe('messages', 150);
+    // Template.instance().subscribe('messages', 150);
   },
   "click .s-alert-box": event => sAlert.closeAll()
 });
@@ -126,8 +129,12 @@ Template.chatHome.onCreated(() => {
   // If a key is pressed anywhere but within our
   // input field, let's set focus back to the message input bad
   $(document).on('keydown', function(event) {
+    console.log(event);
     if (!$(event.target).is('input')) {
       event.preventDefault();
+      if (Keyboard.isKey(Keyboard.BACKSPACE, event)) {
+       sAlert.info("The backspace key has been disabled.");
+      }
       $('.new-message-input').focus();
     }
   });
