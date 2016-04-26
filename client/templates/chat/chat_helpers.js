@@ -8,6 +8,7 @@ import { Messages } from '/imports/api/messages/messages.js'
 import { Session } from 'meteor/session';
 import { $ } from 'meteor/jquery';
 import { Parse } from '/imports/parse.js';
+import { sAlert } from 'meteor/juliancwirko:s-alert';
 
 // Import npm packages
 import moment from 'moment';
@@ -92,7 +93,8 @@ Template.chatHome.events({
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
     Template.instance().subscribe('messages', 150);
-  }
+  },
+  "click .s-alert-box": event => sAlert.closeAll()
 });
 
 /**
