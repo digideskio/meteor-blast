@@ -1,7 +1,7 @@
 <template name="chatSidebarAvailableUsers">
     <div class="available-users side-panel fill-vh flex-col z-depth-2" style="width: 260px;">
       {{> chatSidebarHeader}}
-      <div class="flex-1-1-auto grey darken-3 pad10">
+      <div class="flex-1-1-auto grey darken-3 pad10 overflow-auto">
       {{#each usersLoggedIn}}
         <div class="loggedin-user" data-userid="{{_id}}" style="padding: 5px;">
             <img class="vert-middle" src="/images/chat/online.png" alt="Status: Online">

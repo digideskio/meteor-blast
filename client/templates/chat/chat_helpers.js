@@ -126,19 +126,6 @@ Template.chatSidebarSettings.events({
  */
 Template.chatHome.onCreated(() => {
 
-  // If a key is pressed anywhere but within our
-  // input field, let's set focus back to the message input bad
-  $(document).on('keydown', function(event) {
-    console.log(event);
-    if (!$(event.target).is('input')) {
-      event.preventDefault();
-      if (Keyboard.isKey(Keyboard.BACKSPACE, event)) {
-       sAlert.info("The backspace key has been disabled.");
-      }
-      $('.new-message-input').focus();
-    }
-  });
-
   // Init Session profileId for viewing profiles &
   // Set the sidebar template
   Session.set({
@@ -159,6 +146,46 @@ Template.chatHome.onCreated(() => {
     if (!Meteor.userId()) {
       FlowRouter.go('/');
     }
+  });
+
+  /*
+   * Handling key events -
+   * Disabling keys outside of the message field and creating some
+   * keyboard shortcuts
+   */
+  $(document).on('keydown', function(event) {
+    // Setting up some commands anywhere
+    // ALT is our command key, so prevent it from doing anything by itself
+    if (Keyboard.isKey(Keyboard.ALT, event)) {
+      event.preventDefault();
+    }
+    // ALT + T - simulate the /time command
+    if (Keyboard.isKey(Keyboard.T, event, {altKey: true})) {
+      Meteor.call("addChatMessage", Parse.parse("/time"));
+      return;
+    }
+    else if (Keyboard.isKey(Keyboard.DOWN_ARROW, event, {altKey: true})) {
+      scrollToBottom();
+      return;
+    }
+
+    // Outside of the message field
+    // Send the focus back to the message field on all keys expect up, down, and alt
+    if (!$(event.target).is('input') &&
+        !Keyboard.isKey([Keyboard.DOWN_ARROW, Keyboard.UP_ARROW, Keyboard.ALT], event)) {
+      event.preventDefault();
+      // Showing an example of alerting the user on
+      // a keydown outside of the message field.
+      if (Keyboard.isKey(Keyboard.BACKSPACE, event)) {
+        sAlert.info("The backspace key has been disabled.");
+      }
+      // Return focus to the message field
+      $('.new-message-input').focus();
+    } else {
+      // Inside the message field
+
+    }
+
   });
 
 });

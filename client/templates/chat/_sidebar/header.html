@@ -1,18 +1,26 @@
 <template name="chatSidebarHeader">
-  <div class="no-flex white-text no-wrap text-center grey darken-3 pad10">
-    <img class="vert-middle" style="width: 35px; height: auto;" src="{{currentUser.profile.image}}" alt="{{currentUser.profile.name}}">
-    <span class="vert-middle" style="font-size: 26px; font-weight: 700;">Meteor Blast</span>
-  </div>
-  <div class="flex-row white-text grey darken-2 text-center">
-    <i data-template="chatSidebarRooms" class="flex-1-1-auto btn-info fa fa-hashtag btn-rooms
-      {{#if equals (getSessionData "sidebarTemplate") "chatSidebarRooms"}}active{{/if}}"></i>
-    <i data-template="chatSidebarAvailableUsers" class="flex-1-1-auto btn-info fa fa-users btn-available-users
-      {{#if equals (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers"}}active{{/if}}"></i>
-    <i data-template="chatSidebarUserInfo" class="flex-1-1-auto btn-info fa fa-info-circle btn-user-info
-      {{#if equals (getSessionData "sidebarTemplate") "chatSidebarUserInfo"}}active{{/if}}"></i>
-    <i data-template="chatSidebarSettings" class="flex-1-1-auto btn-info fa fa-cog btn-settings
-      {{#if equals (getSessionData "sidebarTemplate") "chatSidebarSettings"}}active{{/if}}"></i>
-    <i data-template="chatSidebarHelp" class="flex-1-1-auto btn-info fa fa-question-circle btn-help
-      {{#if equals (getSessionData "sidebarTemplate") "chatSidebarHelp"}}active{{/if}}"></i>
+  <div>
+    <div class="no-flex white-text no-wrap grey darken-3 pad10">
+      <div class="display-inline-block">
+        <img class="vert-middle z-depth-1" style="width: 35px; height: auto;" src="{{currentUser.profile.image}}" alt="{{currentUser.profile.name}}">
+      </div>
+      <div class="display-inline-block text-center" style="padding-left: 20px;">
+        <span class="vert-middle" style="font-size: 26px; font-weight: 700;">
+          <a href="/" class="white-text">Meteor Blast</a>
+        </span>
+      </div>
+    </div>
+    <div class="flex-row white-text grey darken-2 text-center">
+      <i data-template="chatSidebarRooms" class="flex-1-1-auto btn-info fa fa-hashtag btn-rooms
+        {{#if equals (getSessionData "sidebarTemplate") "chatSidebarRooms"}}active{{/if}}"></i>
+      <i data-template="chatSidebarAvailableUsers" class="flex-1-1-auto btn-info fa fa-users btn-available-users
+        {{#if equals (getSessionData "sidebarTemplate") "chatSidebarAvailableUsers"}}active{{/if}}"></i>
+      <i data-template="chatSidebarUserInfo" class="flex-1-1-auto btn-info fa fa-info-circle btn-user-info
+        {{#if equals (getSessionData "sidebarTemplate") "chatSidebarUserInfo"}}active{{/if}}"></i>
+      <i data-template="chatSidebarSettings" class="flex-1-1-auto btn-info fa fa-cog btn-settings
+        {{#if equals (getSessionData "sidebarTemplate") "chatSidebarSettings"}}active{{/if}}"></i>
+      <i data-template="chatSidebarHelp" class="flex-1-1-auto btn-info fa fa-question-circle btn-help
+        {{#if equals (getSessionData "sidebarTemplate") "chatSidebarHelp"}}active{{/if}}"></i>
+    </div>
   </div>
 </template>

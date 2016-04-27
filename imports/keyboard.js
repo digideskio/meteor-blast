@@ -107,12 +107,29 @@ export const Keyboard = {
 
   /**
    * Returns true if a keyboard event matches a corresponding keycode
-   * @param keyCode The integer value of the keyCode
+   * @param keyCode The integer value of the keyCode or an array of integer values
    * @param event The keyboard event
    * @param options maps extra options to the key event
    * @returns {boolean}
    */
-  isKey: (keyCode, event, options) => {
-    return keyCode === event.keyCode;
+  isKey: (keyCode, event, options = {}) => {
+    if (!event) {
+      throw new Error("keyboard.js: isKey is missing event param.");
+    }
+    let result = (Array.isArray(keyCode)) ?
+      keyCode.includes(event.keyCode) :
+      keyCode == event.keyCode;
+
+    if (typeof options === 'object') {
+      for (let key in options) {
+        if (options.hasOwnProperty(key))
+          result = result && (options[key] == event[key]);
+      }
+    } else {
+      throw new Error("keyboard.js: isKey options is not an object.");
+    }
+    return result;
   }
+
+
 };

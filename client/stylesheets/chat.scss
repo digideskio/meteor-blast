@@ -42,8 +42,9 @@
   #chat_form {
     input {
       height: 37px;
-      padding-left: 10px;
     }
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
   .chat-btn {
@@ -58,6 +59,20 @@
     height: 30px;
     &:hover {
       @extend .lighten-2;
+    }
+  }
+
+  .side-panel {
+    ul {
+      padding-left: 15px;
+    }
+    li.list-header {
+      font-weight: 500;
+      list-style-type: none;
+      text-align: center;
+    }
+    li {
+      list-style-type: disc;
     }
   }
 }

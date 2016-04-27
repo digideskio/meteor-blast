@@ -1,21 +1,47 @@
 <template name="chatSidebarHelp">
-  <div class="available-users side-panel fill-vh flex-col z-depth-2" style="width: 260px;">
+  <div class="side-panel fill-vh flex-col z-depth-2" style="width: 260px;">
     {{> chatSidebarHeader}}
-    <div class="flex-1-1-auto grey darken-3 pad10 white-text fill-width">
-      <p>Current Version: 0.1.1</p>
-
-      <p>
-        <b>Known Issues</b><br />
-        - Chat layout broken in IE<br />
-        - Scrolling all the way to bottom on load<br />
-      </p>
-      <p>
-      <b>Version 0.1.1</b><br />
-        - Updated alerts for errors and info<br />
-        - Disabled keys outside chat bar<br />
-        - Added buttons by chat bar<br />
-        - Added versioning<br />
-      </p>
+    <div class="flex-1-1-auto grey darken-3 pad10 white-text fill-width overflow-auto">
+      <ul>
+        <li class="list-header">Current Version: 0.1.2</li>
+      </ul>
+      <ul>
+        <li class="list-header">Commands</li>
+        <li>/time (Alt + T): Show server time</li>
+      </ul>
+      <ul>
+        <li class="list-header">Known Issues</li>
+        <li>Chat layout broken in IE</li>
+        <li>Scrolling all the way to bottom on load</li>
+        <li>Chat layout broken when adding "nav" back in</li>
+      </ul>
+      <ul>
+        <li class="list-header">ToDos</li>
+        <li>Make an Admin dashboard</li>
+        <li>/topic command</li>
+        <li>group messages by same user for space</li>
+        <li>Allow "Load More" messages</li>
+        <li>Scrollbar stylings</li>
+        <li>Add dropdown menu to profile icon in side header</li>
+        <li>Style loading screen and have it cover only chat window</li>
+      </ul>
+      <ul>
+        <li class="list-header">Version 0.1.2</li>
+        <li>Added support for key/shortcut commands</li>
+        <li>Added Alt + T for time</li>
+        <li>Added Alt + Down Arrow to scroll to bottom from anywhere</li>
+        <li>Made sidebar header link to "home"</li>
+        <li>Fixed padding issue in message field</li>
+        <li>Fixed scrolling and header sizing in sidebar</li>
+        <li>Updated default profile image set to better show shading</li>
+      </ul>
+      <ul>
+        <li class="list-header">Version 0.1.1</li>
+        <li>Updated alerts for errors and info</li>
+        <li>Disabled keys outside chat bar</li>
+        <li>Added buttons by chat bar</li>
+        <li>Added versioning</li>
+      </ul>
     </div>
     {{> chatSidebarFooter}}
   </div>
