@@ -15,17 +15,17 @@ Users are initially:
 
 * [accounts-facebook](https://atmospherejs.com/meteor/accounts-facebook) - Easy configurable login with facebook!
 * [accounts-password](https://atmospherejs.com/meteor/accounts-password) - Takes care of passwords, so you don't have to.
-* [accounts-twitter](https://atmospherejs.com/meteor/accounts-twitter) - Easy configurable login with twitter! 
+* [accounts-twitter](https://atmospherejs.com/meteor/accounts-twitter) - Easy configurable login with twitter!
 * [alanning:roles](https://github.com/alanning/meteor-roles/) - Support for groups and roles for users
-* [ian:accounts-ui-bootstrap-3](https://github.com/ianmartorell/meteor-accounts-ui-bootstrap-3/) - Templating with bootstrap for logging in
-* [iron:router](https://github.com/iron-meteor/iron-router/) - The go to router for Meteor 
+* [poetic:materialize-scss](https://github.com/poetic/meteor-materialize-scss/) - Templating with MaterializeCSS
+* [kadira:flowrouter](https://github.com/kadirahq/flow-router) - The go to router for Meteor
 * [lepozepo:accounting](https://github.com/Lepozepo/meteor-accounting/) - Working with currency data.
 * [less](https://atmospherejs.com/meteor/less) - For writing less
 * [mizzao:user-status](https://github.com/mizzao/meteor-user-status/) - Popular package for tracking user online status
 * [momentjs:moment](https://github.com/moment/moment/) - Formatting dates with ease.
 * [pecl:loading](https://github.com/pcel/meteor-loading) - Loading screen for subscribing to lots of data.
 * [percolate:migrations](https://github.com/percolatestudio/meteor-migrations/) - Support for migrations on startup
-* [twbs:bootstrap](https://github.com/twbs/bootstrap/) - The popular and easy to use framework for html/css/js.
+
 
 #### Packages removed
 
@@ -60,13 +60,14 @@ client
   ├─── stylesheets
   └─── templates
       ├─── _partials
+      ├─── admin
       ├─── app
       ├─── chat
       └─── home
   main.js
 ````
 
-The `client` folder holds everything that will be loaded to and accessible by the client. It's important to note that anything that you wrap in `if (Meteor.isServer) { ... }` won't be accessible by client code, but could still be viewed by the client. Make sure to keep anything sensitive, like passwords, API keys, etc in folders that are only available to the server. Again, the substructure of `client` is up to you. In the case of this boilerplate, I keep all client configurations, like account.js, in `config`. All css (there are less compiler packages) and other things related to styling in `stylesheets`. I like to separate templates by `_partials`: snippets and includes used my multiple templates, `app`: templates used throughout the app, like 404.html, and then folders structured by routes. 
+The `client` folder holds everything that will be loaded to and accessible by the client. It's important to note that anything that you wrap in `if (Meteor.isServer) { ... }` won't be accessible by client code, but could still be viewed by the client. Make sure to keep anything sensitive, like passwords, API keys, etc in folders that are only available to the server. Again, the substructure of `client` is up to you. In the case of this boilerplate, I keep all client configurations, like account.js, in `config`. All css (there are less compiler packages) and other things related to styling in `stylesheets`. I like to separate templates by `_partials`: snippets and includes used my multiple templates, `app`: templates used throughout the app, like 404.html, and then folders structured by routes.
 
 #### `imports` subfolder
 
@@ -74,16 +75,22 @@ The `client` folder holds everything that will be loaded to and accessible by th
 imports
   └─── api
       └─── messages
-          └─── client
-          └─── server
-          messages.js
+            ├─── client
+            └─── server
+            messages.js
+      └─── pages
+            ├─── client
+            └─── server
+             pages.js
+      └─── users
+            ├─── client
+            └─── server
+
   └─── config
-      ├─── _partials
-      ├─── app
-      ├─── chat
-      └─── home
+      └─── client
   └─── migrations
-  main.js
+  keyboard.js
+  parse.js
 ````
 
 The `imports` folder is ignored by Meteor initially. Nothing here is loaded until explicitly directed to by the app. Starting in 1.3 Meteor is moving away from the "globals everywhere" approach that made most of it magical to begin with. Now your entire api, all your collections, should be placed here and loaded as needed by the app. If an import is made on a directory, it will try and find the `index.js` file. If you look in `/imports/api/messages/server` you'll see such a file with a few import statements. We can then make an import in our `/server/main.js` file that looks like `import '/imports/api/messages/server/';` and it will run the `index.js` file and thus the imports there. If we do things this way, when we add more files to certain directories, we can update the individual `index.js` files without having to update the import statement in our `main.js` entry points for the client and server.
@@ -92,10 +99,7 @@ The `imports` folder is ignored by Meteor initially. Nothing here is loaded unti
 
 ```
 lib
-  ├─── collections
-  ├─── constants
-  ├─── methods
-  └─── routes
+    destoy_global_objects.js
 ```
 
 The `lib` folder is accessible by both the client and the server. It's where your routes are going to be located, and setting up your mongo collections. It's important to remember not to put any sensitive information here. The exception to this is setting up your collections. As long as you don't have the autopublish and insecure packages installed, collections will only be available to the client on a publish/subscribe basis. This is a good place to create some constants that you might want available the client/server. This is also a good place for Meteor methods. You can create the same Method in the lib and the server and it will work fine, with the client calling the `lib` method and the server calling the `server` method at the same time. See the method files already available for additional comments.
@@ -122,8 +126,6 @@ The `public` subfolder is available to the server and the client, but acts like 
 
 ```
 server
-  ├─── migrations
-  └─── publications
   main.js
 ```
 
