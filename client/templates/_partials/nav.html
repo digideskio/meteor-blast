@@ -1,7 +1,13 @@
 <template name="nav">
     <nav class="black text-white" role="navigation">
+
+        <ul id="adminDropDown" class="dropdown-content">
+            <li class="{{#if isRouteName 'AdminHome'}}active{{/if}}"><a href="/admin">Admin Link</a></li>
+            <li class="{{#if isRouteName 'AdminUsers'}}active{{/if}}"><a href="/admin/users">User Management</a></li>
+        </ul>
+        
         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo">Meteor Blast</a>
+            <a id="logo-container" href="/" class="brand-logo">Meteor Blast</a>
             <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars"></i></a>
             <ul class="right hide-on-med-and-down">
                 <li class="{{#if isRouteName 'home'}}active{{/if}}"><a href="/">Home</a></li>
@@ -11,10 +17,12 @@
                     <li class="{{#if isRouteName 'chat'}}active{{/if}}"><a href="/chat">Chat</a></li>
                 {{/if}}
                 {{#if isInRole 'admin' 'admin-group'}}
-                    <li><a href="#">Admin Link</a></li>
+                <li><a class="dropdown-button" href="#!" data-activates="adminDropDown">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
                 {{/if}}
                 <li>{{> loginButtons}}</li>
             </ul>
+
+
 
             <ul id="nav-mobile" class="side-nav">
                 <li class="{{#if isRouteName 'home'}}active{{/if}}"><a href="/">Home</a></li>
@@ -24,7 +32,10 @@
                     <li class="{{#if isRouteName 'chat'}}active{{/if}}"><a href="/chat">Chat</a></li>
                 {{/if}}
                 {{#if isInRole 'admin' 'admin-group'}}
-                    <li><a href="#">Admin Link</a></li>
+                    <ul id="adminDropDown" class="dropdown-content">
+                        <li><a href="/admin">Admin Link</a></li>
+                        <li><a href="/admin/users">User Management</a></li>
+                    </ul>
                 {{/if}}
                 <li>{{> loginButtons}}</li>
 

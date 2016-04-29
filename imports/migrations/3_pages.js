@@ -10,6 +10,7 @@ Migrations.add({
     up: function() {
         Pages.insert({name: 'homeIndex', title: 'Welcome to the Homepage', subtitle: 'Some catchy subtitle'});
         Pages.insert({name: 'homeAbout', title: 'About Us', subtitle: 'Some stuff about us.', text: 'Some paragraph style stuff about us'});
+        Pages.insert({name: 'AdminHome', title: 'Admin Page', subtitle: 'Admin Stuffs', text: 'Nore Admin Stuffs'});
     },
     down: function() {
         Pages.remove();

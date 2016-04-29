@@ -1,0 +1,32 @@
+<nav class="black text-white" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="/" class="brand-logo">Meteor Blast</a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="fa fa-bars"></i></a>
+        <ul class="right hide-on-med-and-down">
+            <li class="{{#if isRouteName 'home'}}active{{/if}}"><a href="/">Home</a></li>
+            <li class="{{#if isRouteName 'about'}}active{{/if}}"><a href="/about">About</a></li>
+            <li class="{{#if isRouteName 'contact'}}active{{/if}}"><a href="/contact">Contact</a></li>
+            {{#if currentUser}}
+                <li class="{{#if isRouteName 'chat'}}active{{/if}}"><a href="/chat">Chat</a></li>
+            {{/if}}
+            {{#if isInRole 'admin' 'admin-group'}}
+                <li><a href="/admin">Admin Link</a></li>
+            {{/if}}
+            <li>{{> loginButtons}}</li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            <li class="{{#if isRouteName 'home'}}active{{/if}}"><a href="/">Home</a></li>
+            <li class="{{#if isRouteName 'about'}}active{{/if}}"><a href="/about">About</a></li>
+            <li class="{{#if isRouteName 'contact'}}active{{/if}}"><a href="/contact">Contact</a></li>
+            {{#if currentUser}}
+                <li class="{{#if isRouteName 'chat'}}active{{/if}}"><a href="/chat">Chat</a></li>
+            {{/if}}
+            {{#if isInRole 'admin' 'admin-group'}}
+                <li><a href="#">Admin Link</a></li>
+            {{/if}}
+            <li>{{> loginButtons}}</li>
+
+        </ul>
+    </div>
+</nav>
