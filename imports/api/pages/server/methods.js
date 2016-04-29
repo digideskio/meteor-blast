@@ -27,3 +27,13 @@ Meteor.methods({
     }
   }
 });
+Meteor.methods({
+    toggleAdmin(id){
+        if(Roles.userIsInRole(id, 'admin', 'admin-group')){
+            Roles.removeUserFromRole(id, ['admin'], 'admin-group');
+        }
+        else{
+            Roles.setUserRoles(id, ['admin'], 'admin-group');
+        }
+    }
+});

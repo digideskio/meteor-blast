@@ -1,0 +1,79 @@
+<template name="Users">
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    {{#if isInRole 'admin' 'admin-group'}}
+                    <table class="{{editMode}}">
+                        <tr>
+                            <th>
+                                Picture
+                            </th>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Username
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Full Name
+                            </th>
+                            <th>
+                                Created At
+                            </th>
+                            <th>
+                                Role
+                            </th>
+                        </tr>
+                        {{#each users}}
+                            <tr>
+                                <td>
+                                    <img src={{profilePic}} width="50px" height="50px" />
+                                </td>
+                                <td class="user_id" {{_id}}>
+                                    {{_id}}
+                                </td>
+                                <td>
+                                    {{username}}
+                                </td>
+                                <td>
+                                    {{userEmail}}
+                                </td>
+                                <td>
+                                    {{profile.name}}
+                                </td>
+                                <td>
+                                    {{dateFormat}}
+                                </td>
+                                <td>
+                                    {{userRoles}}
+
+                                    {{#if currentEdit}}
+                                        <div class="user-edit">
+                                            <i class="fa fa-close close-edit-mode"></i>
+                                            <h3>Edit User</h3>
+
+                                            {{#if isAdmin}}
+
+                                                <button class="toggle-admin">Remove Admin</button>
+
+                                            {{else}}
+                                                <button class="toggle-admin">Make Admin</button>
+
+                                            {{/if}}
+                                        </div>
+                                    {{/if}}
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </table>
+                {{else}}
+                    <h1>NOT AUTHORIZED</h1>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+</template>

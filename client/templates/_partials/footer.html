@@ -1,19 +1,11 @@
 <template name="footer">
     <footer class="page-footer grey darken-2" style="padding-top: 0;">
-        <div class="container">
-            <div class="row no-margin">
-                <div class="col">
-                    <ul>
-                        <li><a class="white-text" href="">Home</a></li>
-                        <li><a class="white-text" href="">Terms & Conditions</a></li>
-                        <li><a class="white-text" href="">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
         <div class="footer-copyright grey darken-3">
             <div class="container">
-                &copy; 2016, Nate Brady All Rights Reserved.
+                <span class="right">
+                    <a class="white-text" href="">Contact Us</a> | <a class="white-text" href="">Terms & Conditions</a>
+                </span>
+                &copy; {{currentYear}} - {{copyRightHolder}}
             </div>
         </div>
     </footer>

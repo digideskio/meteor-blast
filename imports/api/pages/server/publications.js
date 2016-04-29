@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 import { Pages } from '../pages.js';
 
 /**
@@ -7,4 +8,9 @@ import { Pages } from '../pages.js';
  */
 Meteor.publish("getPageData", function(template) {
   return Pages.find({name: template});
+});
+
+Meteor.publish('allUsers', function(){
+    if(Roles.userIsInRole(this.userId, ['admin'], 'admin-group'))
+    return Meteor.users.find({})
 });
