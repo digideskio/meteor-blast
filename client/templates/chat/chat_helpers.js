@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
 import { Markdown } from 'meteor/markdown';
+import { Rooms } from '/imports/api/rooms/rooms.js';
 import { Messages } from '/imports/api/messages/messages.js'
 import { Session } from 'meteor/session';
 import { $ } from 'meteor/jquery';
@@ -15,6 +16,9 @@ import moment from 'moment';
 // Import our packages
 import { Parse } from '/imports/parse.js';
 import { Keyboard } from '/imports/keyboard.js';
+
+Window.session = Session;
+Window.room = Rooms;
 
 /**
  * Functions available only within the scope of this file
@@ -43,7 +47,10 @@ Template.chatMainPanelWindow.helpers({
   dateFormat: date =>
     moment(date).format('MM/DD/YYYY hh:mm A'),
   messages: () =>
-    Messages.find({}, {sort: {date: 1}}).fetch()
+    Messages.find({roomName: Session.get('roomName')}, {sort: {date: 1}}).fetch(),
+  scrollToBottom: () => scrollToBottom(),
+  currentRoom: () =>
+    Rooms.find({nameToLowerCase: Session.get('roomName')}).fetch()[0]
 });
 
 /**
@@ -69,7 +76,7 @@ Template.chatHome.events({
     // Grab the value at message
     let message = event.target.message.value;
     // Call the method to add a chat message
-    Meteor.call('addChatMessage', Parse.parse(message));
+    Meteor.call('addChatMessage', Session.get('roomName'), Parse.parse(message));
     // Clear the form
     event.target.message.value = "";
     // Auto scroll to the bottom of the page
@@ -95,7 +102,6 @@ Template.chatHome.events({
   "click .loggedin-user": event => {
     Session.set('profileId', $(event.currentTarget).data('userid'));
     Session.set('sidebarTemplate', 'chatSidebarUserInfo');
-    // Template.instance().subscribe('messages', 150);
   },
   "click .s-alert-box": event => sAlert.closeAll()
 });
@@ -128,14 +134,20 @@ Template.chatHome.onCreated(() => {
 
   // Init Session profileId for viewing profiles &
   // Set the sidebar template
+  // Set the room name, just showing it should stay lowercase in the-
+  // session for quicker lookup
   Session.set({
     'profileId': Meteor.userId(),
-    'sidebarTemplate': 'chatSidebarAvailableUsers'
+    'sidebarTemplate': 'chatSidebarAvailableUsers',
+    'roomName': 'Meteor-Blast'.toLowerCase()
   });
 
   // Set up some subscriptions
   Template.instance().subscribe("onlineProfiles");
-  Template.instance().subscribe("messages", () =>
+  // Get the room data
+  Template.instance().subscribe("getRoom", Session.get('roomName'));
+  // Get a maximum of 50 msgs from "roomName"
+  Template.instance().subscribe("messages", Session.get('roomName'), 50, () =>
     Tracker.afterFlush(() =>
       window.requestAnimationFrame(scrollToBottom))
   );

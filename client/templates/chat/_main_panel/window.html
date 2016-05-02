@@ -2,10 +2,12 @@
   <div class="fill-height flex-col pos-rel">
 
     {{! Room name / Topic area }}
-    <div class="topic-holder flex-1-1-auto z-depth-2">
+    <div class="topic-holder no-flex z-depth-2">
       <div class="pad10">
-        <span class="room">#Meteor-Blast: </span>
-        <span class="topic grey-text text-darken-3">Set a topic</span>
+        {{#with currentRoom}}
+        <span class="room">#{{name}}: </span>
+        <span class="topic grey-text text-darken-3">{{topic}}</span>
+        {{/with}}
       </div>
     </div>
 
