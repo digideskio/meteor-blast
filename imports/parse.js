@@ -5,6 +5,8 @@
  * Written by Nate Brady (@NateBrady23)
  */
 
+import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 import moment from 'moment';
 
 
@@ -33,6 +35,18 @@ let Command = {
     exec: () => {
       return   {
         'info': `Server time is currently: ${moment(Date.now()).format('MM/DD/YYYY hh:mm A')}`
+      }
+    }
+  },
+  topic: {
+    help: `USAGE: /topic <msg>
+           Sets a room topic.`,
+    commandType: 'room',
+    roles: ['admin'],
+    rolesGroup: 'admin-group',
+    exec: () => {
+      return {
+        'info': `The topic has been changed.`
       }
     }
   }
@@ -87,7 +101,18 @@ Parse.parseCommand = msg => {
     args = msg.split(' ').slice(1);
   }
 
+  // If the command exists
   if (Object.keys(Command).includes(com)) {
+    // If roles exist for that command, make sure the user is in the proper role
+    if (Command[com].roles) {
+      if (Roles.userIsInRole(Meteor.user(), Command[com].roles, Command[com].rolesGroup)) {
+        return Command[com].exec(args);
+      } else {
+        return {
+          'error': 'You do not have the proper privileges for this command.'
+        }
+      }
+    }
     return Command[com].exec(args);
   }
 
