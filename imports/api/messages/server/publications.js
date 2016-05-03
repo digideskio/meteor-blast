@@ -9,14 +9,14 @@ import { Messages } from '../messages';
  * in users receive any data from this publish method.
  */
 
-Meteor.publish("messages", function (limit) {
+Meteor.publish("messages", function (roomName, limit = 50) {
   // In the future, we may care more about which user has access, but for now
   // let's just make sure the user is actually logged in to our app
   if (this.userId) {
     var self = this;
-    limit = limit || 50;
+    roomName = roomName.toLowerCase();
 
-    var observable = Messages.find({}, {limit: limit, sort: {date: -1}});
+    var observable = Messages.find({roomName: roomName}, {limit: limit, sort: {date: -1}});
 
     // If we want to do some special things in the future
     var handle = observable.observeChanges({

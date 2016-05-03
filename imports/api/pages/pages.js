@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '/imports/roles.js';
 
 /**
  * This is an example of allowing/denying access to certain CRUD functions
@@ -12,6 +12,6 @@ export const Pages = new Mongo.Collection("pages");
 
 Pages.allow({
   update: function() {
-    return Roles.userIsInRole(Meteor.user(), 'admin', 'admin-group');
+    return Roles.userHasRole(Meteor.user(), 'admin');
   }
 });

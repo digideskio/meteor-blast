@@ -6,18 +6,19 @@ Meteor.methods({
   /**
    * Adding a chat message to the database.
    *
+   * @param roomName - Name of room, always make sure it is lowerCase for easy lookup
    * @param msg - A message object that has either a message, info, and error field.
    *   if a message.message exists, that's what gets entered into the db. The rest is for
    *   user alerts.
    */
-  addChatMessage: function(msg) {
+  addChatMessage: function(roomName, msg) {
 
-    if (!msg) {
+    if (!msg || !roomName) {
       return;
     }
 
     if (msg.message && msg.message.length) {
-      Messages.insert({_userId: Meteor.userId(), message: msg.message, date: new Date()});
+      Messages.insert({_userId: Meteor.userId(), roomName: roomName.toLowerCase(), message: msg.message, date: new Date()});
     }
     if (msg.info) {
       sAlert.info(msg.info);

@@ -3,7 +3,7 @@
     {{> chatSidebarHeader}}
     <div class="flex-1-1-auto grey darken-3 pad10 white-text fill-width overflow-auto">
       <ul>
-        <li class="list-header">Current Version: 0.1.2</li>
+        <li class="list-header">Current Version: 0.3.1</li>
       </ul>
       <ul>
         <li class="list-header">Commands</li>
@@ -13,19 +13,43 @@
         <li class="list-header">Known Issues</li>
         <li>Scrolling all the way to bottom on load</li>
         <li>Chat layout broken when adding "nav" back in</li>
+        <li>Much more latency using imports for templates?</li>
       </ul>
       <ul>
         <li class="list-header">ToDos</li>
-        <li>Make an Admin dashboard</li>
+        <li>Audit Admin area</li>
+        <li>Move stylesheets to imports</li>
+        <li>Move template helpers to imports</li>
+        <li>Major: Move to ReactJS for templating before v1.0</li>
+        <li>Multi-room</li>
+        <li>Save what room a user is in (for now just one)</li>
+        <li>Make user list by room</li>
         <li>/topic command</li>
         <li>group messages by same user for space</li>
         <li>Allow "Load More" messages</li>
         <li>Scrollbar stylings</li>
         <li>Add dropdown menu to profile icon in side header</li>
         <li>Style loading screen and have it cover only chat window</li>
+        <li>Use all npm packages instead of atmosphere</li>
+        <li>Add style guide to readme for code contributors</li>
       </ul>
       <ul>
-        <li class="list-header">Version 0.1.3 (WiP)</li>
+        <li class="list-header">Version 0.3.1</li>
+        <li>Moved all templates to imports dir</li>
+        <li>Restructured Users collection</li>
+        <li>Merged in Admin dashboard</li>
+        <li>Breaking Change: Created simple roles package (removed alanning:roles)</li>
+        <li>Adding admin only commands</li>
+        <li>Scrolling to bottom on all messages</li>
+      </ul>
+      <ul>
+        <li class="list-header">Version 0.2.1</li>
+        <li>Breaking Change: Added rooms db</li>
+        <li>Messages now save what room they belong to</li>
+        <li>Room name and topic now come from db</li>
+      </ul>
+      <ul>
+        <li class="list-header">Version 0.1.3</li>
         <li>Fixed IE Flex issue</li>
       </ul>
       <ul>

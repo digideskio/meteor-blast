@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
-import { Roles } from 'meteor/alanning:roles';
 import { Messages } from '/imports/api/messages/messages.js'
 
 /**
@@ -40,6 +39,7 @@ Migrations.add({
       Messages.insert({
         _userId: (i%2==0) ? admin._id : user._id,
         message: loremIpsum(),
+        roomName: 'meteor-blast',
         date: randomDate(new Date(1981,2,26),new Date())
       });
     }

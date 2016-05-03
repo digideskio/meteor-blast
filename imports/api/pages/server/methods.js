@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '/imports/roles.js';
 import { Pages } from '../pages.js';
 
 Meteor.methods({
@@ -16,7 +16,7 @@ Meteor.methods({
    * @param value - new value for that part of the page
    */
   'updatePage': function(name, key, value) {
-    if (Roles.userIsInRole(this.userId, ['admin'], 'admin-group')) {
+    if (Roles.userHasRole(Meteor.userId(), 'admin')) {
       if (!key || !value || !(value+"").length) {
         // doesn't pass
       } else {
@@ -27,13 +27,12 @@ Meteor.methods({
     }
   }
 });
-Meteor.methods({
-    toggleAdmin(id){
-        if(Roles.userIsInRole(id, 'admin', 'admin-group')){
-            Roles.removeUserFromRole(id, ['admin'], 'admin-group');
-        }
-        else{
-            Roles.setUserRoles(id, ['admin'], 'admin-group');
-        }
-    }
-});
+// Meteor.methods({
+//   toggleAdmin(id){
+//     if (Roles.userHasRole(id, 'admin')){
+//       Roles.removeUserFromRole(id, ['admin'], 'admin-group');
+//     } else {
+//       Roles.addUsersToRoles(id, 'admin');
+//     }
+//   }
+// });

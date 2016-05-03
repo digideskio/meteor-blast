@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '/imports/roles.js';
 
 
 /**
@@ -21,7 +21,7 @@ Migrations.add({
       email: 'admin@email.com',
       profile: {name: 'Admin Name'}
     });
-    Roles.addUsersToRoles(id, 'admin', 'admin-group');
+    Roles.addUsersToRoles(id, 'admin');
 
     id = Accounts.createUser({
       username: 'user',
@@ -29,7 +29,7 @@ Migrations.add({
       email: 'user@email.com',
       profile: {name: 'User Name'}
     });
-    Roles.addUsersToRoles(id, 'user', 'user-group');
+    Roles.addUsersToRoles(id, 'user');
 
 	},
   down: function() {
