@@ -6,7 +6,7 @@
  */
 
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '/imports/roles.js';
 import moment from 'moment';
 
 
@@ -42,8 +42,7 @@ let Command = {
     help: `USAGE: /topic <msg>
            Sets a room topic.`,
     commandType: 'room',
-    roles: ['admin'],
-    rolesGroup: 'admin-group',
+    role: 'admin',
     exec: () => {
       return {
         'info': `The topic has been changed.`
@@ -103,9 +102,9 @@ Parse.parseCommand = msg => {
 
   // If the command exists
   if (Object.keys(Command).includes(com)) {
-    // If roles exist for that command, make sure the user is in the proper role
-    if (Command[com].roles) {
-      if (Roles.userIsInRole(Meteor.user(), Command[com].roles, Command[com].rolesGroup)) {
+    // If role exists for that command, make sure the user is in the proper role
+    if (Command[com].role) {
+      if (Roles.userHasRole(Meteor.user(), Command[com].role)) {
         return Command[com].exec(args);
       } else {
         return {

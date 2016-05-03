@@ -52,11 +52,14 @@ Accounts.onCreateUser(function(options, user) {
   /**
    * ROLES
    *
-   * Add user to proper group
+   * This is an array that holds all the user roles, like 'admin', 'sysadmin', 'user', etc
+   * Add the user roll to all users
    */
-  user.roles = {
-    "user-group": [ "user" ]
-  };
+  if (user.roles && Array.isArray(user.roles) && !user.roles.includes('user')) {
+    user.roles.push('user');
+  } else {
+    user.roles = ['user'];
+  }
 
   // Return the user to be inserted into the DB
   return user;

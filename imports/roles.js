@@ -6,7 +6,7 @@
 import { Meteor } from "meteor/meteor";
 import { Mongo } from "meteor/mongo";
 
-let roles = new Mongo.collection("roles");
+let rolesDb = new Mongo.Collection("roles");
 
 export const Roles = {
 
@@ -19,8 +19,11 @@ export const Roles = {
  * @param role {String} Name of role to create
  */
 Roles.createRole = role => {
+  role = role.trim().toLowerCase();
   try {
-    return roles.insert({name: role.trim().toLowerCase()});
+    if (!rolesDb.findOne({name: role})) {
+      return rolesDb.insert({name: role});
+    }
   }
   catch (e) {
     throw new Error("Roles: problem inserting role. " + e);
@@ -35,7 +38,7 @@ Roles.createRole = role => {
  */
 Roles.deleteRoleByName = role => {
   try {
-    return roles.remove({name: role.trim().toLowerCase()});
+    return rolesDb.remove({name: role.trim().toLowerCase()});
   }
   catch (e) {
     throw new Error("Roles: problem deleting role. " + e);
@@ -50,7 +53,7 @@ Roles.deleteRoleByName = role => {
  */
 Roles.deleteRoleById = roleId => {
   try {
-    return roles.remove({name: roleId})
+    return rolesDb.remove({name: roleId})
   }
   catch (e) {
     throw new Error("Roles: problem deleting role. " + e);
@@ -64,10 +67,10 @@ Roles.deleteRoleById = roleId => {
  */
 Roles.addUsersToRoles = (users, roles) => {
 
-  if (!isArray(roles)) {
+  if (!Array.isArray(roles)) {
     roles = [roles];
   }
-  if (!isArray(users)) {
+  if (!Array.isArray(users)) {
     users = [users];
   }
 
@@ -77,10 +80,35 @@ Roles.addUsersToRoles = (users, roles) => {
 
   // Make sure users is ids
   users = users.map(u => (typeof u === 'object' && u._id && typeof u._id === 'string') ?
-    u._id : null).filter(u => u !== null);
+    u._id : u).filter(u => typeof u === 'string');
 
   if (users.length && roles.length) {
     Meteor.users.update({_id: {$in: users}},
-      {roles: {$addToSet: roles}}, {multi: true});
+      {$addToSet: {roles: {$each: roles}}}, {multi: true});
   }
+};
+
+/**
+ * Returns true if a user contains the role passed in
+ * @param user {Object|String} User Object or User ID
+ * @param role {String} Name of the role
+ */
+Roles.userHasRole = (user, role) => {
+  if (!user || !role) {
+    return false;
+  }
+  role = role.trim().toLowerCase();
+  if (typeof user === 'object' && user._id) {
+    user = user['_id'];
+  }
+  if (user = Meteor.users.findOne({_id: user})) {
+    if (user && user.roles && Array.isArray(user.roles)) {
+      return user.roles.indexOf(role) !== -1;
+    }
+  }
+  return false;
+};
+
+Roles.redirect = (user, role) => {
+  return Roles.userHasRole(user, role);
 };

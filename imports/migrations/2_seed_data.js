@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
-import { Roles } from 'meteor/alanning:roles';
 import { Messages } from '/imports/api/messages/messages.js'
 
 /**

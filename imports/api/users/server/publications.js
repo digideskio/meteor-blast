@@ -19,6 +19,7 @@ var options = {
     username: 1,
     profile: 1,
     settings: 1,
+    roles: 1,
     "status.online": 1,
     "status.idle": 1,
     "services.github.username": 1,
@@ -41,4 +42,8 @@ Meteor.publish("onlineProfiles", function() {
 
 Meteor.publish("userProfileInfo", function(userId) {
   return Meteor.users.find({_id: userId}, options);
+});
+
+Meteor.publish("ownerInfo", function() {
+  return Meteor.users.find({_id: this.userId});
 });

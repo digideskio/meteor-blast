@@ -15,7 +15,6 @@ Meteor.publish("messages", function (roomName, limit = 50) {
   if (this.userId) {
     var self = this;
     roomName = roomName.toLowerCase();
-    console.log(roomName);
 
     var observable = Messages.find({roomName: roomName}, {limit: limit, sort: {date: -1}});
 

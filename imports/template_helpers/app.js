@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Roles } from 'meteor/alanning:roles';
+import { Roles } from '/imports/roles.js';
 import { $ } from 'meteor/jquery';
 import { sAlert } from 'meteor/juliancwirko:s-alert';
+import { Session } from 'meteor/session';
 
 Template.layout.events({
   "click span.editable": function(event) {
@@ -15,7 +16,7 @@ Template.layout.events({
      *   Some editable text
      * </span>
      */
-    if (Roles.userIsInRole(Meteor.user(), ['admin'], 'admin-group')) {
+    if (Roles.userHasRole(Meteor.user(), 'admin')) {
 
       var selector = $(event.currentTarget),
         formSelector;
@@ -68,3 +69,46 @@ Template.layout.events({
   }
 
 });
+
+Template.nav.onRendered(() =>
+
+
+    this.$('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrain_width: false,
+      hover: false,
+      alignment: 'right',
+      gutter: 0,
+      belowOrigin: true
+    }),
+
+  this.$('.button-collapse').sideNav({
+    menuWidth: 240,
+    activationWidth: 70,
+    closeOnClick: true
+  })
+
+
+);
+
+Template.loading.rendered = () => {
+  if ( ! Session.get('loadingSplash') ) {
+    Template.instance().loading = window.pleaseWait({
+      logo: '/images/icons/meteor.png',
+      backgroundColor: '#7f8c8d',
+      loadingHtml: message + spinner
+    });
+    Session.set('loadingSplash', true); // just show loading splash once
+  }
+};
+
+Template.loading.destroyed = function () {
+  if ( Template.instance().loading ) {
+    Template.instance().loading.finish();
+    delete Session.keys['loadingSplash'];
+  }
+};
+
+var message = '<p class="loading-message">Just a second</p>';
+var spinner = '<div class="sk-spinner sk-spinner-rotating-plane"></div>';

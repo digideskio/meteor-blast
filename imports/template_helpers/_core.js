@@ -8,6 +8,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { Roles } from '/imports/roles.js';
+import moment from 'moment';
 
 /**
  * Subscribes to and returns a user
@@ -39,6 +41,11 @@ Template.registerHelper("getSessionData", key => Session.get(key));
 Template.registerHelper("setSessionData",
   (key, data) => Session.set(key, data));
 
+/**
+ * Checks to see if the user has a role
+ */
+Template.registerHelper("hasRole",
+  (user, role) => Roles.userHasRole(user, role));
 
 /**
  * Returns the current Route Name
@@ -74,4 +81,24 @@ Template.registerHelper("equals", function(...items) {
   // Filter the array for elements equal to the first and then see if the 2 lengths match
   return items.filter(el => el == items[0])
       .length === items.length;
+});
+
+/**
+ * Uses momentJS to format a date
+ */
+Template.registerHelper("dateFormat",
+  date => moment(date).format('MM/DD/YYYY hh:mm A'));
+
+/**
+ * Returns the current year
+ */
+Template.registerHelper('currentYear', function(){
+  return new Date().getFullYear();
+});
+
+/**
+ * Returns the copyright holder
+ */
+Template.registerHelper('copyrightHolder', function(){
+  return "EvermoreDev"
 });

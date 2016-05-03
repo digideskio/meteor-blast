@@ -13,3 +13,10 @@ Template.homeIndex.onRendered(function() {
   // Initialize the materialize parallax plugin
   $('.parallax').parallax();
 });
+
+Template.homeAbout.helpers({
+  pages: function() {
+    Meteor.subscribe('getPageData', 'homeAbout');
+    return Pages.find({}).fetch()[0];
+  }
+});

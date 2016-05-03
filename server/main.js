@@ -13,6 +13,7 @@ import '/imports/api/rooms/server/';
 import { Migrations } from 'meteor/percolate:migrations';
 import '/imports/migrations/';
 
+
 Meteor.startup(() => {
   Migrations.migrateTo(4);
 });

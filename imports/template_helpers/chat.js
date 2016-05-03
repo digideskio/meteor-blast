@@ -2,7 +2,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import { Roles } from 'meteor/alanning:roles';
 import { Markdown } from 'meteor/markdown';
 import { Rooms } from '/imports/api/rooms/rooms.js';
 import { Messages } from '/imports/api/messages/messages.js'
@@ -10,10 +9,8 @@ import { Session } from 'meteor/session';
 import { $ } from 'meteor/jquery';
 import { sAlert } from 'meteor/juliancwirko:s-alert';
 
-// Import npm packages
-import moment from 'moment';
-
 // Import our packages
+import { Roles } from '/imports/roles.js';
 import { Parse } from '/imports/parse.js';
 import { Keyboard } from '/imports/keyboard.js';
 
@@ -44,8 +41,6 @@ Template.chatSidebarAvailableUsers.helpers({
  * MainPanel Helpers
  */
 Template.chatMainPanelWindow.helpers({
-  dateFormat: date =>
-    moment(date).format('MM/DD/YYYY hh:mm A'),
   messages: () =>
     Messages.find({roomName: Session.get('roomName')}, {sort: {date: 1}}).fetch(),
   scrollToBottom: () => scrollToBottom(),
