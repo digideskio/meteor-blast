@@ -21,6 +21,5 @@ Meteor.methods({
     settings = Meteor.users.findOne({_id: this.userId}).settings || {};
     settings[settingName] = value;
     Meteor.users.update({_id: this.userId}, {$set: {settings: settings}});
-
   }
 });
