@@ -27,12 +27,4 @@ Meteor.methods({
     }
   }
 });
-// Meteor.methods({
-//   toggleAdmin(id){
-//     if (Roles.userHasRole(id, 'admin')){
-//       Roles.removeUserFromRole(id, ['admin'], 'admin-group');
-//     } else {
-//       Roles.addUsersToRoles(id, 'admin');
-//     }
-//   }
-// });
+

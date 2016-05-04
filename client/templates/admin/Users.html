@@ -1,79 +1,57 @@
 <template name="adminUsers">
+  <main>
   <div class="container">
     <div class="section">
       <div class="row">
         {{#if hasRole currentUser 'admin'}}
-          <table class="{{editMode}}">
+          <table>
             <tr>
-              <th>
-                Picture
-              </th>
-              <th>
-                Id
-              </th>
-              <th>
-                Username
-              </th>
-              <th>
-                Email
-              </th>
-              <th>
-                Full Name
-              </th>
-              <th>
-                Created At
-              </th>
-              <th>
-                Role
-              </th>
+              <th>Picture</th>
+              <th>Id</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Full Name</th>
+              <th>Created At</th>
+              <th>Role</th>
+              <th>Actions</th>
             </tr>
             {{#each users}}
-              <tr>
+              <tr class="admin-edit-user">
                 <td>
-                  <img src={{profilePic}} width="50px" height="50px" />
-                </td>
-                <td class="user_id" {{_id}}>
-                  {{_id}}
-                </td>
-                <td>
-                  {{username}}
-                </td>
-                <td>
-                  {{userEmail}}
-                </td>
-                <td>
-                  {{profile.name}}
-                </td>
-                <td>
-                  {{dateFormat}}
-                </td>
-                <td>
-                  {{userRoles}}
+                  <img src="{{profile.image}}" class="img-square-35"/>
 
-                  {{#if currentEdit}}
-                    <div class="user-edit">
-                      <i class="fa fa-close close-edit-mode"></i>
-                      <h3>Edit User</h3>
-
-                      {{#if isAdmin}}
-
-                        <button class="toggle-admin">Remove Admin</button>
-
-                      {{else}}
-                        <button class="toggle-admin">Make Admin</button>
-
-                      {{/if}}
-                    </div>
+                </td>
+                <td class="user_id">{{_id}}</td>
+                <td>{{username}}</td>
+                <td>
+                  <ul>
+                    {{#each emails}}
+                      <li>{{address}}</li>
+                    {{/each}}
+                  </ul>
+                </td>
+                <td>{{profile.name}}</td>
+                <td>{{dateFormat}}</td>
+                <td>
+                  {{#each roles}}
+                    {{this}}
+                  {{/each}}
+                </td>
+                <td style="font-size: larger">
+                  {{#if hasRole _id 'admin'}}
+                    <i class="toggle-admin fa fa-star" aria-hidden="true" data-userid="{{_id}}"></i>
+                  {{else}}
+                    <i class="toggle-admin fa fa-star-o" aria-hidden="true" data-userid="{{_id}}"></i>
                   {{/if}}
+                  <i class="admin-remove-user fa fa-trash" aria-hidden="true" data-userid="{{_id}}"></i>
                 </td>
               </tr>
             {{/each}}
           </table>
-        {{else}}
-          <h1>NOT AUTHORIZED</h1>
         {{/if}}
       </div>
     </div>
   </div>
+  </main>
 
 </template>

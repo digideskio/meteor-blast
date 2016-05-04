@@ -10,6 +10,7 @@
  */
 
 import { Meteor } from 'meteor/meteor';
+import { Roles } from '/imports/roles';
 
 // Since we want to have access to the same fields every time we subscribe to a user that isn't the
 // logged in user, create an options object in one place, that can be used across multiple publish methods
@@ -46,4 +47,14 @@ Meteor.publish("userProfileInfo", function(userId) {
 
 Meteor.publish("ownerInfo", function() {
   return Meteor.users.find({_id: this.userId});
+});
+
+/**
+ * WARNING: Admin only publications!
+ * Make sure to check for adminininity
+ */
+Meteor.publish('allUsers', function(){
+  if (Roles.userHasRole(this.userId, 'admin')) {
+    return Meteor.users.find({});
+  }
 });

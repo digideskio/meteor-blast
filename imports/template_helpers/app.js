@@ -6,7 +6,7 @@ import { sAlert } from 'meteor/juliancwirko:s-alert';
 import { Session } from 'meteor/session';
 
 Template.layout.events({
-  "click span.editable": function(event) {
+  "click span.editable": event => {
     /**
      * Editable areas should be wrapped in a span tag with a
      * data-page having the template it's targeting, and an id
@@ -41,7 +41,7 @@ Template.layout.events({
       formSelector.val(text);
     }
   },
-  "focusout .savable": function(event) {
+  "focusout .savable": event => {
 
     event.preventDefault();
     var selector = $(event.target);
@@ -70,10 +70,14 @@ Template.layout.events({
 
 });
 
-Template.nav.onRendered(() =>
-
-
-    this.$('.dropdown-button').dropdown({
+Template.nav.onRendered(() => {
+  // TODO: This is the only way to ensure that all the proper pieces have been inserted
+  // into the DOM. document.ready doesn't work because the document will think it is ready
+  // because we're doing reactive conditional statements in the template. This type of
+  // functionality should be avoided, and probably another reason to see how ReactJS handles
+  // something like this.
+  setTimeout(() => {
+    $('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
       constrain_width: false,
@@ -81,18 +85,20 @@ Template.nav.onRendered(() =>
       alignment: 'right',
       gutter: 0,
       belowOrigin: true
-    }),
+    });
 
-  this.$('.button-collapse').sideNav({
-    menuWidth: 240,
-    activationWidth: 70,
-    closeOnClick: true
-  })
-
-
-);
+    $('.button-collapse').sideNav({
+      menuWidth: 240,
+      activationWidth: 70,
+      closeOnClick: true
+    });
+  }, 600);
+});
 
 Template.loading.rendered = () => {
+  let message = '<p class="loading-message">Just a second</p>';
+  let spinner = '<div class="sk-spinner sk-spinner-rotating-plane"></div>';
+
   if ( ! Session.get('loadingSplash') ) {
     Template.instance().loading = window.pleaseWait({
       logo: '/images/icons/meteor.png',
@@ -103,12 +109,9 @@ Template.loading.rendered = () => {
   }
 };
 
-Template.loading.destroyed = function () {
+Template.loading.destroyed = () => {
   if ( Template.instance().loading ) {
     Template.instance().loading.finish();
     delete Session.keys['loadingSplash'];
   }
 };
-
-var message = '<p class="loading-message">Just a second</p>';
-var spinner = '<div class="sk-spinner sk-spinner-rotating-plane"></div>';

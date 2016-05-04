@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
+import { Roles } from '/imports/roles.js';
 
 Meteor.methods({
+
   /**
    * Meteor.methods get called by the client and the server simultaneously
    * when invoked by the client. This allows us to update the client's version
@@ -21,5 +23,21 @@ Meteor.methods({
       settings = Meteor.users.findOne({_id: this.userId}).settings || {};
       settings[settingName] = value;
       Meteor.users.update({_id: this.userId}, {$set: {settings: settings}});
+  },
+
+  /**
+   *
+   * @param userId {String}
+   */
+  "toggleAdmin": function(userId) {
+    // Make sure you can't toggle admin on yourself &
+    // that you are an admin
+    if (userId && userId !== Meteor.userId() && Roles.userHasRole(Meteor.userId(), 'admin')) {
+      if (Roles.userHasRole(userId, 'admin')) {
+        Roles.removeUserFromRole(userId, 'admin');
+      } else {
+        Roles.addUsersToRoles(userId, 'admin');
+      }
+    }
   }
 });

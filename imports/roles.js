@@ -109,6 +109,33 @@ Roles.userHasRole = (user, role) => {
   return false;
 };
 
-Roles.redirect = (user, role) => {
-  return Roles.userHasRole(user, role);
+/**
+ * Returns the array of all the user's roles
+ * @param user {Object|String} User Object or User ID
+ */
+Roles.getUserRoles = user => {
+  if (typeof user === 'object' && user._id) {
+    user = user._id;
+  }
+  if (typeof user === 'string') {
+    let getUser = Meteor.users.findOne({_id: user});
+    if (getUser && getUser.roles && Array.isArray(user.roles)) {
+      return user.roles;
+    }
+  }
+  return null;
+};
+
+/**
+ * Removes a user from a role
+ * @param user {Object|String} User Object or User ID
+ * @param role {String} Name of the role
+ */
+Roles.removeUserFromRole = (user, role) => {
+  if (typeof user === 'object' && user._id) {
+    user = user._id;
+  }
+  if (typeof user === 'string' && typeof role === 'string') {
+    Meteor.users.update({_id: user}, {$pull: {roles: role}}, {multi: true});
+  }
 };

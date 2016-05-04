@@ -22,13 +22,13 @@ var adminRoutes = FlowRouter.group({
 
 // Route /chat
 adminRoutes.route('/', {
-  name: 'AdminHome',
+  name: 'adminHome',
   action: function() {
     BlazeLayout.render("layout", {content: "adminHome"});
   }
 });
 adminRoutes.route('/users', {
-  name: 'AdminUsers',
+  name: 'adminUsers',
   action: function() {
     BlazeLayout.render("layout", {content: "adminUsers"});
   }
