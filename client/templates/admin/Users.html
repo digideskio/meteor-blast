@@ -39,11 +39,11 @@
                 </td>
                 <td style="font-size: larger">
                   {{#if hasRole _id 'admin'}}
-                    <i class="toggle-admin fa fa-star" aria-hidden="true" data-userid="{{_id}}"></i>
+                    <i class="toggle-admin fa fa-star" style="cursor: pointer;" aria-hidden="true" data-userid="{{_id}}"></i>
                   {{else}}
-                    <i class="toggle-admin fa fa-star-o" aria-hidden="true" data-userid="{{_id}}"></i>
+                    <i class="toggle-admin fa fa-star-o" style="cursor: pointer;" aria-hidden="true" data-userid="{{_id}}"></i>
                   {{/if}}
-                  <i class="admin-remove-user fa fa-trash" aria-hidden="true" data-userid="{{_id}}"></i>
+                  <i class="admin-remove-user fa fa-trash" style="cursor: pointer;" aria-hidden="true" data-userid="{{_id}}"></i>
                 </td>
               </tr>
             {{/each}}
