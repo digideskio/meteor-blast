@@ -1,6 +1,6 @@
 # :boom: Meteor Blast :boom:
 
-Meteor Blast is a boilerplate designed to get you up and running with the [Meteor](https://www.meteor.com/) javascript platform and creating websites quickly. This boilerplate includes a simple chatroom example to introduce the developer to some of Meteor's design patterns.
+Meteor Blast is a boilerplate designed to get you up and running with the [Meteor](https://www.meteor.com/) javascript platform and creating websites quickly. This boilerplate includes a simple chat room example to introduce the developer to some of Meteor's design patterns.
 
 ## Getting Started
 
@@ -109,10 +109,11 @@ The `private` subfolder is only available to the server. So why not just put it 
 
 ```
 public
+  └─── docs
   └─── images
 ```
 
-The `public` subfolder is available to the server and the client, but acts like the `private` subfolder in that it does not get loaded and pushed to the client. This is a good place for static assets like images.
+The `public` subfolder is available to the server and the client, but acts like the `private` subfolder in that it does not get loaded and pushed to the client. This is a good place for static assets like images. Currently, the docs subfolder contains the `HISTORY.md` file which breaks down the version history for the project. The `TODO.md` and `ISSUES.md` are also here. These are in the public folder because they are currently being served to the help area of the chat room.
 
 #### `server` subfolder
 
@@ -142,12 +143,18 @@ This subfolder is ignored by Meteor. There are incredible packages that exist fo
 
 If you log in as an Admin you can change the title and subtitle of the home and about us pages by clicking on it, editing it, and clicking away. This is a reactive source that will update the view for everyone connected. This is a simple proof of concept that I hope to expand for paragraphs and other areas of the site. Once it is done, I will add validation, clean it up and spin it out into a meteor package.
 
-#### Chatroom
+#### Chat room
 
 This area looks like a separate SPA though it's part of the entire app. The majority of the work for the chat app is located in `client/templates/chat`. The functionality is slowly coming along. Keep checking back here for updates.
 
 ## Resources
 
+### Project Docs
+* [History/Version Changes]()
+* [Current TODOs]()
+* [Current Known Issues]()
+
+### Meteor Resources
 * [Full Meteor Documentation](http://docs.meteor.com/#/full/)
 * [AtmoshpereJS](https://atmospherejs.com/) - Search Meteor Packages
 * [Discover Meteor Book](https://www.discovermeteor.com/)

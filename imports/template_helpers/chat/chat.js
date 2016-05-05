@@ -40,6 +40,13 @@ Template.chatSidebarAvailableUsers.helpers({
       .filter(u => u.status && u.status.online && u.currentRoomId === Meteor.user().currentRoomId)
 });
 
+Template.chatSidebarHelp.helpers({
+  getVersionChanges: () => {
+    $.get('/public/docs/HISTORY.md', (res) => {
+      console.log(res);
+    });
+  }
+});
 /**
  * MainPanel Helpers
  */
