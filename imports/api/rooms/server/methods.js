@@ -6,7 +6,11 @@ Meteor.methods({
   /**
    * Update a room topic
    */
-  editRoomTopic: function(topic) {
-    Rooms.update({topic: topic});
+  roomsUpdateTopic: function(roomId, topic) {
+    Rooms.update({_id: roomId}, {$set: {topic: topic}});
+  },
+  
+  roomsDeleteMessages: function(roomId) {
+    Rooms.remove({_id: roomId})
   }
 });

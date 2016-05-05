@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
 
 
 /**

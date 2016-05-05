@@ -8,7 +8,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
 import moment from 'moment';
 
 /**

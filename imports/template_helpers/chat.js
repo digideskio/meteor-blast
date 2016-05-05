@@ -10,12 +10,12 @@ import { $ } from 'meteor/jquery';
 import { sAlert } from 'meteor/juliancwirko:s-alert';
 
 // Import our packages
-import { Roles } from '/imports/roles.js';
-import { Parse } from '/imports/parse.js';
-import { Keyboard } from '/imports/keyboard.js';
+import { Roles } from '/imports/modules/roles.js';
+import { Parse } from '/imports/modules/parse.js';
+import { Keyboard } from '/imports/modules/keyboard.js';
+import { Debug } from '/imports/modules/debug.js';
 
-Window.session = Session;
-Window.room = Rooms;
+Window.messages = Messages;
 
 /**
  * Functions available only within the scope of this file
@@ -32,9 +32,12 @@ var scrollToBottom = () => {
  * Sidebar Helpers
  */
 Template.chatSidebarAvailableUsers.helpers({
+  /**
+   * Gets all the logged in users for the room the current user is in
+   */
   usersLoggedIn: () =>
     Meteor.users.find().fetch()
-      .filter(u => u.status && u.status.online)
+      .filter(u => u.status && u.status.online && u.currentRoomId === Meteor.user().currentRoomId)
 });
 
 /**
@@ -42,10 +45,10 @@ Template.chatSidebarAvailableUsers.helpers({
  */
 Template.chatMainPanelWindow.helpers({
   messages: () =>
-    Messages.find({roomName: Session.get('roomName')}, {sort: {date: 1}}).fetch(),
+    Messages.find({_roomId: Meteor.user().currentRoomId}, {sort: {date: 1}}).fetch(),
   scrollToBottom: () => scrollToBottom(),
   currentRoom: () =>
-    Rooms.find({nameToLowerCase: Session.get('roomName')}).fetch()[0]
+    Rooms.find({_id: Meteor.user().currentRoomId}).fetch()[0]
 });
 
 /**
@@ -71,7 +74,7 @@ Template.chatHome.events({
     // Grab the value at message
     let message = event.target.message.value;
     // Call the method to add a chat message
-    Meteor.call('addChatMessage', Session.get('roomName'), Parse.parse(message));
+    Meteor.call('addChatMessage', Parse.parse(message));
     // Clear the form
     event.target.message.value = "";
     // Auto scroll to the bottom of the page
@@ -127,6 +130,9 @@ Template.chatSidebarSettings.events({
  */
 Template.chatHome.onCreated(() => {
 
+  // So we can access our template within subscription callbacks
+  let template = Template.instance();
+
   // Init Session profileId for viewing profiles &
   // Set the sidebar template
   // Set the room name, just showing it should stay lowercase in the-
@@ -140,11 +146,16 @@ Template.chatHome.onCreated(() => {
   // Set up some subscriptions
   Template.instance().subscribe("onlineProfiles");
   // Get the room data
-  Template.instance().subscribe("getRoom", Session.get('roomName'));
-  // Get a maximum of 50 msgs from "roomName"
-  Template.instance().subscribe("messages", Session.get('roomName'), 50, () =>
-    Tracker.afterFlush(() =>
-      window.requestAnimationFrame(scrollToBottom))
+  Template.instance().subscribe("getRoom", Session.get('roomName'),
+    () => {
+      //TODO: For now we know there's only one room, but this will have to be updated
+      // properly when multi room functionality is added
+      let currentRoom = Rooms.find({}).fetch()[0];
+      Meteor.call('updateRoom', currentRoom._id);
+      Debug.log('chatHome.onCreated', currentRoom);
+      // After we get the room, load the messages for that room
+      template.subscribe("messages", currentRoom._id, 50);
+    }
   );
 
   // Track Meteor.userId() - once it no longer exits

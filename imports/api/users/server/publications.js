@@ -10,7 +10,7 @@
  */
 
 import { Meteor } from 'meteor/meteor';
-import { Roles } from '/imports/roles';
+import { Roles } from '/imports/modules/roles';
 
 // Since we want to have access to the same fields every time we subscribe to a user that isn't the
 // logged in user, create an options object in one place, that can be used across multiple publish methods
@@ -21,6 +21,7 @@ var options = {
     profile: 1,
     settings: 1,
     roles: 1,
+    currentRoomId: 1,
     "status.online": 1,
     "status.idle": 1,
     "services.github.username": 1,

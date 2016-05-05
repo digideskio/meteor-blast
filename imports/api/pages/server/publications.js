@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
 import { Pages } from '../pages.js';
 
 /**

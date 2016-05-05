@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
 
 Meteor.methods({
 
@@ -24,7 +24,11 @@ Meteor.methods({
       settings[settingName] = value;
       Meteor.users.update({_id: this.userId}, {$set: {settings: settings}});
   },
-
+  
+  "updateRoom": function(roomId) {
+    Meteor.users.update({_id: this.userId}, {$set: {currentRoomId: roomId}});
+  },
+  
   /**
    *
    * @param userId {String}
@@ -40,4 +44,5 @@ Meteor.methods({
       }
     }
   }
+
 });

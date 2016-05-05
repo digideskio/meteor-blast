@@ -6,7 +6,9 @@
  */
 
 import { Meteor } from 'meteor/meteor';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
+import { Debug } from '/imports/modules/debug.js';
+
 import moment from 'moment';
 
 
@@ -25,7 +27,19 @@ let Command = {
             info: Command[args].help
           } : {
             error: "There is no help available for that command."
-          }
+          };
+    }
+  },
+  purge: {
+    help: `USAGE: /purge
+           Deletes all messages in a room.`,
+    commandType: 'room',
+    role: 'admin',
+    exec: () => {
+      Meteor.call('roomsDeleteMessages', Meteor.user().currentRoomId);
+      return {
+        'info': `Messages in this room have been deleted.`
+      };
     }
   },
   time: {
@@ -35,7 +49,7 @@ let Command = {
     exec: () => {
       return   {
         'info': `Server time is currently: ${moment(Date.now()).format('MM/DD/YYYY hh:mm A')}`
-      }
+      };
     }
   },
   topic: {
@@ -43,10 +57,16 @@ let Command = {
            Sets a room topic.`,
     commandType: 'room',
     role: 'admin',
-    exec: () => {
+    exec: (args) => {
+      // TODO: Validation - we're assuming too much right now
+      // We're accepting the user from the client and believing it
+
+      Debug.log('parse.js: Command.topic.exec()', args);
+      // Get the current room the user who called the command is in
+      Meteor.call('roomsUpdateTopic', Meteor.user().currentRoomId, args.join(' '));
       return {
         'info': `The topic has been changed.`
-      }
+      };
     }
   }
 };

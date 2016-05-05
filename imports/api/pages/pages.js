@@ -1,5 +1,5 @@
 import { Mongo } from 'meteor/mongo';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
 
 /**
  * This is an example of allowing/denying access to certain CRUD functions

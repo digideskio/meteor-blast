@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Roles } from '/imports/roles.js';
+import { Roles } from '/imports/modules/roles.js';
 import { $ } from 'meteor/jquery';
 import { sAlert } from 'meteor/juliancwirko:s-alert';
 import { Session } from 'meteor/session';
