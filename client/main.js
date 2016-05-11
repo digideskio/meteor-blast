@@ -7,12 +7,11 @@ import { Meteor } from 'meteor/meteor';
 import '/imports/config/client/';
 
 // Import our template helpers
-import '/imports/template_helpers/_core.js';
-import '/imports/template_helpers/admin.js';
-import '/imports/template_helpers/app.js';
-import '/imports/template_helpers/chat.js';
-import '/imports/template_helpers/home.js';
-
+import '/imports/template_helpers/_helpers/';
+import '/imports/template_helpers/admin/';
+import '/imports/template_helpers/app/';
+import '/imports/template_helpers/chat/';
+import '/imports/template_helpers/home';
 
 // Import all the collection api's needed by the client
 import '/imports/api/messages/client/';

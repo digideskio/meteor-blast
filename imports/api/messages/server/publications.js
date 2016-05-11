@@ -12,7 +12,6 @@ import { Messages } from '../messages';
 Meteor.publish("messages", function (roomId, limit = 50) {
   // In the future, we may care more about which user has access, but for now
   // let's just make sure the user is actually logged in to our app
-  console.log(roomId);
   if (this.userId) {
     var self = this;
 

@@ -17,7 +17,7 @@ Meteor.methods({
     }
 
     if (msg.message && msg.message.length) {
-      Messages.insert({_userId: Meteor.userId(), _roomId: Meteor.user().currentRoomId, message: msg.message, date: new Date()});
+      Messages.insert({_userId: Meteor.userId(), _roomId: Meteor.user().currentRoomId, message: msg.message, type: msg.type, date: new Date()});
     }
     if (msg.info) {
       sAlert.info(msg.info);

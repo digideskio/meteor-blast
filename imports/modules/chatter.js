@@ -1,5 +1,5 @@
 /**
- * Parse is a package that will take a message or command to Parse.parse(string) and
+ * Chatter is a package that will take a message or command to Chatter.parse(string) and
  * return an object.
  *
  * Written by Nate Brady (@NateBrady23)
@@ -12,38 +12,50 @@ import { Debug } from '/imports/modules/debug.js';
 import moment from 'moment';
 
 
-export const Parse = {
+export const Chatter = {
 
 };
 
 // Available commands
 let Command = {
   help: {
-    help: 'USAGE: /help <command>',
+    help: `USAGE: /help [command]
+           Returns help for a command.`,
     commandType: 'info',
     exec: (args) => {
         return (args && Command[args] && Command[args].help) ?
-          {
-            info: Command[args].help
-          } : {
-            error: "There is no help available for that command."
-          };
+          { info: Command[args].help} 
+          : { error: "There is no help available for that command." };
+    }
+  },
+  image: {
+    help: `USAGE: /image [url] [OPTIONAL: Alt text]<br />
+           Displays an image to the chat room.`,
+    commandType: 'message',
+    exec: (args) => {
+      if (args && args.length) {
+        return (args.length == 1) ? { message: `![${args[0]}](${args[0]})` }
+          : { message: `![${args[1]}](${args[0]})`};
+      }
+      return { error: 'Please enter the image url' };
     }
   },
   purge: {
-    help: `USAGE: /purge
+    help: `USAGE: /purge<br />
            Deletes all messages in a room.`,
     commandType: 'room',
     role: 'admin',
     exec: () => {
-      Meteor.call('roomsDeleteMessages', Meteor.user().currentRoomId);
+      Meteor.call('purgeMessages', Meteor.user().currentRoomId);
       return {
+        'type': 'room',
+        'message': 'Messages in the room have been deleted.',
         'info': `Messages in this room have been deleted.`
       };
     }
   },
   time: {
-    help: `USAGE: /time
+    help: `USAGE: /time<br />
            Displays the server date & time.`,
     commandType: 'info',
     exec: () => {
@@ -53,7 +65,7 @@ let Command = {
     }
   },
   topic: {
-    help: `USAGE: /topic <msg>
+    help: `USAGE: /topic [msg]<br />
            Sets a room topic.`,
     commandType: 'room',
     role: 'admin',
@@ -72,9 +84,15 @@ let Command = {
 };
 
 /**
- * Parse the message for commands, etc
+ * Alias some commands
  */
-Parse.parse = msg => {
+Command['?'] = Command.help;
+Command.img = Command.image;
+
+/**
+ * Chatter the message for commands, etc
+ */
+Chatter.parse = msg => {
 
   if (msg) {
     msg = msg.trim();
@@ -87,8 +105,8 @@ Parse.parse = msg => {
   }
 
   // If we have a command, lets do something else
-  if (Parse.isCommand(msg)) {
-    return Parse.parseCommand(msg);
+  if (Chatter.isCommand(msg)) {
+    return Chatter.parseCommand(msg);
   }
 
   // Otherwise we have a regular message
@@ -102,14 +120,14 @@ Parse.parse = msg => {
  * Returns true of the msg string begins with a '/' and an additional character
  * @param msg
  */
-Parse.isCommand = msg =>
+Chatter.isCommand = msg =>
   (msg && msg.length > 1 && msg[0] === '/');
 
 /**
  * Runs the function that corresponds to a given command
  * @param msg
  */
-Parse.parseCommand = msg => {
+Chatter.parseCommand = msg => {
   // Remove the '/' from the command
   // and any extra spaces
   msg = msg.slice(1).replace(/\s+/, ' ');

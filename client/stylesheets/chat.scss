@@ -2,8 +2,12 @@
 @import "classes";
 
 .chat-home {
+  .loading {
+    z-index: 20;
+    background-color: rgba(180, 184, 188, 0.88);
+  }
   .topic-holder {
-    z-index: 100;
+    z-index: 10;
   }
   .room {
     font-weight: 500;
@@ -11,6 +15,22 @@
   }
   .topic {
 
+  }
+  .chat-window {
+    padding-bottom: 5px;
+  }
+  .new-message-container {
+    padding-left: 10px;
+    padding-top: 10px;
+  }
+  .room-message-container {
+    padding-left: 10px;
+    padding-top: 10px;
+    font-style: italic;
+    font-size: small;
+  }
+  .same-owner-container {
+    padding-left: 10px;
   }
   .message {
     p {
@@ -22,6 +42,10 @@
       padding: 0 10px;
       color: cornsilk;
     }
+  }
+  .timestamp {
+    font-size: 9px;
+    @extend .grey-text;
   }
   .btn-info {
     padding-top: 10px;
@@ -63,6 +87,13 @@
   }
 
   .side-panel {
+    font-size: 13px;
+    h1 {font-size: 20px; margin: 0; }
+    h2 {font-size: 18px; margin: 0; }
+    h3 {font-size: 16px; margin: 0; }
+    h4 {font-size: 15px; margin: 0; }
+    h5 {font-size: 14px; margin: 0; }
+
     ul {
       padding-left: 15px;
     }
@@ -74,5 +105,9 @@
     li {
       list-style-type: disc;
     }
+  }
+
+  .chat-help {
+
   }
 }

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Migrations } from 'meteor/percolate:migrations';
 import { Messages } from '/imports/api/messages/messages.js'
+import { Rooms } from '/imports/api/rooms/rooms.js'
 
 /**
  * Create 1,000 sample messages for use in the chatroom
@@ -31,15 +32,15 @@ function randomDate(start, end) {
 }
 
 Migrations.add({
-  version: 2,
+  version: 3,
   up: function() {
     var admin = Meteor.users.findOne({username: 'admin'});
     var user = Meteor.users.findOne({username: 'user'});
     for (var i = 0; i < 1000; i++) {
       Messages.insert({
         _userId: (i%2==0) ? admin._id : user._id,
+        _roomId: Rooms.findOne({nameToLowerCase: "meteor-blast"})._id,
         message: loremIpsum(),
-        roomName: 'meteor-blast',
         date: randomDate(new Date(1981,2,26),new Date())
       });
     }
