@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Messages } from '../messages.js';
+import { Roles } from '/imports/modules/roles';
 
 Meteor.methods({
 
@@ -13,8 +14,19 @@ Meteor.methods({
    */
   addChatMessage: function(msg) {
     if (msg && msg.message) {
-      Messages.insert({_userId: Meteor.userId(), _roomId: Meteor.user().currentRoomId, message: msg.message, date: new Date()});
+      Messages.insert({_userId: Meteor.userId(), _roomId: Meteor.user().currentRoomId, message: msg.message, type: msg.type, date: new Date()});
     }
+  },
+
+  /**
+   * Purges all the messages for a given room
+   * @param roomId {int}
+   */
+  purgeMessages: (roomId) => {
+    if (Roles.userHasRole(Meteor.userId(), 'admin')) {
+      Messages.remove({_roomId: roomId});
+    }
+    return true;
   }
 
 });

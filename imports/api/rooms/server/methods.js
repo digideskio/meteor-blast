@@ -8,9 +8,5 @@ Meteor.methods({
    */
   roomsUpdateTopic: function(roomId, topic) {
     Rooms.update({_id: roomId}, {$set: {topic: topic}});
-  },
-  
-  roomsDeleteMessages: function(roomId) {
-    Rooms.remove({_id: roomId})
   }
 });

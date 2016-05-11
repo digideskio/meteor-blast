@@ -1,10 +1,8 @@
-# :boom: Meteor Blast :boom:
-
 ## Version History and Changes
 
 This file contains the version history for Meteor Blast. Currently still in pre-release. At `v0.4.1` and prior changes were being pushed directly to the master branch. From here on, new releases and features will be worked on in separate branches and then merged and tagged into the master branch. The master branch will always have the latest version that can be installed and run following the instructions in the `README.md` file.
 
-Currently using basic semantic versioning: `major.minor.patch`. For the purposes of this project `major` will be any new release, which could include major functional and structural changes. `minor` could include changes to the file structure that don't alter the functionality of the project. While in `major: 0` this will also include other possible breaking changes. `minor` will include small bug fixes and cosmetic changes.
+Currently using basic semantic versioning: `major.minor.patch`. For the purposes of this project `major` will be any new release, which could include major functional and structural changes. `minor` could include changes to the file structure that don't alter the functionality of the project. While in `major: 0` this will also include other possible breaking changes. `patch` will include small bug fixes and cosmetic changes.
 
 Currently this file is located in `/public/docs/` because it is being pulled into the chat room help panel.
 
@@ -16,6 +14,9 @@ Currently this file is located in `/public/docs/` because it is being pulled int
 * Changes to Rooms and Messages collection for path toward multi-room functionality
 * Fixed a bug that stopped key commands from working
 * Created a small debug package to give more information and hide when not in development
+* Added some cleanup when chat template is destroyed
+* Removed markdown atmosphere package and added npm markdown package
+* Grouped consecutive messages if same user
 
 #### v0.3.1
 * Moved all templates to imports dir
@@ -33,7 +34,7 @@ Currently this file is located in `/public/docs/` because it is being pulled int
 ##### v0.1.3
 * Fixed IE flex issue
 
-#### v0.1.2
+##### v0.1.2
 * Added support for key/shortcut commands
 * Added Alt + T for time
 * Added Alt + Down Arrow to scroll to bottom from anywhere

@@ -1,4 +1,8 @@
 <template name="chatMainPanelWindow">
+  <div class="loading pos-abs fill-height fill-width">
+    <img class="centered" src="/images/icons/loading.gif" alt="loading...">
+  </div>
+
   <div class="fill-height flex-col pos-rel">
 
     {{! Room name / Topic area }}
@@ -12,36 +16,61 @@
     </div>
 
     {{! Chat window with messages }}
-    <div class="chat-window flex-1-1-auto overflow-auto pos-rel">
+    <div class="chat-window flex-1-1-auto overflow-auto scrollbar-light pos-rel">
       {{#each messages}}
-      {{! Simple check to see if the message owner still exists}}
-        {{#if userExists _userId}}
-        {{! If the user viewing the message is the owner}}
-        {{! if equals currentUser._id _userId}}
-          <div class="flex-row pad10">
-            {{#unless currentUser.settings.profileImages}}
-            <div style="flex: 0 0 60px;">
-              {{#with getUser _userId}}
-                <img class="z-depth-2" style="width: 40px;" src="{{profile.image}}">
-              {{/with}}
-            </div>
-            {{/unless}}
-            <div class="flex-1-1-auto">
-              <div>
-                <span class="grey-text text-darken-3" style="font-weight: 600">{{#with getUser _userId}}{{profile.name}}{{/with}}</span>
-                {{#unless currentUser.settings.timestamp}}
-                  <span class="grey-text text-darken-1" style="font-weight: 400">{{dateFormat date}}</span>
-                {{/unless}}
-              </div>
-              <div style="font-weight: 600;"
-                   class="message {{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}}-text">
-                  {{! This markdown helper also removes html tags}}
-                  {{#markdown}}{{message}}{{/markdown}}
-              </div>
-            </div>
+
+        {{! If it's a room message}}
+        {{#if equals type "room"}}
+          <div class="flex-row room-message-container">
+            *** {{message}}
           </div>
-          {{! scroll to bottom on every message}}
-          {{scrollToBottom}}
+        {{else}}
+
+          {{! Simple check to see if the message owner still exists}}
+          {{#if userExists _userId}}
+            {{! if the current message has the same owner as the last message,
+                don't redraw everything}}
+            {{#if isSameMsgOwner @index}}
+              <div class="flex-row same-owner-container">
+                {{#unless currentUser.settings.profileImages}}
+                  <div style="flex: 0 0 60px;"></div>
+                {{/unless}}
+                <div class="flex-1-1-auto">
+                  <div class="{{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}}-text">
+                    {{#unless currentUser.settings.timestamp}}
+                      <span class="timestamp">{{dateFormat date}}</span>
+                    {{/unless}}
+                    <span class="message">{{{markdown message}}}</span>
+                  </div>
+                </div>
+              </div>
+            {{else}}
+                <div class="flex-row new-message-container">
+                  {{#unless currentUser.settings.profileImages}}
+                  <div style="flex: 0 0 60px;">
+                    {{#with getUser _userId}}
+                      <img class="z-depth-2 img-square-40" src="{{profile.image}}">
+                    {{/with}}
+                  </div>
+                  {{/unless}}
+                  <div class="flex-1-1-auto">
+                    <div>
+                      {{#with getUser _userId}}
+                        <span class="grey-text text-darken-3">{{profile.name}}</span>
+                        <span class="grey-text">@{{username}}</span>
+                      {{/with}}
+                    </div>
+                    <div class="{{#with getUser _userId}}{{getValueOrDefault settings.chatColor "teal"}}{{/with}}-text">
+                      {{#unless currentUser.settings.timestamp}}
+                        <span class="timestamp">{{dateFormat date}}</span>
+                      {{/unless}}
+                      <span class="message">{{{markdown message}}}</span>
+                    </div>
+                  </div>
+                </div>
+            {{/if}}
+          {{/if}}
+
         {{/if}}
       {{/each}}
     </div>

@@ -94,24 +94,3 @@ Template.nav.onRendered(() => {
     });
   }, 600);
 });
-
-Template.loading.rendered = () => {
-  let message = '<p class="loading-message">Just a second</p>';
-  let spinner = '<div class="sk-spinner sk-spinner-rotating-plane"></div>';
-
-  if ( ! Session.get('loadingSplash') ) {
-    Template.instance().loading = window.pleaseWait({
-      logo: '/images/icons/meteor.png',
-      backgroundColor: '#7f8c8d',
-      loadingHtml: message + spinner
-    });
-    Session.set('loadingSplash', true); // just show loading splash once
-  }
-};
-
-Template.loading.destroyed = () => {
-  if ( Template.instance().loading ) {
-    Template.instance().loading.finish();
-    delete Session.keys['loadingSplash'];
-  }
-};

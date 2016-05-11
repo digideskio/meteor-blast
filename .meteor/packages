@@ -20,14 +20,11 @@ percolate:migrations
 accounts-facebook
 accounts-twitter
 lepozepo:accounting
-pcel:loading
-markdown
 accounts-github
 mizzao:user-status
 reactive-var
 accounts-base
 fortawesome:fontawesome
-less
 reactive-dict
 standard-minifier-css
 standard-minifier-js

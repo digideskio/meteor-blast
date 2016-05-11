@@ -54,7 +54,6 @@ less@2.6.0
 livedata@1.0.18
 localstorage@1.0.9
 logging@1.0.12
-markdown@1.0.9
 meteor@1.1.14
 meteor-base@1.0.4
 minifier-css@1.1.11
@@ -75,7 +74,6 @@ oauth1@1.1.9
 oauth2@1.1.9
 observe-sequence@1.0.11
 ordered-dict@1.0.7
-pcel:loading@1.0.3
 percolate:migrations@0.9.8
 poetic:materialize-scss@1.97.6_1
 promise@0.6.7

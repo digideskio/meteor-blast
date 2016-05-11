@@ -1,6 +1,6 @@
 {
   "name": "meteor-blast",
-  "version": "1.0.0",
+  "version": "0.4.1",
   "description": "A meteor template",
   "main": "index.js",
   "directories": {
@@ -14,12 +14,13 @@
     "url": "git+https://github.com/nbrady-techempower/meteor-blast.git"
   },
   "author": "Nate Brady",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nbrady-techempower/meteor-blast/issues"
   },
   "homepage": "https://github.com/nbrady-techempower/meteor-blast#readme",
   "dependencies": {
+    "markdown": "^0.5.0",
     "moment": "^2.13.0"
   }
 }

@@ -1,5 +1,3 @@
-# :boom: Meteor Blast :boom:
-
 ## TODOs List
 
 * __Major:__ Move to ReactJS for templating before v1.0
@@ -15,3 +13,5 @@
 * Style loading screen and have it cover only chat window
 * Use all npm packages instead of atmosphere
 * Add style guide to readme for code contributors
+* Up and down arrows for previous messages
+* Site admins & Room admins
