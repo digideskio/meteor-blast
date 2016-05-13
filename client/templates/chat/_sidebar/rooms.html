@@ -6,6 +6,11 @@
         <img style="width: 100px;" src="/images/chat/rooms.gif" alt="Rooms!">
       </div>
       There is only 1 room, and you're in it! Maybe *you* should add support for multiple rooms!
+      {{#each rooms}}
+        <div class="room-name">
+          #{{name}}
+        </div>
+      {{/each}}
     </div>
     {{> chatSidebarFooter}}
   </div>

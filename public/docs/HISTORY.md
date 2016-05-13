@@ -6,6 +6,10 @@ Currently using basic semantic versioning: `major.minor.patch`. For the purposes
 
 Currently this file is located in `/public/docs/` because it is being pulled into the chat room help panel.
 
+
+
+* Fixed issues causing perpetual loading screen
+
 #### v0.4.1
 * Creation of the HISTORY.md, ISSUES.md, TODO.md and LICENSE files
 * Added docs subfolder to public for serving
