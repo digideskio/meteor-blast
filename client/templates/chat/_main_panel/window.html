@@ -27,7 +27,6 @@
         {{else}}
 
           {{! Simple check to see if the message owner still exists}}
-          {{#if userExists _userId}}
             {{! if the current message has the same owner as the last message,
                 don't redraw everything}}
             {{#if isSameMsgOwner @index}}
@@ -69,7 +68,6 @@
                   </div>
                 </div>
             {{/if}}
-          {{/if}}
 
         {{/if}}
       {{/each}}

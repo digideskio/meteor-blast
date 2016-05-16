@@ -23,6 +23,15 @@ import { F } from './_functions.js';
 /**
  * Sidebar Helpers
  */
+Template.chatSidebarRooms.helpers({
+  /** Get all rooms **/
+  rooms: () => {
+    if (Meteor.user()) {
+      return Rooms.find().fetch();
+    }
+  }
+});
+
 Template.chatSidebarAvailableUsers.helpers({
   /**
    * Gets all the logged in users for the room the current user is in
@@ -46,19 +55,22 @@ Template.chatSidebarHelp.helpers({
  * MainPanel Helpers
  */
 Template.chatMainPanelWindow.helpers({
+  /** Get all chat messages **/
   messages: () => {
     if (Meteor.user()) {
       return Messages.find({_roomId: Meteor.user().currentRoomId}, {sort: {date: 1}}).fetch();
     }
   },
+  /** scrollToBottom in the template **/
   scrollToBottom: () => F.scrollToBottom(),
+  /** Get the currentRoom data **/
   currentRoom: () => {
     if (Meteor.user()) {
       return Rooms.find({_id: Meteor.user().currentRoomId}).fetch()[0];
     }
   },
-  // Takes in a message index and compares it to the message before it.
-  // If the user id is the same, returns true.
+  /** Takes in a message index and compares it to the message before it.
+      If the user id is the same, returns true. **/
   isSameMsgOwner: (msgIdx) => {
     let msgs = Messages.find({_roomId: Meteor.user().currentRoomId}, {sort: {date: 1}}).fetch();
     return (msgs && msgs[msgIdx-1] && msgs[msgIdx]
